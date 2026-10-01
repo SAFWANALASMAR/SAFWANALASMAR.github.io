@@ -1,0 +1,208 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import {
+  getServices,
+  getSettings,
+  getSite,
+  isPlaceholder,
+  publicFileExists,
+  url,
+  type Lang,
+} from '../lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = await getSite(lang);
+const s = await getSettings();
+const c = t.contact;
+const services = await getServices();
+
+const formReady = !isPlaceholder(s.formspreeId);
+const emailReady = !isPlaceholder(s.email);
+// Until Formspree is set up, the form opens the visitor's email app with the message filled in.
+const useMailto = !formReady && emailReady;
+const githubReady = !isPlaceholder(s.github);
+const hasCv = publicFileExists(s.cv);
+
+const linkClass =
+  'flex items-center gap-3 rounded-xl border border-line bg-surface p-4 text-text transition-colors hover:border-accent hover:text-accent';
+---
+
+<Base
+  lang={lang}
+  path="/contact/"
+  title={t.meta.pages.contact.title}
+  description={t.meta.pages.contact.description}
+>
+  <section class="container-x pt-14 sm:pt-20">
+    <SectionHeading as="h1" title={c.title} intro={c.intro} />
+
+    <div class="mt-12 grid gap-10 lg:grid-cols-[1.4fr_1fr]">
+      <!-- Form -->
+      <div id="contact-form" class="card scroll-mt-24 p-6 sm:p-8">
+        <h2 class="text-xl font-bold text-text">{c.formTitle}</h2>
+        {
+          useMailto ? (
+            <p class="mt-2 text-sm text-muted">{c.formMailto}</p>
+          ) : (
+            !formReady && (
+              <p class="mt-4 rounded-lg border border-line bg-surface-2 p-3 text-sm text-text" role="note">
+                {c.formNotReady} <bdi class="text-muted">{s.formspreeId}</bdi>
+              </p>
+            )
+          )
+        }
+        <form
+          class="mt-6 space-y-5"
+          method="POST"
+          action={
+            formReady
+              ? `https://formspree.io/f/${s.formspreeId}`
+              : useMailto
+                ? `mailto:${s.email}`
+                : undefined
+          }
+          enctype={useMailto ? 'text/plain' : undefined}
+          data-mailto={useMailto ? s.email : undefined}
+          data-labels={JSON.stringify({ name: c.name, email: c.email, service: c.service })}
+        >
+          <input type="hidden" name="_subject" value={c.subject} />
+          <input type="hidden" name="_language" value={lang} />
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label for="name" class="mb-1.5 block text-sm font-medium text-text">{c.name}</label>
+              <input id="name" name="name" type="text" required autocomplete="name" class="field" />
+            </div>
+            <div>
+              <label for="email" class="mb-1.5 block text-sm font-medium text-text">{c.email}</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                autocomplete="email"
+                dir="ltr"
+                class="field"
+              />
+            </div>
+          </div>
+          <div>
+            <label for="service" class="mb-1.5 block text-sm font-medium text-text">{c.service}</label>
+            <select id="service" name="service" required class="field">
+              <option value="" disabled selected>{c.servicePlaceholder}</option>
+              {services.map((service) => <option value={service.id}>{service.data[lang].title}</option>)}
+              <option value="other">{c.serviceOther}</option>
+            </select>
+          </div>
+          <div>
+            <label for="message" class="mb-1.5 block text-sm font-medium text-text">{c.message}</label>
+            <textarea id="message" name="message" rows="6" required class="field resize-y"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary w-full sm:w-auto" disabled={!formReady && !useMailto}>
+            {c.submit}
+            <Icon name="arrow" size={18} class="rtl:-scale-x-100" />
+          </button>
+        </form>
+      </div>
+
+      <!-- Direct links -->
+      <aside aria-labelledby="direct">
+        <h2 id="direct" class="text-xl font-bold text-text">{c.directTitle}</h2>
+        <ul class="mt-6 space-y-3">
+          <li>
+            {
+              emailReady ? (
+                <a href={`mailto:${s.email}`} class={linkClass}>
+                  <Icon name="mail" />
+                  <span class="shrink-0 text-sm whitespace-nowrap text-muted">{c.emailLabel}</span>
+                  <span class="ms-auto min-w-0 truncate font-medium" dir="ltr">{s.email}</span>
+                </a>
+              ) : (
+                <div class={linkClass}>
+                  <Icon name="mail" />
+                  <span class="shrink-0 text-sm whitespace-nowrap text-muted">{c.emailLabel}</span>
+                  <span class="ms-auto font-medium">{s.email}</span>
+                </div>
+              )
+            }
+          </li>
+          <li>
+            <a href={s.linkedin} target="_blank" rel="me noopener" class={linkClass}>
+              <Icon name="linkedin" />
+              <span class="shrink-0 text-sm whitespace-nowrap text-muted">{c.linkedinLabel}</span>
+              <span class="ms-auto truncate font-medium" dir="ltr">in/safwan-alasmar</span>
+            </a>
+          </li>
+          <li>
+            {
+              githubReady ? (
+                <a href={s.github} target="_blank" rel="me noopener" class={linkClass}>
+                  <Icon name="github" />
+                  <span class="shrink-0 text-sm whitespace-nowrap text-muted">{c.githubLabel}</span>
+                  <span class="ms-auto truncate font-medium" dir="ltr">
+                    {s.github.replace(/^https?:\/\/(www\.)?github\.com\//, '')}
+                  </span>
+                </a>
+              ) : (
+                <div class={linkClass}>
+                  <Icon name="github" />
+                  <span class="shrink-0 text-sm whitespace-nowrap text-muted">{c.githubLabel}</span>
+                  <span class="ms-auto font-medium">{s.github}</span>
+                </div>
+              )
+            }
+          </li>
+        </ul>
+
+        <div class="mt-6">
+          {
+            hasCv ? (
+              <a href={url(s.cv)} download class="btn btn-ghost w-full">
+                <Icon name="download" size={18} />
+                {c.cv}
+              </a>
+            ) : (
+              <p class="btn btn-ghost w-full cursor-not-allowed opacity-80" aria-disabled="true">
+                <Icon name="download" size={18} />
+                {c.cv} <span class="text-sm text-muted">{c.cvPending}</span>
+              </p>
+            )
+          }
+        </div>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<script>
+  // Mailto mode: open the visitor's email app with subject and message prefilled.
+  const form = document.querySelector<HTMLFormElement>('form[data-mailto]');
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    const labels = JSON.parse(form.dataset.labels ?? '{}');
+    const select = form.querySelector<HTMLSelectElement>('#service');
+    const service = select?.selectedOptions[0]?.text ?? '';
+    const body = [
+      `${labels.name}: ${data.get('name')}`,
+      `${labels.email}: ${data.get('email')}`,
+      `${labels.service}: ${service}`,
+      '',
+      String(data.get('message') ?? ''),
+    ].join('\n');
+    const subject = `${data.get('_subject')} — ${service}`;
+    location.href = `mailto:${form.dataset.mailto}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  });
+
+  // Preselect the service when arriving from "Request this service".
+  const service = new URLSearchParams(location.search).get('service');
+  const select = document.querySelector<HTMLSelectElement>('#service');
+  if (service && select && [...select.options].some((o) => o.value === service)) {
+    select.value = service;
+  }
+</script>

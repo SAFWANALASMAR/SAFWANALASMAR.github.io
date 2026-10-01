@@ -1,0 +1,20 @@
+order: 5
+icon: analysis
+ar:
+  title: تحليل الأعمال والدراسات
+  audience: صاحب فكرة أو منشأة صغيرة يحتاج قراراً مبنياً على تحليل.
+  summary: تحليل منظم يحوّل الفكرة أو المشكلة إلى خطة واضحة قابلة للتنفيذ.
+  includes:
+    - وثائق المتطلبات للمشاريع التقنية
+    - خطط تسويقية وتشغيلية للمحلات
+    - دراسات جدوى بسيناريوهات مالية
+    - إعادة تصميم الإجراءات
+en:
+  title: Business Analysis & Studies
+  audience: Founders and small businesses that need a decision grounded in analysis.
+  summary: Structured analysis that turns an idea or problem into an actionable plan.
+  includes:
+    - Requirements documents
+    - Marketing & operating plans
+    - Feasibility studies with financial scenarios
+    - Process redesign

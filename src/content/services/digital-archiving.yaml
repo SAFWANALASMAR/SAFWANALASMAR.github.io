@@ -1,0 +1,20 @@
+order: 3
+icon: archive
+ar:
+  title: تنظيم الأرشيف الرقمي وإدارة المعرفة
+  audience: جهة ملفاتها مبعثرة بين الأجهزة والسحابة.
+  summary: أرشيف موحّد يجد فيه أي موظف ما يحتاجه في دقيقة، دون فقد ملف واحد.
+  includes:
+    - هيكلة موحّدة للمجلدات والتسمية
+    - مطابقة السحابة مع أجهزة المكتب
+    - سكربتات ترتيب بمعاينة قبل التنفيذ وسجل لكل عملية
+    - خريطة للملفات وسجل زمني للأعمال
+en:
+  title: Digital Archiving & Knowledge Management
+  audience: Organizations whose files are scattered across devices and the cloud.
+  summary: A unified archive anyone can navigate in a minute, with zero file loss.
+  includes:
+    - Folder & naming taxonomy
+    - Cloud-to-office mirroring
+    - Preview-first organizing scripts with full logs
+    - File map & work log

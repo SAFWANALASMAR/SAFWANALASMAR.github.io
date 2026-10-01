@@ -1,0 +1,20 @@
+order: 4
+icon: nonprofit
+ar:
+  title: التحول الرقمي للجمعيات والقطاع غير الربحي
+  audience: الجمعيات والمؤسسات الأهلية.
+  summary: حلول رقمية تناسب طبيعة عمل الجمعيات ومتطلبات الجهات المانحة.
+  includes:
+    - نقل الموقع وإضافة صفحات الخدمات (الاستبيانات، الشكاوى، المتجر)
+    - قوالب التقارير الدورية والختامية للمانحين
+    - حصر الأصول والحسابات الرقمية وتأمينها
+    - تشغيل منصات الموارد البشرية والمتاجر الإلكترونية
+en:
+  title: Non-Profit Digital Transformation
+  audience: Associations and non-profit organizations.
+  summary: Digital solutions built around how associations and their donors work.
+  includes:
+    - Website migration & service pages
+    - Periodic and final donor report templates
+    - Digital assets & accounts audit
+    - HR platform and e-store setup

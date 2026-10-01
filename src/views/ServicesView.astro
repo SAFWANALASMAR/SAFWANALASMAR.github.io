@@ -1,0 +1,78 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { getServices, getSite, localePath, type Lang } from '../lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = await getSite(lang);
+const services = await getServices();
+---
+
+<Base
+  lang={lang}
+  path="/services/"
+  title={t.meta.pages.services.title}
+  description={t.meta.pages.services.description}
+>
+  <section class="container-x pt-14 sm:pt-20">
+    <SectionHeading as="h1" title={t.services.title} intro={t.services.intro} />
+
+    <div class="mt-12 grid gap-6 lg:grid-cols-2">
+      {
+        services.map((service) => {
+          const st = service.data[lang];
+          return (
+            <article id={service.id} class="card card-hover reveal flex scroll-mt-24 flex-col p-6 sm:p-8">
+              <div class="flex items-start gap-4">
+                <span class="grid size-12 shrink-0 place-items-center rounded-xl bg-accent-soft text-accent">
+                  <Icon name={service.data.icon} size={24} />
+                </span>
+                <div>
+                  <h2 class="text-xl leading-snug font-bold text-text">{st.title}</h2>
+                  <p class="mt-2 text-muted">{st.summary}</p>
+                </div>
+              </div>
+
+              <dl class="mt-6 flex-1 space-y-5">
+                <div>
+                  <dt class="eyebrow">{t.services.audienceLabel}</dt>
+                  <dd class="mt-1 text-text">{st.audience}</dd>
+                </div>
+                <div>
+                  <dt class="eyebrow">{t.services.includesLabel}</dt>
+                  <dd>
+                    <ul class="mt-2 space-y-2">
+                      {st.includes.map((item) => (
+                        <li class="flex gap-2.5 text-text">
+                          <Icon name="check" size={18} class="mt-1 shrink-0 text-accent" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </dd>
+                </div>
+              </dl>
+
+              <div class="mt-8">
+                <a
+                  href={`${localePath(lang, '/contact/')}?service=${service.id}#contact-form`}
+                  class="btn btn-primary"
+                >
+                  {t.services.request}
+                  <Icon name="arrow" size={18} class="rtl:-scale-x-100" />
+                </a>
+              </div>
+            </article>
+          );
+        })
+      }
+    </div>
+
+    <p class="reveal mt-10 text-center text-sm text-muted">{t.services.pricing}</p>
+  </section>
+</Base>

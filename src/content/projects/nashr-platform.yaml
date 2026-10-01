@@ -1,0 +1,34 @@
+order: 3
+featured: true
+year: 2026
+type: web-app
+status: in-progress
+tags: [React, TypeScript, Supabase, Telegram Bot API]
+ar:
+  title: منصة «نَشْر» لأتمتة النشر على منصات التواصل
+  summary: منصة تستقبل المحتوى من بوت تلقرام، وتجدوله وتوزّعه على ثماني منصات من لوحة واحدة.
+  challenge: نشر يومي يدوي لعدة مقاطع وتصاميم على ثماني منصات تواصل.
+  solution: منصة تستقبل المحتوى من بوت تلقرام، وتجدوله وتوزّعه على المنصات من لوحة واحدة.
+  role:
+    - تصميم المنتج
+    - مخطط قاعدة البيانات
+    - وظائف الخادم
+    - أوامر البوت
+    - البناء بأداة تطوير مدعومة بالذكاء الاصطناعي
+  tools: [React, TypeScript, Supabase, Edge Functions, Telegram Bot API, Lovable]
+  result: "【تُحدَّث عند الإطلاق】"
+  availability: "【ملاحظة الإتاحة】"
+en:
+  title: "“Nashr” — Social Media Publishing Automation"
+  summary: A platform that receives content from a Telegram bot, then schedules and distributes it to eight platforms from one dashboard.
+  challenge: Daily manual publishing of several videos and designs to eight social platforms.
+  solution: A platform that receives content from a Telegram bot, then schedules and distributes it across the platforms from a single dashboard.
+  role:
+    - Product design
+    - Database schema
+    - Server functions
+    - Bot commands
+    - Built with an AI-assisted development tool
+  tools: [React, TypeScript, Supabase, Edge Functions, Telegram Bot API, Lovable]
+  result: "【تُحدَّث عند الإطلاق】"
+  availability: "【ملاحظة الإتاحة】"

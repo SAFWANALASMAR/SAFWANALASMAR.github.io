@@ -1,0 +1,193 @@
+---
+import Base from '../layouts/Base.astro';
+import HeroCode from '../components/HeroCode.astro';
+import Icon from '../components/Icon.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import {
+  getProjects,
+  getServices,
+  getSettings,
+  getSite,
+  isPlaceholder,
+  localePath,
+  type Lang,
+} from '../lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = await getSite(lang);
+const s = await getSettings();
+const services = await getServices();
+const featured = (await getProjects()).filter((p) => p.data.featured).slice(0, 3);
+const en = await getSite('en');
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: t.hero.name,
+  alternateName: lang === 'ar' ? en.hero.name : (await getSite('ar')).hero.name,
+  jobTitle: t.hero.title,
+  description: t.hero.value,
+  url: new URL(localePath(lang, '/'), Astro.site).href,
+  ...(isPlaceholder(s.email) ? {} : { email: `mailto:${s.email}` }),
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Madinah',
+    addressCountry: 'SA',
+  },
+  alumniOf: {
+    '@type': 'CollegeOrUniversity',
+    name: 'Yanbu Industrial College',
+  },
+  knowsAbout: ['C#', '.NET', 'SQL Server', 'Python', 'TypeScript', 'Business Analysis', 'Automation'],
+  knowsLanguage: ['ar', 'en'],
+  sameAs: [s.linkedin, s.github].filter((link) => !isPlaceholder(link)),
+};
+---
+
+<Base
+  lang={lang}
+  path="/"
+  title={t.meta.pages.home.title}
+  description={t.meta.pages.home.description}
+  jsonLd={jsonLd}
+>
+  <!-- Hero -->
+  <section class="relative overflow-hidden">
+    <div class="grid-bg pointer-events-none absolute inset-0" aria-hidden="true"></div>
+    <div
+      class="container-x relative grid items-center gap-12 py-16 sm:py-20 lg:py-28 xl:grid-cols-[1fr_1.2fr]"
+    >
+      <div>
+        <p class="eyebrow">{t.hero.title}</p>
+        <h1 class="mt-3 text-4xl leading-tight font-bold text-text sm:text-5xl">{t.hero.name}</h1>
+        <p class="mt-5 max-w-xl text-lg text-text sm:text-xl">{t.hero.value}</p>
+        <p class="mt-4 text-sm text-muted">{t.hero.support}</p>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href={localePath(lang, '/contact/')} class="btn btn-primary">
+            {t.hero.ctaPrimary}
+            <Icon name="arrow" size={18} class="rtl:-scale-x-100" />
+          </a>
+          <a href={localePath(lang, '/projects/')} class="btn btn-ghost">{t.hero.ctaSecondary}</a>
+        </div>
+      </div>
+      <div class="min-w-0">
+        <HeroCode label={t.hero.codeLabel} />
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section aria-label={t.stats.label} class="border-y border-line bg-surface">
+    <dl class="container-x grid grid-cols-2 gap-x-6 gap-y-8 py-10 lg:grid-cols-4">
+      {
+        t.stats.items.map((item) => (
+          <div class="reveal flex flex-col-reverse gap-1">
+            <dt class="text-sm text-muted">{item.label}</dt>
+            <dd class="text-3xl font-bold text-accent sm:text-4xl">
+              <bdi dir="ltr">{item.value}</bdi>
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+
+  <!-- Services -->
+  <section class="container-x pt-20 sm:pt-24" aria-labelledby="home-services">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <SectionHeading id="home-services" title={t.home.servicesTitle} intro={t.home.servicesIntro} />
+      <a
+        href={localePath(lang, '/services/')}
+        class="inline-flex items-center gap-1.5 font-semibold text-accent hover:underline"
+      >
+        {t.home.servicesMore}
+        <Icon name="arrow" size={16} class="rtl:-scale-x-100" />
+      </a>
+    </div>
+    <ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        services.map((service) => {
+          const st = service.data[lang];
+          return (
+            <li class="card card-hover reveal relative p-6">
+              <span class="grid size-11 place-items-center rounded-xl bg-accent-soft text-accent">
+                <Icon name={service.data.icon} size={22} />
+              </span>
+              <h3 class="mt-4 text-lg leading-snug font-bold text-text">
+                <a
+                  href={localePath(lang, `/services/#${service.id}`)}
+                  class="after:absolute after:inset-0"
+                >
+                  {st.title}
+                </a>
+              </h3>
+              <p class="mt-2 text-sm text-muted">{st.summary}</p>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </section>
+
+  <!-- Featured projects -->
+  <section class="container-x pt-20 sm:pt-24" aria-labelledby="home-projects">
+    <div class="flex flex-wrap items-end justify-between gap-4">
+      <SectionHeading id="home-projects" title={t.home.projectsTitle} intro={t.home.projectsIntro} />
+      <a
+        href={localePath(lang, '/projects/')}
+        class="inline-flex items-center gap-1.5 font-semibold text-accent hover:underline"
+      >
+        {t.home.projectsMore}
+        <Icon name="arrow" size={16} class="rtl:-scale-x-100" />
+      </a>
+    </div>
+    <ul class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      {
+        featured.map((project) => (
+          <li>
+            <ProjectCard project={project} lang={lang} />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <!-- How I work -->
+  <section class="container-x pt-20 sm:pt-24" aria-labelledby="home-process">
+    <SectionHeading id="home-process" title={t.home.processTitle} />
+    <ol class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        t.home.process.map((step, i) => (
+          <li class="card reveal p-6">
+            <span class="font-mono text-sm font-medium text-accent" dir="ltr">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <h3 class="mt-2 text-lg font-bold text-text">{step.title}</h3>
+            <p class="mt-1.5 text-sm text-muted">{step.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <!-- Closing CTA -->
+  <section class="container-x pt-20 sm:pt-24">
+    <div
+      class="reveal relative overflow-hidden rounded-2xl bg-accent px-6 py-12 text-center text-on-accent sm:px-12"
+    >
+      <p class="mx-auto max-w-2xl text-xl font-bold sm:text-2xl">{t.home.cta}</p>
+      <a
+        href={localePath(lang, '/contact/')}
+        class="btn mt-6 bg-on-accent text-accent hover:opacity-90"
+      >
+        {t.home.ctaButton}
+        <Icon name="arrow" size={18} class="rtl:-scale-x-100" />
+      </a>
+    </div>
+  </section>
+</Base>

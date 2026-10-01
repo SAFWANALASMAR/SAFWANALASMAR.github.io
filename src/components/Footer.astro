@@ -1,0 +1,68 @@
+---
+import Icon from './Icon.astro';
+import { getSettings, getSite, isPlaceholder, localePath, type Lang } from '../lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = await getSite(lang);
+const s = await getSettings();
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-24 border-t border-line">
+  <div
+    class="container-x flex flex-col gap-6 py-10 sm:flex-row sm:items-center sm:justify-between"
+  >
+    <div>
+      <a href={localePath(lang, '/')} class="font-bold text-text">{t.hero.name}</a>
+      <p class="mt-1 text-sm text-muted">{t.footer.tagline}</p>
+    </div>
+    <ul class="flex items-center gap-2">
+      {
+        !isPlaceholder(s.email) && (
+          <li>
+            <a
+              href={`mailto:${s.email}`}
+              class="grid size-10 place-items-center rounded-lg border border-line text-muted hover:border-accent hover:text-accent"
+              aria-label={t.contact.emailLabel}
+            >
+              <Icon name="mail" />
+            </a>
+          </li>
+        )
+      }
+      <li>
+        <a
+          href={s.linkedin}
+          rel="me noopener"
+          target="_blank"
+          class="grid size-10 place-items-center rounded-lg border border-line text-muted hover:border-accent hover:text-accent"
+          aria-label={t.contact.linkedinLabel}
+        >
+          <Icon name="linkedin" />
+        </a>
+      </li>
+      {
+        !isPlaceholder(s.github) && (
+          <li>
+            <a
+              href={s.github}
+              rel="me noopener"
+              target="_blank"
+              class="grid size-10 place-items-center rounded-lg border border-line text-muted hover:border-accent hover:text-accent"
+              aria-label={t.contact.githubLabel}
+            >
+              <Icon name="github" />
+            </a>
+          </li>
+        )
+      }
+    </ul>
+  </div>
+  <div class="container-x border-t border-line/60 py-5 text-xs text-muted">
+    © <span dir="ltr">{year}</span>{' '}{t.hero.name}. {t.footer.rights}
+  </div>
+</footer>

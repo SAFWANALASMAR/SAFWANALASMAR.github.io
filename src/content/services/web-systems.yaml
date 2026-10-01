@@ -1,0 +1,20 @@
+order: 1
+icon: web
+ar:
+  title: أنظمة الويب المخصصة للمؤسسات
+  audience: جهة عندها نماذج ورقية أو طلبات تمر على أكثر من مستوى اعتماد.
+  summary: نظام ويب يحوّل إجراءاتك الورقية إلى مسار رقمي بصلاحيات وسجل تدقيق.
+  includes:
+    - تحليل الاحتياج وكتابة وثيقة المتطلبات
+    - تصميم قاعدة البيانات ومسارات الاعتماد والصلاحيات
+    - تطوير الواجهات ولوحة الإدارة
+    - التسليم والتدريب
+en:
+  title: Custom Web Systems
+  audience: Organizations with paper forms or requests that pass through several approval levels.
+  summary: Turn paper procedures into a digital workflow with permissions and an audit trail.
+  includes:
+    - Requirements analysis & BRD
+    - Database, approval paths & permissions
+    - Interfaces & admin panel
+    - Handover & training

@@ -1,0 +1,41 @@
+order: 4
+featured: false
+year: 2026
+type: digital-transformation
+tags: [Jisr, Salla, Google Workspace, Metricool]
+ar:
+  title: التحول الرقمي لجمعية أهلية
+  summary: نقل الموقع، وتأمين الحسابات الرقمية، وتشغيل الموارد البشرية، وقوالب موحّدة للتقارير.
+  org: جمعية أهلية
+  challenge: موقع قديم بلا صفحات خدمات، وحسابات رقمية غير موثّقة، وعمليات إدارية يدوية.
+  solution:
+    - إدارة انتقال الموقع من ووردبريس إلى بناء مخصص بصفحات الاستبيان والشكاوى والمتجر
+    - حصر أكثر من 17 حساباً رقمياً وتأمينها
+    - تشغيل منصة الموارد البشرية ودورات المسير الشهرية
+    - قوالب موحّدة للتقارير الدورية والختامية
+  role:
+    - قيادة المشروع
+    - تحليل الاحتياج
+    - التنسيق مع المطوّر
+    - التشغيل
+  tools: [Jisr, Salla, Hostinger, Google Workspace, Metricool]
+  result: منظومة تقارير وتوثيق دورية لم تكن موجودة من قبل.
+  availability: "【ملاحظة الإتاحة】"
+en:
+  title: Digital Transformation for a Non-Profit Association
+  summary: Website migration, secured digital accounts, an HR platform in operation, and unified report templates.
+  org: A non-profit association
+  challenge: An outdated website with no service pages, undocumented digital accounts, and manual administrative processes.
+  solution:
+    - Managed the website migration from WordPress to a custom build with survey, complaints and store pages
+    - Audited and secured more than 17 digital accounts
+    - Launched the HR platform and the monthly payroll cycles
+    - Unified templates for periodic and final reports
+  role:
+    - Project leadership
+    - Needs analysis
+    - Coordination with the developer
+    - Operations
+  tools: [Jisr, Salla, Hostinger, Google Workspace, Metricool]
+  result: A periodic reporting and documentation system that did not exist before.
+  availability: "【ملاحظة الإتاحة】"

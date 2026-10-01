@@ -1,0 +1,41 @@
+order: 2
+featured: true
+year: 2026
+type: automation
+tags: [Python, PowerShell, OOXML, Google Drive]
+ar:
+  title: منظومة أتمتة الأرشيف والتقارير المؤسسية
+  summary: أرشيف موحّد لسبعة مشاريع ممولة، وفهارس شهرية تُولَّد آلياً بدل كتابتها يدوياً.
+  org: جمعية أهلية
+  challenge: آلاف الملفات المؤسسية موزّعة بين السحابة وجهاز المكتب بلا تصنيف، وتقارير تُكتب يدوياً من الصفر كل شهر.
+  solution: هيكلة موحّدة بمجلد لكل مشروع ممول وأربعة أقسام ثابتة، مطابقة بين السحابة وجهاز المكتب، وسجل زمني للأعمال يولّد فهرساً شهرياً بصيغ Word وPDF وجداول البيانات بروابط مباشرة للملفات.
+  role:
+    - تصميم التصنيف
+    - كتابة سكربتات الترتيب بوضع معاينة قبل التنفيذ وسجل لكل عملية
+    - بناء مولّد المستندات العربية على القالب الرسمي
+    - التحقق من عدم فقد أي ملف
+  tools: [Python, PowerShell, OOXML, Google Drive, LibreOffice, سير عمل بالذكاء الاصطناعي]
+  result:
+    - 7 مشاريع ممولة مؤرشفة بهيكل موحّد
+    - سجل بـ100 عمل وفهارس لخمسة أشهر
+    - خفض استهلاك المعالجة بأكثر من 95%
+    - نقل مئات الملفات دون فقد ملف واحد
+  availability: "【ملاحظة الإتاحة】"
+en:
+  title: Institutional Archive & Report Automation
+  summary: A unified archive for seven funded projects, with monthly indexes generated automatically instead of written by hand.
+  org: A non-profit association
+  challenge: Thousands of institutional files scattered between the cloud and the office computer with no classification, and reports written by hand from scratch every month.
+  solution: A unified structure with one folder per funded project and four fixed sections, cloud-to-office mirroring, and a work log that generates a monthly index in Word, PDF and spreadsheet formats with direct links to the files.
+  role:
+    - Designed the taxonomy
+    - Wrote organizing scripts with a preview-before-run mode and a log for every operation
+    - Built the Arabic document generator on the official template
+    - Verified that no file was lost
+  tools: [Python, PowerShell, OOXML, Google Drive, LibreOffice, AI-assisted workflows]
+  result:
+    - 7 funded projects archived in a unified structure
+    - A log of 100 deliverables and indexes for five months
+    - Over 95% less processing
+    - Hundreds of files moved without losing a single one
+  availability: "【ملاحظة الإتاحة】"

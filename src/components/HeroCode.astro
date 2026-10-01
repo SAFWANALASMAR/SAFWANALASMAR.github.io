@@ -1,0 +1,43 @@
+---
+// Decorative hero snippet. Stays in English for both languages and is always LTR.
+interface Props {
+  label: string;
+}
+const { label } = Astro.props;
+
+const str = (v: string) => `<span class="s">"${v}"</span>`;
+const prop = (k: string) => `<span class="p">${k}</span>`;
+
+const stack = ['C#', '.NET', 'SQL Server', 'Python', 'TypeScript'];
+const focus = ['web systems', 'automation', 'Arabic-first documents'];
+
+// `wide`: arrays on one line (tablet/desktop). `narrow`: one item per line (phones), so nothing scrolls.
+const snippet = (wide: boolean) => {
+  const list = (items: string[]) =>
+    wide ? `[${items.map(str).join(', ')}]` : `[\n${items.map((i) => `    ${str(i)},`).join('\n')}\n  ]`;
+  return [
+    `<span class="k">const</span> <span class="v">safwan</span> = {`,
+    `  ${prop('role')}: ${str('Digital Solutions Developer')},`,
+    `  ${prop('stack')}: ${list(stack)},`,
+    `  ${prop('focus')}: ${list(focus)},`,
+    `  ${prop('based')}: ${str('Madinah, Saudi Arabia')},`,
+    `};`,
+  ].join('\n');
+};
+---
+
+<figure
+  class="code-block overflow-hidden rounded-2xl border border-white/10 shadow-lift"
+  dir="ltr"
+  lang="en"
+  aria-label={label}
+>
+  <div class="flex items-center gap-1.5 border-b border-white/10 px-4 py-3" aria-hidden="true">
+    <span class="size-2.5 rounded-full bg-[#ff6b6b]/80"></span>
+    <span class="size-2.5 rounded-full bg-[#f5c98a]/80"></span>
+    <span class="size-2.5 rounded-full bg-[#6fd3a6]/80"></span>
+    <span class="ms-3 font-mono text-xs text-white/70">safwan.ts</span>
+  </div>
+  <pre class="overflow-x-auto p-5 text-[0.78rem] leading-relaxed sm:hidden"><code set:html={snippet(false)} /></pre>
+  <pre class="hidden overflow-x-auto p-5 leading-relaxed sm:block sm:text-sm xl:text-[0.8rem]"><code set:html={snippet(true)} /></pre>
+</figure>

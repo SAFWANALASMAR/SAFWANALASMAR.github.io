@@ -1,0 +1,100 @@
+---
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { getProjects, getSite, type Lang } from '../lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = await getSite(lang);
+const projects = await getProjects();
+// Only offer filters for types that actually have projects.
+const types = [...new Set(projects.map((p) => p.data.type))];
+---
+
+<Base
+  lang={lang}
+  path="/projects/"
+  title={t.meta.pages.projects.title}
+  description={t.meta.pages.projects.description}
+>
+  <section class="container-x pt-14 sm:pt-20">
+    <SectionHeading as="h1" title={t.projects.title} intro={t.projects.intro} />
+
+    <div
+      role="group"
+      aria-label={t.projects.filterLabel}
+      class="mt-10 flex flex-wrap gap-2"
+      data-project-filter
+    >
+      <button type="button" class="filter-btn" data-filter="all" aria-pressed="true">
+        {t.projects.all}
+      </button>
+      {
+        types.map((type) => (
+          <button type="button" class="filter-btn" data-filter={type} aria-pressed="false">
+            {t.projects.types[type]}
+          </button>
+        ))
+      }
+    </div>
+
+    <ul class="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3" data-project-list>
+      {
+        projects.map((project) => (
+          <li data-type={project.data.type}>
+            <ProjectCard project={project} lang={lang} headingLevel="h2" />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Base>
+
+<style>
+  :global(html:not(.js)) [data-project-filter] {
+    display: none;
+  }
+  .filter-btn {
+    min-height: 2.5rem;
+    padding: 0.375rem 1rem;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition:
+      background-color 0.2s,
+      color 0.2s,
+      border-color 0.2s;
+  }
+  .filter-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .filter-btn[aria-pressed='true'] {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--on-accent);
+  }
+</style>
+
+<script>
+  const group = document.querySelector('[data-project-filter]');
+  const items = document.querySelectorAll<HTMLElement>('[data-project-list] > li');
+  group?.addEventListener('click', (event) => {
+    const btn = (event.target as HTMLElement).closest<HTMLButtonElement>('[data-filter]');
+    if (!btn) return;
+    const filter = btn.dataset.filter;
+    group
+      .querySelectorAll('[data-filter]')
+      .forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+    items.forEach((item) => {
+      item.hidden = filter !== 'all' && item.dataset.type !== filter;
+    });
+  });
+</script>

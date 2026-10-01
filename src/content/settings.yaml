@@ -1,0 +1,9 @@
+# روابط وإعدادات مشتركة بين اللغتين. ما بين 【】 يُستبدل قبل النشر.
+email: "safwan.asmar10@gmail.com"
+linkedin: "https://www.linkedin.com/in/safwan-alasmar"
+github: "https://github.com/SAFWANALASMAR"
+# معرّف نموذج Formspree — الجزء الأخير من الرابط https://formspree.io/f/XXXXXXX
+formspreeId: "【معرّف النموذج】"
+# المسارات داخل مجلد public/
+cv: "cv/Safwan-Alasmar-CV.pdf"
+photo: "images/profile.jpg"

@@ -1,0 +1,137 @@
+---
+import Icon from './Icon.astro';
+import { getSite, localePath, otherLang, type Lang } from '../lib/i18n';
+
+interface Props {
+  lang: Lang;
+  path: string;
+}
+
+const { lang, path } = Astro.props;
+const t = await getSite(lang);
+const other = otherLang(lang);
+
+const links = [
+  { path: '/', label: t.nav.home },
+  { path: '/services/', label: t.nav.services },
+  { path: '/projects/', label: t.nav.projects },
+  { path: '/about/', label: t.nav.about },
+  { path: '/contact/', label: t.nav.contact },
+];
+
+const isActive = (linkPath: string) =>
+  linkPath === '/' ? path === '/' : path.startsWith(linkPath);
+---
+
+<header
+  class="sticky top-0 z-40 border-b border-line/70 bg-bg/85 backdrop-blur supports-[backdrop-filter]:bg-bg/70"
+>
+  <div class="container-x flex h-16 items-center justify-between gap-3">
+    <a
+      href={localePath(lang, '/')}
+      class="flex items-center gap-2.5 font-bold text-text"
+      aria-label={t.hero.name}
+    >
+      <span
+        class="grid size-9 place-items-center rounded-lg bg-accent font-mono text-sm text-on-accent"
+        aria-hidden="true">&lt;/&gt;</span
+      >
+      <span class="hidden text-base min-[400px]:inline sm:text-lg">{t.hero.name}</span>
+    </a>
+
+    <nav aria-label={t.nav.primary} class="hidden md:block">
+      <ul class="flex items-center gap-1">
+        {
+          links.map((link) => (
+            <li>
+              <a
+                href={localePath(lang, link.path)}
+                aria-current={isActive(link.path) ? 'page' : undefined}
+                class="rounded-lg px-3 py-2 text-sm font-medium text-muted transition-colors hover:text-accent aria-[current=page]:text-accent"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-1.5">
+      <a
+        href={localePath(other, path)}
+        lang={other}
+        hreflang={other}
+        aria-label={t.nav.switchLangLabel}
+        class="inline-flex h-10 items-center gap-1.5 rounded-lg border border-line px-3 text-sm font-medium text-text transition-colors hover:border-accent hover:text-accent"
+      >
+        <Icon name="globe" size={16} />
+        <span>{t.nav.switchLang}</span>
+      </a>
+      <button
+        type="button"
+        data-theme-toggle
+        aria-label={t.nav.themeToggle}
+        aria-pressed="false"
+        class="grid size-10 place-items-center rounded-lg border border-line text-text transition-colors hover:border-accent hover:text-accent"
+      >
+        <Icon name="moon" class="dark:hidden" />
+        <Icon name="sun" class="hidden dark:block" />
+      </button>
+      <button
+        type="button"
+        data-menu-toggle
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label={t.nav.menu}
+        class="grid size-10 place-items-center rounded-lg border border-line text-text md:hidden"
+      >
+        <Icon name="menu" class="menu-open-icon" />
+        <Icon name="close" class="menu-close-icon hidden" />
+      </button>
+    </div>
+  </div>
+
+  <nav id="mobile-menu" aria-label={t.nav.primary} class="hidden border-t border-line md:hidden">
+    <ul class="container-x flex flex-col py-2">
+      {
+        links.map((link) => (
+          <li>
+            <a
+              href={localePath(lang, link.path)}
+              aria-current={isActive(link.path) ? 'page' : undefined}
+              class="block rounded-lg px-3 py-3 font-medium text-text hover:text-accent aria-[current=page]:text-accent"
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menu = document.getElementById('mobile-menu');
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') !== 'true';
+    toggle.setAttribute('aria-expanded', String(open));
+    menu?.classList.toggle('hidden', !open);
+    toggle.querySelector('.menu-open-icon')?.classList.toggle('hidden', open);
+    toggle.querySelector('.menu-close-icon')?.classList.toggle('hidden', !open);
+  });
+
+  const themeBtn = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+  const root = document.documentElement;
+  const sync = () => themeBtn?.setAttribute('aria-pressed', String(root.classList.contains('dark')));
+  sync();
+  themeBtn?.addEventListener('click', () => {
+    const dark = !root.classList.contains('dark');
+    root.classList.toggle('dark', dark);
+    try {
+      localStorage.setItem('theme', dark ? 'dark' : 'light');
+    } catch {}
+    sync();
+  });
+</script>

@@ -1,0 +1,196 @@
+# Site text in English. Edit here without touching the code.
+
+meta:
+  siteName: Safwan Alasmar
+  pages:
+    home:
+      title: Safwan Alasmar — Digital Solutions Developer for Organizations
+      description: "I turn manual organizational work into documented digital systems: web systems, Arabic report and document automation, and digital archiving."
+    services:
+      title: Services — Safwan Alasmar
+      description: Custom web systems, Arabic report and document automation, digital archiving, non-profit digital transformation, and business analysis.
+    projects:
+      title: Projects — Safwan Alasmar
+      description: "Real projects with case studies: challenge, solution, role, tools and result."
+    about:
+      title: About — Safwan Alasmar
+      description: A Computer Science graduate who combines code with a real understanding of what management needs, building Arabic-first, right-to-left solutions.
+    contact:
+      title: Contact — Safwan Alasmar
+      description: Got a manual process eating your time every month? Tell me about it.
+    notFound:
+      title: Page not found — Safwan Alasmar
+      description: The page you are looking for does not exist.
+
+nav:
+  home: Home
+  services: Services
+  projects: Projects
+  about: About
+  contact: Contact
+  switchLang: العربية
+  switchLangLabel: التبديل إلى العربية
+  themeToggle: Toggle dark mode
+  menu: Menu
+  skip: Skip to content
+  primary: Main navigation
+
+hero:
+  name: Safwan Alasmar
+  title: Digital Solutions Developer for Organizations
+  value: I turn manual organizational work into documented digital systems that don't depend on any single person.
+  support: Computer Science graduate · Web systems · Automation · Professional Arabic documents
+  ctaPrimary: Request a service
+  ctaSecondary: See the projects
+  codeLabel: Decorative code snippet summarizing role and stack
+
+stats:
+  label: Key numbers
+  items:
+    - value: "100+"
+      label: documented deliverables
+    - value: "7"
+      label: funded-project archives rebuilt
+    - value: "95%+"
+      label: less processing after archive automation
+    - value: "18"
+      label: participants from 10 countries documented
+
+home:
+  servicesTitle: Services
+  servicesIntro: Practical solutions for government entities, associations and businesses, from analysis to handover.
+  servicesMore: All services
+  projectsTitle: Featured projects
+  projectsIntro: Real projects, each with a short case study.
+  projectsMore: All projects
+  processTitle: How I work
+  process:
+    - title: Understand
+      text: A session to understand the current process and the real problem.
+    - title: Document
+      text: A short requirements document, approved before any code.
+    - title: Build
+      text: Development in stages, with a preview at every stage.
+    - title: Deliver
+      text: Handover with a user guide, and support after launch.
+  cta: Got a manual process eating your time every month? Tell me about it.
+  ctaButton: Get in touch
+
+services:
+  title: Services
+  intro: Five services that all start by understanding your current process and end with a documented system that doesn't depend on any single person.
+  audienceLabel: Who it's for
+  includesLabel: Includes
+  request: Request this service
+  pricing: Pricing depends on scope — get in touch for a tailored quote.
+
+projects:
+  title: Projects
+  intro: "Real projects, each with a case study: the challenge, the solution, my exact role, the tools and the result."
+  filterLabel: Filter by type
+  all: All
+  viewCase: Case study
+  inProgress: In progress
+  back: All projects
+  types:
+    web-system: Web system
+    automation: Automation
+    web-app: Web app
+    digital-transformation: Digital transformation
+    business-analysis: Business analysis
+  labels:
+    year: Year
+    type: Type
+    org: Organization
+    tags: Tech tags
+    challenge: The challenge
+    solution: The solution
+    role: My role
+    tools: Tools
+    result: The result
+    availability: Availability
+    link: Project link
+
+about:
+  title: About
+  photoAlt: Photo of Safwan Alasmar
+  initials: SA
+  bio: Computer Science graduate from Yanbu Industrial College (Royal Commission for Jubail and Yanbu). I started in business analysis and application development, turning a paper form into a full web system with a tiered approval workflow and a database I designed from scratch. Today I digitize institutional work in the non-profit sector — automating reports and documents, rebuilding archives, leading digital transformation, and building publishing-automation tools. My edge is combining code with a real understanding of what management needs — and building Arabic-first, right-to-left solutions without compromise.
+  timelineTitle: Experience
+  timeline:
+    - period: May 2026 – Present
+      org: Al-Maqari Quranic Association, Madinah
+      role: Head of Media, leading digital transformation, automation and institutional reporting
+    - period: Mar – May 2026
+      org: Ghassan Trading Company
+      role: Sales & Marketing Representative
+    - period: Oct 2025 – Present
+      org: Preply
+      role: Arabic teacher for non-native speakers (part-time, remote)
+    - period: Jan – Jul 2025
+      org: Royal Commission for Jubail and Yanbu — General Administration of IT
+      role: "Co-op trainee: business analysis and application development, technical support and infrastructure"
+    - period: 2018 – 2024
+      org: Freelance
+      role: Delivery platforms and customer service — fully funded my university studies
+  educationTitle: Education & Certificates
+  education:
+    - title: B.Sc. in Computer Science
+      org: Yanbu Industrial College, Royal Commission for Jubail and Yanbu
+      date: Oct 2025
+    - title: Professional Diploma in E-Commerce and Digital Marketing
+      date: "2021"
+    - title: Entrepreneurship & Innovation Program
+      org: Monsha'at
+      date: "2024"
+    - title: Summer Student Enrichment Program
+      org: Saudi Aramco
+      date: "2017"
+  skillsTitle: Skills
+  skills:
+    - category: Back end & data
+      items: [C#, .NET, ASP.NET Core MVC, Entity Framework Core, ASP.NET Identity, SQL Server]
+    - category: Front end
+      items: [HTML, CSS, JavaScript, TypeScript, React, Bootstrap]
+    - category: Automation & scripting
+      items: [Python, PowerShell, Document generation (OOXML), AI tools]
+    - category: Cloud & tools
+      items: [Git / GitHub, Azure DevOps, Microsoft Azure, Supabase, Google Workspace]
+    - category: Analysis
+      items: [Business analysis, Requirements documents, Approval workflow & permissions design, Process redesign]
+    - category: Platforms
+      items: [Salla, Jisr, Donor platforms]
+    - category: Languages
+      items: [Arabic (native), English (professional)]
+  volunteerTitle: Volunteering
+  volunteer: Mosque imam by official appointment from the Ministry of Islamic Affairs (2025 – present) · Regular blood donor (2020 – present).
+
+contact:
+  title: Contact
+  intro: Got a manual process eating your time every month? Tell me about it.
+  formTitle: Send a message
+  name: Name
+  email: Email
+  service: Service needed
+  servicePlaceholder: Choose a service
+  serviceOther: Something else
+  message: Message
+  submit: Send
+  formMailto: Sending opens your email app with the message ready.
+  formNotReady: The contact form isn't active yet — please email me directly.
+  directTitle: Or reach out directly
+  emailLabel: Email
+  linkedinLabel: LinkedIn
+  githubLabel: GitHub
+  cv: Download CV
+  cvPending: "【يُضاف الملف】"
+  subject: Service request from the website
+
+footer:
+  tagline: Digital Solutions Developer for Organizations · Madinah
+  rights: All rights reserved.
+
+notFound:
+  title: Page not found
+  text: The page may have moved, or the link may be incorrect.
+  back: Back to home

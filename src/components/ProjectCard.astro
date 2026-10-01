@@ -1,0 +1,41 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Icon from './Icon.astro';
+import { getSite, localePath, tagClass, type Lang } from '../lib/i18n';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  lang: Lang;
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { project, lang, headingLevel: Heading = 'h3' } = Astro.props;
+const t = await getSite(lang);
+const p = project.data;
+const text = p[lang];
+---
+
+<article class="card card-hover reveal relative flex h-full flex-col p-6">
+  <div class="mb-4 flex flex-wrap items-center gap-2 text-xs font-medium text-muted">
+    <span class="rounded-md bg-surface-2 px-2 py-1">{t.projects.types[p.type]}</span>
+    <span class="rounded-md bg-surface-2 px-2 py-1" dir="ltr">{p.year}</span>
+    {
+      p.status === 'in-progress' && (
+        <span class="rounded-md bg-accent-soft px-2 py-1 text-accent">{t.projects.inProgress}</span>
+      )
+    }
+  </div>
+  <Heading class="text-lg leading-snug font-bold text-text">
+    <a href={localePath(lang, `/projects/${project.id}/`)} class="after:absolute after:inset-0">
+      {text.title}
+    </a>
+  </Heading>
+  <p class="mt-2 flex-1 text-sm text-muted">{text.summary}</p>
+  <ul class="mt-5 flex flex-wrap gap-1.5">
+    {p.tags.map((tag) => <li class={tagClass(tag)}>{tag}</li>)}
+  </ul>
+  <span class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-accent">
+    {t.projects.viewCase}
+    <Icon name="arrow" size={16} class="rtl:-scale-x-100" />
+  </span>
+</article>

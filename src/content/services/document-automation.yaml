@@ -1,0 +1,20 @@
+order: 2
+icon: document
+ar:
+  title: أتمتة التقارير والمستندات العربية
+  audience: من يكتب التقارير والخطابات والجداول يدوياً كل شهر.
+  summary: تقارير ومستندات عربية رسمية تُولَّد آلياً على قالبك، بصيغ Word وPDF وجداول البيانات، باتجاه عربي سليم.
+  includes:
+    - قوالب رسمية بهوية الجهة
+    - توليد آلي للتقارير الدورية والفهارس
+    - معالجة الملفات والفواتير دفعة واحدة
+    - ربط سير العمل بأدوات الذكاء الاصطناعي
+en:
+  title: Arabic Report & Document Automation
+  audience: Anyone writing reports, letters and spreadsheets by hand every month.
+  summary: Official Arabic documents generated automatically on your template (Word, PDF, Sheets) with correct right-to-left layout.
+  includes:
+    - Branded templates
+    - Automated periodic reports & indexes
+    - Batch processing of files and invoices
+    - AI-assisted workflows

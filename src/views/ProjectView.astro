@@ -1,0 +1,127 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { getSite, localePath, tagClass, toList, type Lang } from '../lib/i18n';
+
+interface Props {
+  lang: Lang;
+  project: CollectionEntry<'projects'>;
+}
+
+const { lang, project } = Astro.props;
+const t = await getSite(lang);
+const p = project.data;
+const text = p[lang];
+const L = t.projects.labels;
+
+// Case-study sections in template order; empty ones are skipped.
+const sections = [
+  { label: L.challenge, items: toList(text.challenge) },
+  { label: L.solution, items: toList(text.solution) },
+  { label: L.role, items: toList(text.role) },
+  { label: L.tools, items: toList(text.tools), asTags: true },
+  { label: L.result, items: toList(text.result) },
+  { label: L.availability, items: toList(text.availability) },
+].filter((s) => s.items.length > 0);
+---
+
+<Base
+  lang={lang}
+  path={`/projects/${project.id}/`}
+  title={`${text.title} — ${t.meta.siteName}`}
+  description={text.summary}
+>
+  <article class="container-x max-w-4xl pt-10 sm:pt-14">
+    <a
+      href={localePath(lang, '/projects/')}
+      class="inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:underline"
+    >
+      <Icon name="arrow" size={16} class="ltr:-scale-x-100" />
+      {t.projects.back}
+    </a>
+
+    <header class="mt-6 border-b border-line pb-8">
+      <h1 class="text-3xl leading-tight font-bold text-text sm:text-4xl">{text.title}</h1>
+      <p class="mt-4 text-lg text-muted">{text.summary}</p>
+
+      <dl class="mt-6 grid gap-4 text-sm sm:grid-cols-3">
+        <div>
+          <dt class="text-muted">{L.year}</dt>
+          <dd class="mt-0.5 font-semibold text-text" dir="ltr">{p.year}</dd>
+        </div>
+        <div>
+          <dt class="text-muted">{L.type}</dt>
+          <dd class="mt-0.5 font-semibold text-text">
+            {t.projects.types[p.type]}
+            {
+              p.status === 'in-progress' && (
+                <span class="ms-1 rounded-md bg-accent-soft px-2 py-0.5 text-xs text-accent">
+                  {t.projects.inProgress}
+                </span>
+              )
+            }
+          </dd>
+        </div>
+        {
+          text.org && (
+            <div>
+              <dt class="text-muted">{L.org}</dt>
+              <dd class="mt-0.5 font-semibold text-text">{text.org}</dd>
+            </div>
+          )
+        }
+      </dl>
+
+      <h2 class="sr-only">{L.tags}</h2>
+      <ul class="mt-6 flex flex-wrap gap-1.5">
+        {p.tags.map((tag) => <li class={tagClass(tag)}>{tag}</li>)}
+      </ul>
+    </header>
+
+    <div class="divide-y divide-line">
+      {
+        sections.map((section) => (
+          <section class="reveal grid gap-3 py-8 sm:grid-cols-[10rem_1fr] sm:gap-8">
+            <h2 class="eyebrow text-base">{section.label}</h2>
+            {section.asTags ? (
+              <ul class="flex flex-wrap gap-1.5">
+                {section.items.map((tool) => (
+                  <li class={`${tagClass(tool)} text-sm`}>{tool}</li>
+                ))}
+              </ul>
+            ) : section.items.length === 1 ? (
+              <p class="text-text">{section.items[0]}</p>
+            ) : (
+              <ul class="space-y-2.5">
+                {section.items.map((item) => (
+                  <li class="flex gap-2.5 text-text">
+                    <Icon name="check" size={18} class="mt-1 shrink-0 text-accent" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+        ))
+      }
+      {
+        p.link && (
+          <section class="reveal grid gap-3 py-8 sm:grid-cols-[10rem_1fr] sm:gap-8">
+            <h2 class="eyebrow text-base">{L.link}</h2>
+            <a
+              href={p.link}
+              target="_blank"
+              rel="noopener"
+              class="inline-flex items-center gap-1.5 font-semibold text-accent hover:underline"
+              dir="ltr"
+            >
+              {p.link.replace(/^https?:\/\//, '')}
+              <Icon name="external" size={16} />
+            </a>
+          </section>
+        )
+      }
+    </div>
+  </article>
+</Base>

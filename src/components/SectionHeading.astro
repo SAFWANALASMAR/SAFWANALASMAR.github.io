@@ -1,0 +1,14 @@
+---
+interface Props {
+  title: string;
+  intro?: string;
+  id?: string;
+  as?: 'h1' | 'h2';
+}
+const { title, intro, id, as: Heading = 'h2' } = Astro.props;
+---
+
+<div class="reveal max-w-2xl">
+  <Heading id={id} class="text-2xl font-bold text-text sm:text-3xl">{title}</Heading>
+  {intro && <p class="mt-3 text-muted">{intro}</p>}
+</div>

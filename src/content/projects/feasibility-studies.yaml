@@ -1,0 +1,21 @@
+order: 5
+featured: false
+year: 2026
+type: business-analysis
+tags: [Excel, Financial Modeling]
+ar:
+  title: دراسة جدوى وخطط تجارية
+  summary: دراسة جدوى بثلاثة سيناريوهات مالية، وخطة تسويقية وتشغيلية لمحل تجزئة.
+  solution:
+    - دراسة جدوى لمشروع ضيافة بثلاثة سيناريوهات مالية وخط زمني للتوسع على 24 شهراً
+    - تحليل وخطة تسويقية وتشغيلية لمحل تجزئة في المدينة المنورة
+  tools: [تحليل الأعمال, النمذجة المالية, Word, Excel]
+  availability: "【تُعرض بلا أسماء العملاء ولا أرقامهم إلا بإذنهم】"
+en:
+  title: Feasibility Study & Business Plans
+  summary: A feasibility study with three financial scenarios, and a marketing and operating plan for a retail shop.
+  solution:
+    - A feasibility study for a hospitality project with three financial scenarios and a 24-month expansion timeline
+    - Analysis and a marketing and operating plan for a retail shop in Madinah
+  tools: [Business analysis, Financial modeling, Word, Excel]
+  availability: "【تُعرض بلا أسماء العملاء ولا أرقامهم إلا بإذنهم】"

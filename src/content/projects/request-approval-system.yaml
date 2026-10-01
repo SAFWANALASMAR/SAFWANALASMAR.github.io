@@ -1,0 +1,37 @@
+order: 1
+featured: true
+year: 2025
+type: web-system
+tags: [C#, ASP.NET Core MVC, SQL Server, EF Core]
+ar:
+  title: نظام الطلبات الرقمي بمسار اعتماد متدرج
+  summary: نظام ويب يمر فيه الطلب على المستويات الإدارية آلياً، مع سجل تدقيق لكل خطوة.
+  org: الهيئة الملكية للجبيل وينبع — الإدارة العامة لتقنية المعلومات
+  challenge: نموذج طلبات داخلي ورقي، بلا تتبع ولا صلاحيات ولا سجل لمن اعتمد ومتى.
+  solution: نظام ويب يمر فيه الطلب على المستويات الإدارية آلياً بقواعد توجيه محددة، مع سجل تدقيق لكل خطوة.
+  role:
+    - كتابة وثيقة متطلبات الأعمال، وتوثيق المتطلبات الوظيفية ورحلات المستخدمين ومصفوفة الصلاحيات
+    - تصميم مسار الاعتماد
+    - تصميم قاعدة البيانات العلائقية وتطبيعها
+    - تطوير الواجهات والمساهمة في الخلفية
+    - بناء وحدة إدارة النظام ودمجها
+    - إعداد حالات الاختبار وعرض النظام على إدارة القسم
+  tools: [C#, ASP.NET Core MVC, Entity Framework Core, ASP.NET Identity, SQL Server, Azure DevOps, Git, Bootstrap]
+  result: نظام مكتمل عُرض على إدارة القسم.
+  availability: نظام داخلي لجهة حكومية، والكود غير متاح للنشر.
+en:
+  title: Digital Request System with a Tiered Approval Workflow
+  summary: A web system that routes each request through management levels automatically, with an audit trail for every step.
+  org: Royal Commission for Jubail and Yanbu — General Administration of IT
+  challenge: An internal paper request form with no tracking, no permissions and no record of who approved what, or when.
+  solution: A web system that routes each request through the management levels automatically using defined routing rules, with an audit trail for every step.
+  role:
+    - Wrote the business requirements document, and documented functional requirements, user journeys and the permissions matrix
+    - Designed the approval workflow
+    - Designed and normalized the relational database
+    - Built the interfaces and contributed to the back end
+    - Built and integrated the system administration module
+    - Prepared test cases and presented the system to department management
+  tools: [C#, ASP.NET Core MVC, Entity Framework Core, ASP.NET Identity, SQL Server, Azure DevOps, Git, Bootstrap]
+  result: A complete system, presented to department management.
+  availability: An internal system for a government entity; the code is not available for publication.
