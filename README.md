@@ -1,6 +1,6 @@
 # موقع صفوان الأسمر الشخصي
 
-موقع شخصي ثنائي اللغة (عربي RTL افتراضي على `/`، وإنجليزي LTR على `/en/`) مبني بـ **Astro** و**Tailwind CSS** و**TypeScript**، ثابت بالكامل ويُنشر على **GitHub Pages**.
+موقع شخصي ثنائي اللغة (عربي RTL افتراضي على `/`، وإنجليزي LTR على `/en/`) مبني بـ **Astro** و**Tailwind CSS** و**TypeScript**، ثابت بالكامل ومنشور على **GitHub Pages**: https://safwanalasmar.github.io
 
 A bilingual (Arabic RTL default, English LTR at `/en/`) static personal site built with Astro, Tailwind CSS and TypeScript, deployed to GitHub Pages.
 
@@ -16,6 +16,7 @@ npm run dev       # خادم تطوير على http://localhost:4321
 npm run build     # فحص الأنواع ثم بناء الموقع في dist/
 npm run preview   # معاينة نسخة البناء
 npm run images    # إعادة توليد صور Open Graph والأيقونات (يحتاج Chrome أو Edge)
+npm run deploy    # بناء الموقع ونشره على GitHub Pages
 ```
 
 ## هيكل المشروع
@@ -85,20 +86,29 @@ public/
 
 ## النشر على GitHub Pages
 
-1. أنشئ مستودعاً على GitHub وارفع المشروع إلى فرع `main`.
-2. من **Settings ← Pages** اختر **Source: GitHub Actions**.
-3. كل دفع إلى `main` يبني الموقع وينشره تلقائياً عبر `.github/workflows/deploy.yml` (ويمكن تشغيله يدوياً من تبويب Actions).
+الموقع منشور من مستودع `SAFWANALASMAR.github.io` على الرابط **https://safwanalasmar.github.io**.
 
-سير العمل يضبط عنوان الموقع والمسار الأساسي تلقائياً، فيعمل سواء كان المستودع باسم `<username>.github.io` أو باسم آخر (`<username>.github.io/<repo>/`) أو بنطاق خاص.
+بعد أي تعديل:
+
+```bash
+git add -A
+git commit -m "وصف التعديل"
+git push
+npm run deploy
+```
+
+`git push` يحفظ الكود في فرع `main`، و`npm run deploy` يبني الموقع ويرفع النسخة الجاهزة إلى فرع `gh-pages` الذي يعرضه GitHub Pages. يظهر التحديث خلال دقيقة أو اثنتين.
+
+> إعداد GitHub Pages في المستودع: **Settings ← Pages ← Deploy from a branch ← `gh-pages` / root**.
 
 ## ربط نطاق خاص
 
 1. أنشئ ملف `public/CNAME` يحتوي على النطاق فقط، مثل: `safwan.dev`.
 2. عند مزوّد النطاق:
    - للنطاق الرئيسي: سجلات `A` إلى `185.199.108.153` و`185.199.109.153` و`185.199.110.153` و`185.199.111.153`.
-   - لنطاق فرعي مثل `www`: سجل `CNAME` إلى `<username>.github.io`.
-3. من **Settings ← Pages** اكتب النطاق في **Custom domain** وفعّل **Enforce HTTPS**.
-4. ادفع التغيير؛ سيستخدم البناء النطاق الجديد في الروابط و`sitemap.xml` تلقائياً.
+   - لنطاق فرعي مثل `www`: سجل `CNAME` إلى `safwanalasmar.github.io`.
+3. انشر بالنطاق الجديد: `SITE_URL=https://safwan.dev npm run deploy` (أو غيّر القيمة الافتراضية في `scripts/deploy.mjs`).
+4. من **Settings ← Pages** اكتب النطاق في **Custom domain** وفعّل **Enforce HTTPS**.
 
 ## ملاحظات تقنية
 

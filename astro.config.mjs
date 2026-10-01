@@ -3,8 +3,8 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
-// SITE_URL و BASE_PATH يضبطهما سير عمل GitHub Pages تلقائياً عند النشر.
-// SITE_URL and BASE_PATH are set automatically by the GitHub Pages workflow.
+// SITE_URL و BASE_PATH يضبطهما سكربت النشر (scripts/deploy.mjs).
+// SITE_URL and BASE_PATH are set by the deploy script (scripts/deploy.mjs).
 const site = process.env.SITE_URL || 'http://localhost:4321';
 const base = process.env.BASE_PATH || '/';
 
