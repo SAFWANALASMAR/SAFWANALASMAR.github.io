@@ -1,8 +1,9 @@
 ---
+import Tag from '../components/Tag.astro';
 import type { CollectionEntry } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
-import { getSite, localePath, tagClass, toList, type Lang } from '../lib/i18n';
+import { getSite, localePath, toList, type Lang } from '../lib/i18n';
 
 interface Props {
   lang: Lang;
@@ -75,7 +76,7 @@ const sections = [
 
       <h2 class="sr-only">{L.tags}</h2>
       <ul class="mt-6 flex flex-wrap gap-1.5">
-        {p.tags.map((tag) => <li class={tagClass(tag)}>{tag}</li>)}
+        {p.tags.map((tag) => <Tag text={tag} />)}
       </ul>
     </header>
 
@@ -87,7 +88,7 @@ const sections = [
             {section.asTags ? (
               <ul class="flex flex-wrap gap-1.5">
                 {section.items.map((tool) => (
-                  <li class={`${tagClass(tool)} text-sm`}>{tool}</li>
+                  <Tag text={tool} class="text-sm" />
                 ))}
               </ul>
             ) : section.items.length === 1 ? (

@@ -1,4 +1,5 @@
 ---
+import Tag from '../components/Tag.astro';
 import Base from '../layouts/Base.astro';
 import HeroCode from '../components/HeroCode.astro';
 import Icon from '../components/Icon.astro';
@@ -138,7 +139,7 @@ const jsonLd = {
         [0, 1].map((copy) => (
           <ul class="marquee-group" aria-hidden={copy === 1 ? 'true' : undefined}>
             {stack.map((item) => (
-              <li class="tag">{item}</li>
+              <Tag text={item} />
             ))}
           </ul>
         ))

@@ -1,0 +1,16 @@
+---
+import Icon from './Icon.astro';
+import { tagClass } from '../lib/i18n';
+import { skillIcon } from '../lib/skillIcons';
+
+interface Props {
+  text: string;
+  class?: string;
+}
+const { text, class: extra = '' } = Astro.props;
+---
+
+<li class={`${tagClass(text)} tag-icon ${extra}`}>
+  <Icon name={skillIcon(text)} size={14} class="shrink-0 text-accent" />
+  <span>{text}</span>
+</li>

@@ -1,7 +1,9 @@
 ---
+import Tag from '../components/Tag.astro';
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
-import { getSettings, getSite, publicFileExists, tagClass, url, type Lang } from '../lib/i18n';
+import { skillIcon } from '../lib/skillIcons';
+import { getSettings, getSite, publicFileExists, url, type Lang } from '../lib/i18n';
 
 interface Props {
   lang: Lang;
@@ -214,10 +216,15 @@ const r = a.reviews;
       {
         a.skills.map((group) => (
           <div class="card lift reveal p-6">
-            <h3 class="font-bold text-text">{group.category}</h3>
+            <h3 class="flex items-center gap-3 font-bold text-text">
+              <span class="icon-badge size-9">
+                <Icon name={skillIcon(group.items[0] ?? group.category)} size={18} />
+              </span>
+              {group.category}
+            </h3>
             <ul class="mt-4 flex flex-wrap gap-1.5">
               {group.items.map((item) => (
-                <li class={tagClass(item)}>{item}</li>
+                <Tag text={item} />
               ))}
             </ul>
           </div>

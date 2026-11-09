@@ -1,7 +1,8 @@
 ---
+import Tag from './Tag.astro';
 import type { CollectionEntry } from 'astro:content';
 import Icon from './Icon.astro';
-import { getSite, localePath, tagClass, type Lang } from '../lib/i18n';
+import { getSite, localePath, type Lang } from '../lib/i18n';
 
 interface Props {
   project: CollectionEntry<'projects'>;
@@ -32,7 +33,7 @@ const text = p[lang];
   </Heading>
   <p class="mt-2 flex-1 text-sm text-muted">{text.summary}</p>
   <ul class="mt-5 flex flex-wrap gap-1.5">
-    {p.tags.map((tag) => <li class={tagClass(tag)}>{tag}</li>)}
+    {p.tags.map((tag) => <Tag text={tag} />)}
   </ul>
   <span class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-accent">
     {t.projects.viewCase}
