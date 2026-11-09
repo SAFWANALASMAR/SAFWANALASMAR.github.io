@@ -47,13 +47,17 @@ hero:
 stats:
   label: Key numbers
   items:
-    - value: "100+"
+    - icon: archive
+      value: "100+"
       label: institutional deliverables documented and archived
-    - value: "7"
+    - icon: document
+      value: "7"
       label: funded-project archives rebuilt
-    - value: "30,000"
+    - icon: users
+      value: "30,000"
       label: users the Ejaz portal is built to serve
-    - value: "5.0"
+    - icon: star
+      value: "5.0"
       label: student rating on Preply from 21 reviews
 
 home:
@@ -118,14 +122,16 @@ about:
   bio: "I'm Safwan, a Computer Science graduate from Yanbu Industrial College (Royal Commission for Jubail and Yanbu). I started in business analysis and application development during my co-op, turning a paper form into a web system with a tiered approval workflow and a database I designed from scratch. Today I am Public Relations & Marketing Manager and Head of Media at Al-Maqari Quranic Association in Madinah, where I also lead digital transformation, report and document automation, and archive rebuilding. As a volunteer I am developing the Ejaz Association's web portal, and I teach Arabic to non-native speakers on Preply. I combine writing code with a real understanding of what management needs, and I build Arabic, right-to-left solutions the way they should be built."
   timelineTitle: Experience
   timeline:
-    - period: Oct 2026 – Present
+    - icon: web
+      period: Oct 2026 – Present
       org: Ejaz Association for Studies and Scientific Research
       role: Executive Advisor, Corporate Communications & Digital Transformation (volunteer)
       points:
         - Designing and developing the association's web portal, ejaz.sa, to replace a WordPress site and serve around 30,000 users
         - Admin panel with tiered permissions, encryption of sensitive data, an internal security review, and code managed on a protected main branch
         - Set up the association's digital presence with one identity across seven platforms, and run its office
-    - period: May 2026 – Present
+    - icon: nonprofit
+      period: May 2026 – Present
       org: Al-Maqari Quranic Association, Madinah
       role: Public Relations & Marketing Manager and Head of Media (since Sep 2026); previously Public Relations & Marketing Officer
       points:
@@ -135,7 +141,8 @@ about:
         - Automated the archive and institutional reporting, and built official document templates
         - Build partnerships and institutional communication, and draft official letters
         - Keep the association's data current on regulatory and donor platforms
-    - period: Oct 2025 – Present
+    - icon: teach
+      period: Oct 2025 – Present
       org: Preply
       role: Arabic, Quran and Tajweed teacher for non-native speakers (remote, part-time)
       points:
@@ -144,10 +151,12 @@ about:
         - Lessons tailored to each level using Al-Arabiyyah Bayna Yadayk, Noor Al-Bayan and Al-Qaidah An-Noraniah
       link: https://preply.com/en/tutor/7053708
       linkLabel: My Preply profile
-    - period: Mar – May 2026
+    - icon: briefcase
+      period: Mar – May 2026
       org: Ghassan Trading Company
       role: Sales & Marketing Representative
-    - period: Jan – Jul 2025
+    - icon: analysis
+      period: Jan – Jul 2025
       org: Royal Commission for Jubail and Yanbu — General Administration of IT
       role: "Co-op trainee: business analysis and application development, technical support and infrastructure"
   educationTitle: Education & Certificates
@@ -169,6 +178,7 @@ about:
     - title: Distance Learning Certificate
       org: Holy Quran Academy at the Prophet's Mosque
       date: 1439 AH
+  showMore: Show details
   certificateView: View certificate
   certificateClose: Close
   reviews:

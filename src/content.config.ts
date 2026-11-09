@@ -96,7 +96,13 @@ const site = defineCollection({
     }),
     stats: z.object({
       label: z.string(),
-      items: z.array(z.object({ value: z.string(), label: z.string() })),
+      items: z.array(
+        z.object({
+          value: z.string(),
+          label: z.string(),
+          icon: z.enum(['archive', 'document', 'users', 'star', 'web', 'shield']).optional(),
+        }),
+      ),
     }),
     home: z.object({
       servicesTitle: z.string(),
@@ -152,6 +158,7 @@ const site = defineCollection({
           period: z.string(),
           org: z.string(),
           role: z.string(),
+          icon: z.enum(['briefcase', 'web', 'teach', 'analysis', 'nonprofit']).optional(),
           points: z.array(z.string()).optional(),
           link: z.url().optional(),
           linkLabel: z.string().optional(),
@@ -166,6 +173,7 @@ const site = defineCollection({
           image: z.string().optional(),
         }),
       ),
+      showMore: z.string(),
       certificateView: z.string(),
       certificateClose: z.string(),
       reviews: z.object({

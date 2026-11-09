@@ -123,6 +123,36 @@ const ogImage = abs(url(`og/${lang}.png`));
         items.forEach((el) => io.observe(el));
       }
 
+      // Count numbers up from zero the first time they scroll into view.
+      const counters = document.querySelectorAll<HTMLElement>('[data-count]');
+      const countUp = (el: HTMLElement) => {
+        const raw = el.dataset.count ?? '';
+        const match = raw.match(/^([\d,]+(?:\.\d+)?)(.*)$/);
+        if (!match) return;
+        const target = parseFloat(match[1].replace(/,/g, ''));
+        const decimals = (match[1].split('.')[1] ?? '').length;
+        const start = performance.now();
+        const step = (now: number) => {
+          const p = Math.min((now - start) / 1200, 1);
+          const v = target * (1 - Math.pow(1 - p, 3));
+          el.textContent =
+            v.toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals }) + match[2];
+          if (p < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      };
+      if (!reduce && 'IntersectionObserver' in window) {
+        const co = new IntersectionObserver((entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              countUp(entry.target as HTMLElement);
+              co.unobserve(entry.target);
+            }
+          }
+        });
+        counters.forEach((el) => co.observe(el));
+      }
+
       // Rebuild email links that are kept split in the HTML to stay out of address harvesters.
       document.querySelectorAll<HTMLElement>('[data-u][data-d]').forEach((el) => {
         const address = `${el.dataset.u}@${el.dataset.d}`;

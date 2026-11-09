@@ -287,3 +287,118 @@
 .lightbox::backdrop {
   background: rgb(5 20 25 / 0.75);
 }
+
+/* Rotating turquoise-to-gold ring around the profile photo. */
+@property --ring-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+.photo-ring {
+  display: inline-block;
+  padding: 4px;
+  border-radius: 999px;
+  background: conic-gradient(from var(--ring-angle), var(--accent), var(--gold), var(--accent-soft), var(--accent));
+  animation: ring-spin 8s linear infinite;
+}
+.photo-ring img {
+  display: block;
+  border: 4px solid var(--bg);
+  border-radius: 999px;
+}
+@keyframes ring-spin {
+  to {
+    --ring-angle: 360deg;
+  }
+}
+
+/* Gold underline that draws itself under the hero name. */
+.name-underline {
+  background-image: linear-gradient(90deg, var(--gold), var(--accent));
+  background-repeat: no-repeat;
+  background-size: 0% 4px;
+  background-position: 100% 100%;
+  padding-bottom: 0.15em;
+  animation: underline-draw 1.1s 0.3s ease-out forwards;
+}
+html[dir='ltr'] .name-underline {
+  background-position: 0% 100%;
+}
+@keyframes underline-draw {
+  to {
+    background-size: 100% 4px;
+  }
+}
+
+/* Gentle float for the hero code card. */
+.float-soft {
+  animation: float-soft 7s ease-in-out infinite;
+}
+@keyframes float-soft {
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* Staggered reveal for lists. */
+.stagger > .reveal:nth-child(2) { transition-delay: 0.08s; }
+.stagger > .reveal:nth-child(3) { transition-delay: 0.16s; }
+.stagger > .reveal:nth-child(4) { transition-delay: 0.24s; }
+.stagger > .reveal:nth-child(5) { transition-delay: 0.32s; }
+.stagger > .reveal:nth-child(6) { transition-delay: 0.4s; }
+
+/* Icon badge used in stats, timeline and certificates. */
+.icon-badge {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, var(--accent-soft), var(--gold-soft));
+  color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--gold) 35%, transparent);
+  transition: transform 0.25s ease;
+}
+.card-hover:hover .icon-badge,
+.lift:hover .icon-badge {
+  transform: rotate(-6deg) scale(1.06);
+}
+.lift {
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+.lift:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  border-color: color-mix(in srgb, var(--gold) 45%, var(--border));
+}
+
+/* Expandable details in the experience timeline. */
+.more summary {
+  cursor: pointer;
+  list-style: none;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+.more summary::-webkit-details-marker {
+  display: none;
+}
+.more summary::after {
+  content: ' +';
+}
+.more[open] summary::after {
+  content: ' −';
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo-ring,
+  .float-soft {
+    animation: none !important;
+  }
+  .name-underline {
+    animation: none !important;
+    background-size: 100% 4px;
+  }
+}
