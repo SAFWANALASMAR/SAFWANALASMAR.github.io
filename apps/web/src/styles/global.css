@@ -1303,3 +1303,73 @@ body {
     background: linear-gradient(90deg, transparent, var(--gold), var(--accent), transparent);
   }
 }
+
+/* ───── Moving card strips (services, featured projects, process) ───── */
+@layer components {
+  .card-marquee {
+    direction: ltr;
+    overflow: hidden;
+    margin-top: 2.5rem;
+    padding-block: 0.75rem 1.25rem;
+    mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  }
+  .cm-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 70s linear infinite;
+  }
+  .card-marquee.is-slow .cm-track {
+    animation-duration: 90s;
+  }
+  .card-marquee.is-reverse .cm-track {
+    animation-direction: reverse;
+  }
+  .card-marquee:hover .cm-track,
+  .card-marquee:focus-within .cm-track {
+    animation-play-state: paused;
+  }
+  .cm-group {
+    display: flex;
+    align-items: stretch;
+    gap: 1.25rem;
+    padding-right: 1.25rem;
+  }
+  .cm-item {
+    flex-shrink: 0;
+  }
+  .cm-service {
+    width: 19rem;
+  }
+  .cm-project {
+    width: 22rem;
+  }
+  .cm-project > .card {
+    height: 100%;
+  }
+  .cm-step {
+    width: 17rem;
+  }
+  .cm-step .step-num {
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 0.85rem;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+  }
+  .card-marquee .step-card::after {
+    display: none;
+  }
+  /* Inside moving strips cards are already in motion: no reveal fade, no tilt. */
+  .card-marquee .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cm-track {
+    animation: marquee 140s linear infinite !important;
+  }
+  .card-marquee.is-reverse .cm-track {
+    animation-direction: reverse !important;
+  }
+}

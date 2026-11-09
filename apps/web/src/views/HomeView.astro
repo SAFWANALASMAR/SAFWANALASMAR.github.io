@@ -5,6 +5,7 @@ import HeroCode from '../components/HeroCode.astro';
 import Icon from '../components/Icon.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import SectionHeading from '../components/SectionHeading.astro';
+import CardMarquee from '../components/CardMarquee.astro';
 import {
   getProjects,
   getServices,
@@ -25,6 +26,7 @@ const { lang } = Astro.props;
 const t = await getSite(lang);
 const s = await getSettings();
 const services = await getServices();
+const dir = lang === 'ar' ? 'rtl' : 'ltr';
 const featured = (await getProjects()).filter((p) => p.data.featured).slice(0, 3);
 const en = await getSite('en');
 const stack = [...new Set(t.about.skills.slice(0, 4).flatMap((g) => g.items))].filter(
@@ -174,30 +176,27 @@ const jsonLd = {
         <Icon name="arrow" size={16} class="rtl:-scale-x-100" />
       </a>
     </div>
-    <ul class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-      {
-        services.map((service) => {
-          const st = service.data[lang];
-          return (
-            <li class="card card-hover reveal relative p-6" data-tilt>
-              <span class="icon-badge draw size-11">
-                <Icon name={service.data.icon} size={22} />
-              </span>
-              <h3 class="mt-4 text-lg leading-snug font-bold text-text">
-                <a
-                  href={localePath(lang, `/services/#${service.id}`)}
-                  class="after:absolute after:inset-0"
-                >
-                  {st.title}
-                </a>
-              </h3>
-              <p class="mt-2 text-sm text-muted">{st.summary}</p>
-            </li>
-          );
-        })
-      }
-    </ul>
   </section>
+  <CardMarquee label={t.home.servicesTitle} dir={dir}>
+    {
+      services.map((service) => {
+        const st = service.data[lang];
+        return (
+          <li class="cm-item cm-service card card-hover relative p-6">
+            <span class="icon-badge draw size-11">
+              <Icon name={service.data.icon} size={22} />
+            </span>
+            <h3 class="mt-4 text-lg leading-snug font-bold text-text">
+              <a href={localePath(lang, `/services/#${service.id}`)} class="after:absolute after:inset-0">
+                {st.title}
+              </a>
+            </h3>
+            <p class="mt-2 text-sm text-muted">{st.summary}</p>
+          </li>
+        );
+      })
+    }
+  </CardMarquee>
 
   <!-- Featured projects -->
   <section class="container-x pt-20 sm:pt-24" aria-labelledby="home-projects">
@@ -211,32 +210,34 @@ const jsonLd = {
         <Icon name="arrow" size={16} class="rtl:-scale-x-100" />
       </a>
     </div>
-    <ul class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-      {
-        featured.map((project) => (
-          <li>
-            <ProjectCard project={project} lang={lang} />
-          </li>
-        ))
-      }
-    </ul>
   </section>
+  <CardMarquee label={t.home.projectsTitle} dir={dir} reverse speed="slow" repeat={3}>
+    {
+      featured.map((project) => (
+        <li class="cm-item cm-project">
+          <ProjectCard project={project} lang={lang} />
+        </li>
+      ))
+    }
+  </CardMarquee>
 
   <!-- How I work -->
   <section class="container-x pt-20 sm:pt-24" aria-labelledby="home-process">
     <SectionHeading id="home-process" icon="flow" title={t.home.processTitle} />
-    <ol class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-      {
-        t.home.process.map((step, i) => (
-          <li class="card card-hover step-card reveal p-6">
-            <span class="step-num" dir="ltr">{String(i + 1).padStart(2, '0')}</span>
-            <h3 class="mt-4 text-lg font-bold text-text">{step.title}</h3>
-            <p class="mt-1.5 text-sm text-muted">{step.text}</p>
-          </li>
-        ))
-      }
-    </ol>
   </section>
+  <CardMarquee label={t.home.processTitle} dir={dir} repeat={3}>
+    {
+      t.home.process.map((step, i) => (
+        <li class="cm-item cm-step card card-hover step-card flex items-start gap-3.5 p-4">
+          <span class="step-num" dir="ltr">{String(i + 1).padStart(2, '0')}</span>
+          <div class="min-w-0">
+            <h3 class="font-bold text-text">{step.title}</h3>
+            <p class="mt-1 text-sm text-muted">{step.text}</p>
+          </div>
+        </li>
+      ))
+    }
+  </CardMarquee>
 
   <!-- Closing CTA -->
   <section class="container-x pt-20 sm:pt-24">

@@ -1,0 +1,20 @@
+---
+// A strip of cards that scrolls forever. The slot is rendered once and repeated:
+// the first copy is the real, accessible list; the repeats are hidden from assistive tech and inert.
+interface Props {
+  label: string;
+  dir: 'rtl' | 'ltr';
+  reverse?: boolean;
+  speed?: 'slow' | 'normal';
+  repeat?: number;
+}
+const { label, dir, reverse = false, speed = 'normal', repeat = 2 } = Astro.props;
+const html = await Astro.slots.render('default');
+const copies = Array.from({ length: repeat * 2 }, (_, i) => i);
+---
+
+<div class:list={['card-marquee', { 'is-reverse': reverse, 'is-slow': speed === 'slow' }]} role="region" aria-label={label}>
+  <div class="cm-track">
+    {copies.map((i) => <ul class="cm-group" dir={dir} aria-hidden={i > 0 ? 'true' : undefined} inert={i > 0} set:html={html} />)}
+  </div>
+</div>
