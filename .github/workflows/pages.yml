@@ -1,0 +1,43 @@
+# زر «نشر الموقع»: من تبويب Actions ← نشر الموقع ← Run workflow.
+# Manual publish to GitHub Pages: builds the site from main and pushes it to the gh-pages branch.
+# Runs only when the owner presses the button — never automatically.
+name: نشر الموقع
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - name: Build
+        run: npm run build
+        env:
+          SITE_URL: https://safwanalasmar.github.io
+      - name: Push to gh-pages
+        working-directory: apps/web/dist
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          touch .nojekyll
+          git init -q -b gh-pages
+          git config core.autocrlf false
+          git add -A
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "Deploy ${GITHUB_SHA::7}"
+          git push -f "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" gh-pages
