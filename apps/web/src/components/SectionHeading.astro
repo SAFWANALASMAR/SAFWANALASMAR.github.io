@@ -1,14 +1,18 @@
 ---
+import SectionTitle from './SectionTitle.astro';
+import type { IconName } from './Icon.astro';
+
 interface Props {
   title: string;
   intro?: string;
   id?: string;
   as?: 'h1' | 'h2';
+  icon?: IconName;
 }
-const { title, intro, id, as: Heading = 'h2' } = Astro.props;
+const { title, intro, id, as = 'h2', icon } = Astro.props;
 ---
 
 <div class="reveal max-w-2xl">
-  <Heading id={id} class="gold-rule text-2xl font-bold text-text sm:text-3xl">{title}</Heading>
-  {intro && <p class="mt-3 text-muted">{intro}</p>}
+  <SectionTitle title={title} id={id} as={as} icon={icon} />
+  {intro && <p class="mt-4 text-lg text-muted">{intro}</p>}
 </div>

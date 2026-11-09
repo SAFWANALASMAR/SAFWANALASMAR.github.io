@@ -1,0 +1,26 @@
+---
+import Icon, { type IconName } from './Icon.astro';
+
+interface Props {
+  title: string;
+  id?: string;
+  as?: 'h1' | 'h2';
+  icon?: IconName;
+  size?: 'lg' | 'md';
+}
+const { title, id, as: Heading = 'h2', icon, size = 'lg' } = Astro.props;
+---
+
+<div class={`title-wrap title-${size}`}>
+  <div class="flex items-center gap-3.5">
+    {
+      icon && (
+        <span class="icon-badge section-icon">
+          <Icon name={icon} size={size === 'lg' ? 24 : 20} />
+        </span>
+      )
+    }
+    <Heading id={id} class="section-title">{title}</Heading>
+  </div>
+  <span class="title-rule" aria-hidden="true"></span>
+</div>

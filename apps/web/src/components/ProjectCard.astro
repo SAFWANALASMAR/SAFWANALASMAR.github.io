@@ -14,28 +14,43 @@ const { project, lang, headingLevel: Heading = 'h3' } = Astro.props;
 const t = await getSite(lang);
 const p = project.data;
 const text = p[lang];
+const typeIcon = {
+  'web-system': 'web',
+  automation: 'flow',
+  'web-app': 'layout',
+  'digital-transformation': 'nonprofit',
+  'business-analysis': 'analysis',
+} as const;
 ---
 
-<article class="card card-hover reveal relative flex h-full flex-col p-6" data-tilt>
-  <div class="mb-4 flex flex-wrap items-center gap-2 text-xs font-medium text-muted">
-    <span class="rounded-md bg-surface-2 px-2 py-1">{t.projects.types[p.type]}</span>
-    <span class="rounded-md bg-surface-2 px-2 py-1" dir="ltr">{p.year}</span>
-    {
-      p.status === 'in-progress' && (
-        <span class="rounded-md bg-accent-soft px-2 py-1 text-accent">{t.projects.inProgress}</span>
-      )
-    }
+<article class="card card-hover project-card reveal relative flex h-full flex-col p-6" data-tilt>
+  <div class="mb-5 flex items-center justify-between gap-3">
+    <span class="icon-badge size-11 rounded-xl">
+      <Icon name={typeIcon[p.type]} size={22} />
+    </span>
+    <div class="flex flex-wrap items-center justify-end gap-1.5 text-xs font-semibold">
+      {
+        p.status === 'in-progress' && (
+          <span class="chip chip-live">
+            <span class="pulse-dot" aria-hidden="true" />
+            {t.projects.inProgress}
+          </span>
+        )
+      }
+      <span class="chip">{t.projects.types[p.type]}</span>
+      <span class="chip font-mono" dir="ltr">{p.year}</span>
+    </div>
   </div>
-  <Heading class="text-lg leading-snug font-bold text-text">
+  <Heading class="text-xl leading-snug font-bold text-text">
     <a href={localePath(lang, `/projects/${project.id}/`)} class="after:absolute after:inset-0">
       {text.title}
     </a>
   </Heading>
-  <p class="mt-2 flex-1 text-sm text-muted">{text.summary}</p>
+  <p class="mt-2.5 flex-1 text-sm leading-relaxed text-muted">{text.summary}</p>
   <ul class="mt-5 flex flex-wrap gap-1.5">
     {p.tags.map((tag) => <Tag text={tag} />)}
   </ul>
-  <span class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-accent">
+  <span class="case-link mt-6">
     {t.projects.viewCase}
     <Icon name="arrow" size={16} class="rtl:-scale-x-100" />
   </span>

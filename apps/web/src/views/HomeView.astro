@@ -165,7 +165,7 @@ const jsonLd = {
   <!-- Services -->
   <section class="container-x pt-20 sm:pt-24" aria-labelledby="home-services">
     <div class="flex flex-wrap items-end justify-between gap-4">
-      <SectionHeading id="home-services" title={t.home.servicesTitle} intro={t.home.servicesIntro} />
+      <SectionHeading id="home-services" icon="briefcase" title={t.home.servicesTitle} intro={t.home.servicesIntro} />
       <a
         href={localePath(lang, '/services/')}
         class="inline-flex items-center gap-1.5 font-semibold text-accent hover:underline"
@@ -202,7 +202,7 @@ const jsonLd = {
   <!-- Featured projects -->
   <section class="container-x pt-20 sm:pt-24" aria-labelledby="home-projects">
     <div class="flex flex-wrap items-end justify-between gap-4">
-      <SectionHeading id="home-projects" title={t.home.projectsTitle} intro={t.home.projectsIntro} />
+      <SectionHeading id="home-projects" icon="folder" title={t.home.projectsTitle} intro={t.home.projectsIntro} />
       <a
         href={localePath(lang, '/projects/')}
         class="inline-flex items-center gap-1.5 font-semibold text-accent hover:underline"
@@ -224,15 +224,13 @@ const jsonLd = {
 
   <!-- How I work -->
   <section class="container-x pt-20 sm:pt-24" aria-labelledby="home-process">
-    <SectionHeading id="home-process" title={t.home.processTitle} />
+    <SectionHeading id="home-process" icon="flow" title={t.home.processTitle} />
     <ol class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
       {
         t.home.process.map((step, i) => (
-          <li class="card reveal p-6">
-            <span class="font-mono text-sm font-medium text-accent" dir="ltr">
-              {String(i + 1).padStart(2, '0')}
-            </span>
-            <h3 class="mt-2 text-lg font-bold text-text">{step.title}</h3>
+          <li class="card card-hover step-card reveal p-6">
+            <span class="step-num" dir="ltr">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="mt-4 text-lg font-bold text-text">{step.title}</h3>
             <p class="mt-1.5 text-sm text-muted">{step.text}</p>
           </li>
         ))
@@ -243,13 +241,13 @@ const jsonLd = {
   <!-- Closing CTA -->
   <section class="container-x pt-20 sm:pt-24">
     <div
-      class="reveal relative overflow-hidden rounded-2xl bg-accent px-6 py-12 text-center text-on-accent sm:px-12"
+      class="cta-banner reveal relative overflow-hidden rounded-3xl px-6 py-14 text-center text-white sm:px-12"
     >
-      <p class="mx-auto max-w-2xl text-xl font-bold sm:text-2xl">{t.home.cta}</p>
-      <a
-        href={localePath(lang, '/contact/')}
-        class="btn mt-6 bg-on-accent text-accent hover:opacity-90"
-      >
+      <span class="cta-orb cta-orb-a" aria-hidden="true"></span>
+      <span class="cta-orb cta-orb-b" aria-hidden="true"></span>
+      <span class="cta-icon mx-auto mb-5" aria-hidden="true"><Icon name="send" size={26} /></span>
+      <p class="relative mx-auto max-w-2xl text-2xl leading-relaxed font-bold sm:text-3xl">{t.home.cta}</p>
+      <a href={localePath(lang, '/contact/')} class="btn cta-btn relative mt-7">
         {t.home.ctaButton}
         <Icon name="arrow" size={18} class="rtl:-scale-x-100" />
       </a>

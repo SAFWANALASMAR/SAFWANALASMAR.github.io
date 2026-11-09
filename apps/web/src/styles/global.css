@@ -1074,3 +1074,232 @@ body {
     var(--shadow-lg),
     inset 0 2px 0 color-mix(in srgb, var(--gold) 75%, transparent);
 }
+
+/* ───── Section titles, project cards and process steps ───── */
+@layer components {
+  .section-title {
+    font-weight: 800;
+    line-height: 1.25;
+    color: transparent;
+    background: linear-gradient(100deg, var(--text) 35%, var(--accent) 80%, var(--gold-text));
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  .title-lg .section-title {
+    font-size: clamp(1.9rem, 1.3rem + 2.2vw, 2.75rem);
+  }
+  h1.section-title {
+    font-size: clamp(2.2rem, 1.4rem + 3vw, 3.25rem);
+  }
+  .title-md .section-title {
+    font-size: clamp(1.5rem, 1.2rem + 1vw, 1.9rem);
+  }
+  .section-icon {
+    width: 3.1rem;
+    height: 3.1rem;
+    border-radius: 1rem;
+    rotate: -6deg;
+  }
+  .title-md .section-icon {
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 0.85rem;
+  }
+  /* Gradient rule with a light that travels along it. */
+  .title-rule {
+    position: relative;
+    display: block;
+    width: 6rem;
+    height: 4px;
+    margin-top: 0.9rem;
+    border-radius: 999px;
+    overflow: hidden;
+    background: linear-gradient(90deg, var(--gold), var(--accent));
+  }
+  [dir='rtl'] .title-rule {
+    background: linear-gradient(270deg, var(--gold), var(--accent));
+  }
+  .title-rule::after {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    width: 40%;
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.85), transparent);
+    animation: rule-shine 3.2s ease-in-out infinite;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
+    background: color-mix(in srgb, var(--surface-2) 70%, transparent);
+    color: var(--muted);
+  }
+  .chip-live {
+    border-color: color-mix(in srgb, var(--gold) 50%, transparent);
+    background: var(--gold-soft);
+    color: var(--gold-text);
+  }
+
+  /* Soft turquoise-gold glow in the card corner. */
+  .project-card {
+    overflow: hidden;
+  }
+  .project-card::before {
+    content: '';
+    position: absolute;
+    inset-block-start: -5rem;
+    inset-inline-end: -5rem;
+    width: 12rem;
+    height: 12rem;
+    border-radius: 999px;
+    background: radial-gradient(circle, color-mix(in srgb, var(--accent) 22%, transparent), color-mix(in srgb, var(--gold) 12%, transparent) 50%, transparent 70%);
+    pointer-events: none;
+    transition: scale 0.5s ease;
+  }
+  .project-card:hover::before {
+    scale: 1.5;
+  }
+  .case-link {
+    display: inline-flex;
+    align-self: flex-start;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.45rem 0.95rem;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent-soft) 75%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+    transition: background-color 0.25s, color 0.25s, gap 0.25s;
+  }
+  .project-card:hover .case-link {
+    gap: 0.75rem;
+    color: var(--on-accent);
+    background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  }
+
+  /* Process: big numbered medallions joined by a dashed line. */
+  .step-card {
+    position: relative;
+    overflow: visible;
+  }
+  .step-num {
+    display: grid;
+    place-items: center;
+    width: 3.4rem;
+    height: 3.4rem;
+    border-radius: 1.1rem;
+    font-family: var(--font-mono);
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, var(--accent), var(--accent-hover) 60%, color-mix(in srgb, var(--gold) 70%, var(--accent-hover)));
+    box-shadow: 0 12px 24px -12px color-mix(in srgb, var(--accent) 90%, transparent);
+    rotate: -6deg;
+    transition: rotate 0.3s ease;
+  }
+  .step-card:hover .step-num {
+    rotate: 0deg;
+  }
+  @media (min-width: 64rem) {
+    .step-card:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 3.2rem;
+      inset-inline-end: -1.25rem;
+      width: 1.25rem;
+      border-top: 2px dashed color-mix(in srgb, var(--gold) 70%, transparent);
+    }
+  }
+}
+
+@keyframes rule-shine {
+  from {
+    translate: -120% 0;
+  }
+  to {
+    translate: 320% 0;
+  }
+}
+
+/* ───── Closing call to action and footer ───── */
+@layer components {
+  .cta-banner {
+    isolation: isolate;
+    background:
+      radial-gradient(40rem 20rem at 85% -10%, color-mix(in srgb, var(--gold) 35%, transparent), transparent 60%),
+      linear-gradient(135deg, #0b7285, #095c6b 55%, #06414c);
+    box-shadow: 0 30px 60px -30px rgb(6 65 76 / 0.7);
+  }
+  .cta-banner::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      linear-gradient(rgb(255 255 255 / 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(255 255 255 / 0.06) 1px, transparent 1px);
+    background-size: 28px 28px;
+    mask-image: radial-gradient(ellipse at center, #000 20%, transparent 75%);
+  }
+  .cta-orb {
+    position: absolute;
+    z-index: -1;
+    border-radius: 999px;
+    filter: blur(2px);
+  }
+  .cta-orb-a {
+    width: 14rem;
+    height: 14rem;
+    inset-block-end: -6rem;
+    inset-inline-start: -4rem;
+    border: 2px solid rgb(227 195 90 / 0.35);
+    animation: float-soft 7s ease-in-out infinite;
+  }
+  .cta-orb-b {
+    width: 9rem;
+    height: 9rem;
+    inset-block-start: -3rem;
+    inset-inline-end: 8%;
+    background: radial-gradient(circle, rgb(255 255 255 / 0.18), transparent 70%);
+    animation: float-soft 9s ease-in-out -3s infinite;
+  }
+  .cta-icon {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 1.1rem;
+    color: #06414c;
+    background: linear-gradient(135deg, #f3dc8c, #c9a227);
+    box-shadow: 0 12px 26px -10px rgb(201 162 39 / 0.8);
+    rotate: -8deg;
+  }
+  .cta-btn {
+    color: #06414c;
+    background: #fff;
+    box-shadow: 0 10px 24px -10px rgb(0 0 0 / 0.45);
+  }
+  .cta-btn:hover {
+    background: #fdf6dc;
+    transform: translateY(-2px);
+  }
+  .site-footer {
+    position: relative;
+    background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--accent-soft) 55%, transparent));
+  }
+  .site-footer::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), var(--accent), transparent);
+  }
+}

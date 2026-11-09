@@ -2,6 +2,7 @@
 import Tag from '../components/Tag.astro';
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
+import SectionTitle from '../components/SectionTitle.astro';
 import { skillIcon } from '../lib/skillIcons';
 import { getSettings, getSite, publicFileExists, url, type Lang } from '../lib/i18n';
 
@@ -60,7 +61,7 @@ const r = a.reviews;
   <div class="container-x mt-16 grid gap-16 lg:grid-cols-2">
     <!-- Timeline -->
     <section aria-labelledby="timeline">
-      <h2 id="timeline" class="gold-rule text-2xl font-bold text-text">{a.timelineTitle}</h2>
+      <SectionTitle id="timeline" icon="briefcase" size="md" title={a.timelineTitle} />
       <ol class="stagger mt-8 space-y-8 border-s-2 border-line ps-8">
         {
           a.timeline.map((item) => (
@@ -114,7 +115,7 @@ const r = a.reviews;
     <div class="space-y-16">
       <!-- Education -->
       <section aria-labelledby="education">
-        <h2 id="education" class="gold-rule text-2xl font-bold text-text">{a.educationTitle}</h2>
+        <SectionTitle id="education" icon="cap" size="md" title={a.educationTitle} />
         <ul class="stagger mt-8 grid gap-3 sm:grid-cols-2">
           {
             a.education.map((item, i) => (
@@ -146,7 +147,7 @@ const r = a.reviews;
 
       <!-- Volunteering -->
       <section aria-labelledby="volunteer">
-        <h2 id="volunteer" class="gold-rule text-2xl font-bold text-text">{a.volunteerTitle}</h2>
+        <SectionTitle id="volunteer" icon="heart" size="md" title={a.volunteerTitle} />
         <p class="reveal mt-4 text-muted">{a.volunteer}</p>
       </section>
     </div>
@@ -157,7 +158,7 @@ const r = a.reviews;
     <div class="card overflow-hidden">
       <div class="grid gap-8 p-6 sm:p-8 lg:grid-cols-[1fr_1.6fr]">
         <div>
-          <h2 id="reviews" class="gold-rule text-2xl font-bold text-text">{r.title}</h2>
+          <SectionTitle id="reviews" icon="star" size="md" title={r.title} />
           <p class="mt-4 text-muted">{r.intro}</p>
           <dl class="mt-6 grid grid-cols-2 gap-4">
             {
@@ -211,7 +212,7 @@ const r = a.reviews;
 
   <!-- Skills -->
   <section class="container-x mt-16" aria-labelledby="skills">
-    <h2 id="skills" class="gold-rule text-2xl font-bold text-text">{a.skillsTitle}</h2>
+    <SectionTitle id="skills" icon="code" size="md" title={a.skillsTitle} />
     <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {
         a.skills.map((group) => (
