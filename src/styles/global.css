@@ -675,3 +675,53 @@ body {
     animation: none !important;
   }
 }
+
+/* Gradient glass instead of flat white: cards, bands and small panels. */
+:root,
+.dark {
+  --card-bg: linear-gradient(
+    155deg,
+    color-mix(in srgb, var(--surface) 84%, transparent),
+    color-mix(in srgb, var(--accent-soft) 62%, transparent) 62%,
+    color-mix(in srgb, var(--gold-soft) 55%, transparent)
+  );
+}
+.card {
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+}
+.card-hover:hover {
+  background:
+    var(--card-bg) padding-box,
+    conic-gradient(from var(--border-angle), var(--accent), var(--gold), var(--accent-soft), var(--accent))
+      border-box;
+}
+.glass-soft {
+  background: linear-gradient(
+    150deg,
+    color-mix(in srgb, var(--surface) 70%, transparent),
+    color-mix(in srgb, var(--accent-soft) 55%, transparent)
+  );
+}
+.band-glass {
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--accent-soft) 75%, transparent),
+    color-mix(in srgb, var(--surface) 55%, transparent),
+    color-mix(in srgb, var(--gold-soft) 75%, transparent),
+    color-mix(in srgb, var(--accent-soft) 75%, transparent)
+  );
+  background-size: 300% 100%;
+  backdrop-filter: blur(8px);
+  animation: band-shift 20s ease-in-out infinite alternate;
+}
+@keyframes band-shift {
+  to {
+    background-position: 100% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .band-glass {
+    animation: none !important;
+  }
+}

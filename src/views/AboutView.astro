@@ -162,7 +162,7 @@ const r = a.reviews;
           <dl class="mt-6 grid grid-cols-2 gap-4">
             {
               r.stats.map((st) => (
-                <div class="flex flex-col-reverse rounded-xl bg-surface-2 p-4">
+                <div class="glass-soft flex flex-col-reverse rounded-xl p-4">
                   <dt class="text-sm text-muted">{st.label}</dt>
                   <dd class="text-2xl font-bold text-accent">
                     <bdi dir="ltr">{st.value}</bdi>
@@ -184,7 +184,7 @@ const r = a.reviews;
         <ul class="stagger grid gap-4 sm:grid-cols-2">
           {
             r.items.map((rev) => (
-              <li class="lift reveal rounded-xl border border-line bg-bg p-5">
+              <li class="lift reveal glass-soft rounded-xl border border-line p-5">
                 <div class="flex items-center justify-between">
                   <p class="tracking-widest text-gold" aria-hidden="true">★★★★★</p>
                   <Icon name="quote" size={22} class="text-accent/40" />
@@ -198,7 +198,7 @@ const r = a.reviews;
           }
         </ul>
       </div>
-      <p class="border-t border-line bg-surface-2 px-6 py-3 text-xs text-muted sm:px-8">{r.note}</p>
+      <p class="band-glass border-t border-line px-6 py-3 text-xs text-muted sm:px-8">{r.note}</p>
     </div>
   </section>
 
