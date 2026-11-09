@@ -93,6 +93,9 @@ const site = defineCollection({
       ctaPrimary: z.string(),
       ctaSecondary: z.string(),
       codeLabel: z.string(),
+      rotatingLead: z.string(),
+      rotating: z.array(z.string()),
+      stackLabel: z.string(),
     }),
     stats: z.object({
       label: z.string(),

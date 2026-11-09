@@ -123,6 +123,42 @@ const ogImage = abs(url(`og/${lang}.png`));
         items.forEach((el) => io.observe(el));
       }
 
+      // Cycle the hero role words.
+      const rotator = document.querySelector<HTMLElement>('[data-rotate]');
+      if (rotator && !reduce) {
+        const words: string[] = JSON.parse(rotator.dataset.rotate ?? '[]');
+        let i = 0;
+        setInterval(() => {
+          rotator.classList.add('is-out');
+          setTimeout(() => {
+            i = (i + 1) % words.length;
+            rotator.textContent = words[i];
+            rotator.classList.remove('is-out');
+          }, 350);
+        }, 2600);
+      }
+
+      // Pointer spotlight and gentle tilt on cards (mouse and pen only).
+      if (!reduce && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+        document.querySelectorAll<HTMLElement>('.card-hover').forEach((card) => {
+          card.addEventListener('pointermove', (e) => {
+            const r = card.getBoundingClientRect();
+            const x = (e.clientX - r.left) / r.width;
+            const y = (e.clientY - r.top) / r.height;
+            card.style.setProperty('--mx', `${x * 100}%`);
+            card.style.setProperty('--my', `${y * 100}%`);
+            if (card.hasAttribute('data-tilt')) {
+              card.style.setProperty('--ry', `${(x - 0.5) * 6}deg`);
+              card.style.setProperty('--rx', `${(0.5 - y) * 6}deg`);
+            }
+          });
+          card.addEventListener('pointerleave', () => {
+            card.style.setProperty('--rx', '0deg');
+            card.style.setProperty('--ry', '0deg');
+          });
+        });
+      }
+
       // Count numbers up from zero the first time they scroll into view.
       const counters = document.querySelectorAll<HTMLElement>('[data-count]');
       const countUp = (el: HTMLElement) => {
