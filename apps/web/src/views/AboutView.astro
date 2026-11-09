@@ -153,6 +153,58 @@ const r = a.reviews;
     </div>
   </div>
 
+  <!-- Marketing and sales -->
+  <section class="container-x mt-20" aria-labelledby="marketing">
+    <div class="reveal max-w-2xl">
+      <SectionTitle id="marketing" icon="chart" size="md" title={a.marketing.title} />
+      <p class="mt-4 text-muted">{a.marketing.intro}</p>
+    </div>
+    <div class="stagger mt-8 grid gap-5 md:grid-cols-3">
+      {
+        a.marketing.projects.map((pr) => (
+          <article class="card card-hover project-card reveal relative flex flex-col p-6">
+            <div class="flex items-center justify-between gap-3">
+              <span class="icon-badge size-11 rounded-xl">
+                <Icon name={pr.icon} size={22} />
+              </span>
+              <span class="chip text-xs font-semibold">{pr.period}</span>
+            </div>
+            <h3 class="mt-5 text-lg leading-snug font-bold text-text">{pr.name}</h3>
+            <p class="mt-1.5 text-sm text-muted">{pr.role}</p>
+            <ul class="mt-4 space-y-1.5 text-sm text-text">
+              {pr.points.map((point) => (
+                <li class="flex gap-2">
+                  <span class="mt-2 size-1.5 shrink-0 rounded-full bg-gold" aria-hidden="true" />
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+    <h3 class="mt-10 font-bold text-text">{a.marketing.certsTitle}</h3>
+    <ul class="stagger mt-4 grid gap-3 sm:grid-cols-2">
+      {
+        a.marketing.certs.map((cert) => (
+          <li class="card lift reveal flex items-start gap-3 p-4">
+            <span class="icon-badge size-10">
+              <Icon name="award" size={20} />
+            </span>
+            <div class="min-w-0 flex-1">
+              <p class="font-bold text-text">{cert.title}</p>
+              <p class="mt-0.5 text-sm text-muted">
+                <bdi>{cert.org}</bdi>
+                {cert.note && <> · {cert.note}</>}
+              </p>
+            </div>
+            <span class="shrink-0 text-sm font-medium text-gold-text">{cert.date}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
   <!-- Student reviews -->
   <section class="container-x mt-20" aria-labelledby="reviews">
     <div class="card overflow-hidden">

@@ -159,12 +159,27 @@ about:
       linkLabel: My Preply profile
     - icon: briefcase
       period: Mar – May 2026
-      org: Ghassan Trading Company
-      role: Sales & Marketing Representative
+      org: Arabian Agencies Company for Mechanical, Electrical and Electronic Projects
+      role: Sales and Marketing Representative
+    - icon: cart
+      period: Feb – Mar 2026
+      org: Asr Al-Najah Company (restaurant)
+      role: Cashier and Assistant Supervisor
     - icon: analysis
       period: Jan – Jul 2025
-      org: Royal Commission for Jubail and Yanbu — General Administration of IT
-      role: "Co-op trainee: business analysis and application development, technical support and infrastructure"
+      org: Royal Commission for Jubail and Yanbu — General Directorate of IT
+      role: "Co-op trainee: business analysis, app development, technical support and infrastructure"
+    - icon: cart
+      period: Apr – Jun 2024
+      org: Rosh Sweet Trading (sweets shop)
+      role: Cashier and Assistant to the Owner
+      points:
+        - Marketing for the shop, plus day-to-day management and supervision
+        - Responsible for the shop and its inventory
+    - icon: send
+      period: 2019 – 2025 (approx.)
+      org: Freelance delivery and ride-hailing via apps
+      role: HungerStation, Mrsool, Jeeny, Careem, Uber
   educationTitle: Education & Certificates
   education:
     - title: B.Sc. in Computer Science
@@ -177,13 +192,54 @@ about:
       org: Monsha'at
       date: "2024"
     - title: Professional Diploma in E-Commerce and Digital Marketing
-      date: "2021"
+      org: Texas Professional University — 120 hours, grade Excellent
+      date: Oct 2021
+    - title: "Digital Marketing: The Code of Effective Marketing"
+      org: Al Mohanad Training Institute — 32 training hours
+      date: Jul 2021
     - title: Summer Student Enrichment Program
       org: Saudi Aramco
       date: "2017"
     - title: Distance Learning Certificate
       org: Holy Quran Academy at the Prophet's Mosque
       date: 1439 AH
+  marketing:
+    title: Marketing and Sales
+    intro: Before and alongside software, I have worked in marketing, sales and direct selling, and founded my own online store.
+    projects:
+      - icon: cart
+        name: SHOP MORE — necklace store
+        period: 2021 — my own project
+        role: Founded it after studying digital marketing and ran every part of it
+        points:
+          - Built the store and its website
+          - Logo and visual identity
+          - Marketing and content on Instagram
+          - Supplier, orders and shipping
+      - icon: chart
+        name: Kukh Alshay — Madinah
+        period: "2026"
+        role: Marketing and operations analysis and plan for a retail shop
+        points:
+          - Analysed the shop's position and opportunities and built a marketing and operating plan
+          - Updated the plan after on-the-ground decisions about opening hours and expansion
+      - icon: sparkles
+        name: Elhlal platform — elhlal.com
+        period: Oct 2026 – Present
+        role: Building the digital presence of an online livestock marketplace
+        points:
+          - Set up the social media accounts under one identity
+          - Content and reach plan for Saudi Arabia, then the Gulf, using organic channels
+    certsTitle: Marketing certificates
+    certs:
+      - title: Professional Diploma in E-Commerce and Digital Marketing
+        org: Texas Professional University
+        date: Oct 2021
+        note: 120 hours, grade Excellent
+      - title: The Code of Effective Marketing (Digital Marketing)
+        org: Al Mohanad Training Institute
+        date: Jul 2021
+        note: 32 training hours
   showMore: Show details
   certificateView: View certificate
   certificateClose: Close
