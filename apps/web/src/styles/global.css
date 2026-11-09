@@ -11,6 +11,7 @@
   --muted: #46606a;
   --border: #d6e6ec;
   --accent: #0b7285;
+  --danger: #b42318;
   --accent-hover: #095c6b;
   --accent-soft: #e1f3f6;
   --on-accent: #ffffff;
@@ -33,6 +34,7 @@
   --muted: #9fb7be;
   --border: #22383f;
   --accent: #4fd1d9;
+  --danger: #ff8a80;
   --accent-hover: #7fe0e6;
   --accent-soft: #10323a;
   --on-accent: #04262b;
@@ -55,6 +57,7 @@
   --color-muted: var(--muted);
   --color-line: var(--border);
   --color-accent: var(--accent);
+  --color-danger: var(--danger);
   --color-accent-hover: var(--accent-hover);
   --color-accent-soft: var(--accent-soft);
   --color-on-accent: var(--on-accent);
@@ -701,4 +704,13 @@ body {
   .band-glass {
     animation: none !important;
   }
+}
+
+/* Contact form honeypot: off-screen for people, still in the DOM for bots. */
+.hp {
+  position: absolute;
+  inset-inline-start: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }

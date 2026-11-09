@@ -12,6 +12,7 @@ import {
   url,
   type Lang,
 } from '../lib/i18n';
+import { CONTACT_LIMITS, CONTACT_PATH } from '@safwan/shared';
 
 interface Props {
   lang: Lang;
@@ -23,9 +24,11 @@ const s = await getSettings();
 const c = t.contact;
 const services = await getServices();
 
-const formReady = !isPlaceholder(s.formspreeId);
+// PUBLIC_TURNSTILE_SITE_KEY overrides settings.yaml for local runs and tests (e.g. Cloudflare's test key).
+const siteKey: string = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || s.turnstileSiteKey;
+const formReady = !isPlaceholder(siteKey);
 const emailReady = !isPlaceholder(s.email);
-// Until Formspree is set up, the form opens the visitor's email app with the message filled in.
+// Until the Turnstile key is set, the form opens the visitor's email app with the message filled in.
 const useMailto = !formReady && emailReady;
 const githubReady = !isPlaceholder(s.github);
 const hasCv = publicFileExists(s.cv);
@@ -54,7 +57,7 @@ const linkClass =
           ) : (
             !formReady && (
               <p class="mt-4 rounded-lg border border-line bg-surface-2 p-3 text-sm text-text" role="note">
-                {c.formNotReady} <bdi class="text-muted">{s.formspreeId}</bdi>
+                {c.formNotReady}
               </p>
             )
           )
@@ -62,11 +65,10 @@ const linkClass =
         <form
           class="mt-6 space-y-5"
           method="POST"
-          action={
-            formReady
-              ? `https://formspree.io/f/${s.formspreeId}`
-              : undefined
-          }
+          action={formReady ? CONTACT_PATH : undefined}
+          data-api={formReady ? '' : undefined}
+          data-lang={lang}
+          data-status-text={formReady ? JSON.stringify(c.status) : undefined}
           enctype={useMailto ? 'text/plain' : undefined}
           data-mailto={useMailto ? '' : undefined}
           data-u={useMailto ? mail.u : undefined}
@@ -75,10 +77,24 @@ const linkClass =
         >
           <input type="hidden" name="_subject" value={c.subject} />
           <input type="hidden" name="_language" value={lang} />
+          <!-- Honeypot: hidden from people and screen readers; bots tend to fill it. -->
+          <div class="hp" aria-hidden="true">
+            <label for="website">Website</label>
+            <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+          </div>
           <div class="grid gap-5 sm:grid-cols-2">
             <div>
               <label for="name" class="mb-1.5 block text-sm font-medium text-text">{c.name}</label>
-              <input id="name" name="name" type="text" required autocomplete="name" class="field" />
+              <input
+                id="name"
+                name="name"
+                type="text"
+                required
+                minlength={CONTACT_LIMITS.name.min}
+                maxlength={CONTACT_LIMITS.name.max}
+                autocomplete="name"
+                class="field"
+              />
             </div>
             <div>
               <label for="email" class="mb-1.5 block text-sm font-medium text-text">{c.email}</label>
@@ -87,6 +103,7 @@ const linkClass =
                 name="email"
                 type="email"
                 required
+                maxlength={CONTACT_LIMITS.email.max}
                 autocomplete="email"
                 dir="ltr"
                 class="field"
@@ -103,12 +120,32 @@ const linkClass =
           </div>
           <div>
             <label for="message" class="mb-1.5 block text-sm font-medium text-text">{c.message}</label>
-            <textarea id="message" name="message" rows="6" required class="field resize-y"></textarea>
+            <textarea
+              id="message"
+              name="message"
+              rows="6"
+              required
+              minlength={CONTACT_LIMITS.message.min}
+              maxlength={CONTACT_LIMITS.message.max}
+              class="field resize-y"></textarea>
           </div>
+          {
+            formReady && (
+              <div
+                class="cf-turnstile"
+                data-sitekey={siteKey}
+                data-action="contact"
+                data-language={lang}
+                data-theme="auto"
+                data-size="flexible"
+              />
+            )
+          }
           <button type="submit" class="btn btn-primary w-full sm:w-auto" disabled={!formReady && !useMailto}>
             {c.submit}
             <Icon name="arrow" size={18} class="rtl:-scale-x-100" />
           </button>
+          <p data-status role="status" aria-live="polite" class="text-sm font-medium empty:hidden"></p>
         </form>
       </div>
 
@@ -183,6 +220,8 @@ const linkClass =
   </section>
 </Base>
 
+{formReady && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+
 <script>
   // Mailto mode: open the visitor's email app with subject and message prefilled.
   const form = document.querySelector<HTMLFormElement>('form[data-mailto]');
@@ -201,6 +240,55 @@ const linkClass =
     ].join('\n');
     const subject = `${data.get('_subject')} — ${service}`;
     location.href = `mailto:${form.dataset.u}@${form.dataset.d}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  });
+
+  // API mode: send JSON to the site's own API (Turnstile token included) and show the result inline.
+  type Turnstile = { reset: (widget?: string) => void };
+  const apiForm = document.querySelector<HTMLFormElement>('form[data-api]');
+  apiForm?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const text: Record<string, string> = JSON.parse(apiForm.dataset.statusText ?? '{}');
+    const status = apiForm.querySelector<HTMLElement>('[data-status]')!;
+    const button = apiForm.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const show = (key: string, ok = false) => {
+      status.textContent = text[key] ?? text.unavailable ?? '';
+      status.classList.toggle('text-accent', ok);
+      status.classList.toggle('text-danger', !ok && key !== 'sending');
+    };
+
+    const data = new FormData(apiForm);
+    const token = String(data.get('cf-turnstile-response') ?? '');
+    if (!token) return show('captcha');
+
+    button.disabled = true;
+    show('sending');
+    try {
+      const res = await fetch(apiForm.action, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: data.get('name'),
+          email: data.get('email'),
+          service: data.get('service'),
+          message: data.get('message'),
+          website: data.get('website'),
+          lang: apiForm.dataset.lang,
+          turnstileToken: token,
+        }),
+      });
+      const result = await res.json().catch(() => ({ ok: false, error: 'unavailable' }));
+      if (result.ok) {
+        apiForm.reset();
+        show('sent', true);
+      } else {
+        show(result.error);
+      }
+    } catch {
+      show('unavailable');
+    } finally {
+      button.disabled = false;
+      (window as unknown as { turnstile?: Turnstile }).turnstile?.reset();
+    }
   });
 
   // Preselect the service when arriving from "Request this service".

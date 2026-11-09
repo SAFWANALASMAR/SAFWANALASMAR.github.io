@@ -2,8 +2,9 @@
 email: "safwan.asmar10@gmail.com"
 linkedin: "https://www.linkedin.com/in/safwan-alasmar"
 github: "https://github.com/SAFWANALASMAR"
-# معرّف نموذج Formspree — الجزء الأخير من الرابط https://formspree.io/f/XXXXXXX
-formspreeId: "【معرّف النموذج】"
+# المفتاح العام لـ Cloudflare Turnstile (حماية نموذج التواصل من الرسائل الآلية) — من لوحة Cloudflare
+# حتى يُضاف المفتاح يفتح النموذج تطبيق البريد لدى الزائر بدل الإرسال المباشر
+turnstileSiteKey: "【مفتاح Turnstile العام】"
 # المسارات داخل مجلد public/
 cv: "cv/Safwan-Alasmar-CV.pdf"
 photo: "images/profile.jpg"

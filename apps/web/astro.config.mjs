@@ -22,12 +22,15 @@ export default defineConfig({
         "default-src 'self'",
         "img-src 'self' data:",
         "font-src 'self' data:",
-        "connect-src 'self' https://formspree.io",
-        "form-action 'self' https://formspree.io",
+        "connect-src 'self'",
+        "form-action 'self'",
+        // Cloudflare Turnstile (contact form bot check) runs in its own frame.
+        'frame-src https://challenges.cloudflare.com',
         "base-uri 'self'",
         "object-src 'none'",
         'upgrade-insecure-requests',
       ],
+      scriptDirective: { resources: ["'self'", 'https://challenges.cloudflare.com'] },
     },
   },
   integrations: [

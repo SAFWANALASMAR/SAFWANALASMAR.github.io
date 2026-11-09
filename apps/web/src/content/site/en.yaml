@@ -244,6 +244,14 @@ contact:
   submit: Send
   formMailto: Sending opens your email app with the message ready.
   formNotReady: The contact form isn't active yet — please email me directly.
+  status:
+    sending: Sending…
+    sent: Your message arrived, thank you. I will reply to your email soon.
+    invalid: Please check the fields — name needs 2+ characters and the message 10+.
+    captcha: Please complete the verification, then send again.
+    rate_limited: Several messages in a short time. Wait a minute and try again.
+    forbidden: The request could not be accepted. Refresh the page and try again.
+    unavailable: Sending failed for now. Try later or email me directly.
   directTitle: Or reach out directly
   emailLabel: Email
   linkedinLabel: LinkedIn
