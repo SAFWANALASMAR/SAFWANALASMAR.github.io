@@ -95,6 +95,9 @@ const site = defineCollection({
       codeLabel: z.string(),
       rotatingLead: z.string(),
       rotating: z.array(z.string()),
+      chips: z
+        .array(z.object({ icon: z.enum(['star', 'users', 'archive', 'document']), value: z.string(), label: z.string() }))
+        .max(2),
       stackLabel: z.string(),
     }),
     stats: z.object({

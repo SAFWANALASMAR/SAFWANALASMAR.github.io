@@ -87,9 +87,9 @@ const jsonLd = {
             </picture>
           )
         }
-        <p class="eyebrow">{t.hero.title}</p>
+        <p class="eyebrow chip-eyebrow"><span class="pulse-dot" aria-hidden="true"></span>{t.hero.title}</p>
         <h1 class="mt-3 text-4xl leading-tight font-bold text-text sm:text-5xl">
-          <span class="name-underline">{t.hero.name}</span>
+          <span class="name-underline"><span class="text-gradient">{t.hero.name}</span></span>
         </h1>
         <p class="mt-4 text-lg font-semibold text-gold-text sm:text-xl">
           {t.hero.rotatingLead}{' '}
@@ -105,8 +105,23 @@ const jsonLd = {
           <a href={localePath(lang, '/projects/')} class="btn btn-ghost">{t.hero.ctaSecondary}</a>
         </div>
       </div>
-      <div class="float-soft min-w-0">
-        <HeroCode label={t.hero.codeLabel} />
+      <div class="relative min-w-0">
+        <div class="float-soft hero-code-glow">
+          <HeroCode label={t.hero.codeLabel} />
+        </div>
+        {
+          t.hero.chips.map((chip, i) => (
+            <div class={`hero-chip hidden sm:flex ${i === 0 ? 'hero-chip-a' : 'hero-chip-b'}`} aria-hidden="true">
+              <span class="chip-icon">
+                <Icon name={chip.icon} size={17} />
+              </span>
+              <span>
+                <bdi dir="ltr">{chip.value}</bdi>
+                <small>{chip.label}</small>
+              </span>
+            </div>
+          ))
+        }
       </div>
     </div>
   </section>

@@ -45,6 +45,9 @@ hero:
   codeLabel: Decorative code snippet summarizing role and stack
   rotatingLead: "I build:"
   rotating: [custom web systems, secure service portals, report and document automation, digital transformation for non-profits]
+  chips:
+    - { icon: star, value: "5.0", label: student rating on Preply }
+    - { icon: users, value: "30,000", label: users for the Ejaz portal }
   stackLabel: Technologies and tools I work with
 
 stats:
