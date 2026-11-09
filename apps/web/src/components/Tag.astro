@@ -12,5 +12,5 @@ const { text, class: extra = '' } = Astro.props;
 
 <li class={`${tagClass(text)} tag-icon ${extra}`}>
   <Icon name={skillIcon(text)} size={14} class="shrink-0 text-accent" />
-  <span>{text}</span>
+  <span dir="auto">{text}</span>
 </li>

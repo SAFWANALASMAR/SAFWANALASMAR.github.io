@@ -47,6 +47,15 @@ const paths = {
   send: '<path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/>',
   quote: '<path d="M10 7H6a2 2 0 0 0-2 2v4h4v4H4M20 7h-4a2 2 0 0 0-2 2v4h4v4h-4"/>',
   globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+  hash: '<path d="M5 9h15M4 15h15M10 3 8 21M16 3l-2 18"/>',
+  'file-code': '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M10 12l-2 2 2 2M14 12l2 2-2 2"/>',
+  columns: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16M15 4v16"/>',
+  bolt: '<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>',
+  table: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18M3 15h18M9 10v10"/>',
+  'user-check': '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 11l2 2 4-4"/>',
+  type: '<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 8h8M12 8v9"/>',
+  folder: '<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
+  trend: '<path d="M3 17l6-6 4 4 8-8M15 7h6v6"/>',
 } as const;
 
 export type IconName = keyof typeof paths;
@@ -58,6 +67,20 @@ interface Props {
 }
 
 const { name, class: className = '', size = 20 } = Astro.props;
+
+// Every icon has a small looping motion (see .ico in global.css). Menu and close stay still: they are controls.
+const motions: Partial<Record<IconName, string>> = {
+  arrow: 'nudge-x', external: 'nudge-x', send: 'fly',
+  download: 'nudge-y', cloud: 'float', mail: 'float', cap: 'float', bot: 'float',
+  heart: 'beat', nonprofit: 'beat',
+  sparkles: 'spin', sun: 'spin', globe: 'spin',
+  briefcase: 'swing', award: 'swing', moon: 'swing', teach: 'swing', key: 'swing', lock: 'swing', cart: 'swing',
+  star: 'twinkle', bolt: 'twinkle', shield: 'twinkle', check: 'twinkle',
+  menu: 'still', close: 'still',
+};
+const motion = motions[name] ?? 'breathe';
+// Spread the phase so neighbouring icons don't pulse in unison (a class, not a style attribute: the CSP forbids those).
+const phase = [...name].reduce((sum, ch) => sum + ch.charCodeAt(0), 0) % 6;
 ---
 
 <svg
@@ -72,6 +95,6 @@ const { name, class: className = '', size = 20 } = Astro.props;
   stroke-linejoin="round"
   aria-hidden="true"
   focusable="false"
-  class={className}
+  class={`ico ico-${motion} ico-p${phase} ${className}`}
   set:html={paths[name]}
 />

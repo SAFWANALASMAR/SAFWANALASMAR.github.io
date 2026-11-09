@@ -58,6 +58,35 @@ test('the API is reached through the site and refuses other origins', async ({ r
   expect(res.status()).toBe(403);
 });
 
+for (const path of ['/', '/en/']) {
+  test(`skills strip never shows an empty gap on ${path}`, async ({ page }) => {
+    await page.goto(path);
+    for (let i = 0; i < 4; i++) {
+      await page.waitForTimeout(500);
+      const gap = await page.evaluate(() => {
+        const strip = document.querySelector('.marquee')!.getBoundingClientRect();
+        const items = [...document.querySelectorAll('.marquee .tag-icon')].map((e) =>
+          e.getBoundingClientRect(),
+        );
+        const right = Math.max(...items.map((r) => r.right));
+        const left = Math.min(...items.map((r) => r.left));
+        return Math.max(0, strip.right - right) + Math.max(0, left - strip.left);
+      });
+      expect(gap).toBe(0);
+    }
+  });
+}
+
+test('every icon except the menu buttons is animated', async ({ page }) => {
+  await page.goto('/about/');
+  const still = await page.evaluate(() =>
+    [...document.querySelectorAll('svg.ico')]
+      .filter((i) => getComputedStyle(i).animationName === 'none')
+      .filter((i) => !i.classList.contains('ico-still')).length,
+  );
+  expect(still).toBe(0);
+});
+
 test('English home page is left-to-right', async ({ page }) => {
   await page.goto('/en/');
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');

@@ -529,6 +529,8 @@ html[dir='ltr'] .scroll-progress {
 
 /* Endless tech-stack strip; pauses on hover. */
 .marquee {
+  /* Anchor the track to the left edge: in an RTL page it would hang off the right and leave a gap as it moves. */
+  direction: ltr;
   overflow: hidden;
   mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
 }
@@ -561,13 +563,9 @@ html[dir='ltr'] .scroll-progress {
   @view-transition {
     navigation: none;
   }
+  /* The owner wants the skills strip to keep moving: slower and calmer here instead of stopped. */
   .marquee-track {
-    animation: none !important;
-    flex-wrap: wrap;
-    width: auto;
-  }
-  .marquee-group[aria-hidden='true'] {
-    display: none;
+    animation: marquee 90s linear infinite !important;
   }
   .caret {
     animation: none !important;
@@ -713,4 +711,54 @@ body {
   width: 1px;
   height: 1px;
   overflow: hidden;
+}
+
+/* Living icons: every icon loops a small motion. Uses the individual translate/rotate/scale
+   properties so it never overrides an icon's own transform (e.g. the RTL-flipped arrow). */
+.ico {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: var(--ico-anim) var(--ico-phase, 0s) infinite;
+}
+.ico-breathe { --ico-anim: ico-breathe 3.2s ease-in-out; }
+.ico-nudge-x { --ico-anim: ico-nudge-x 1.8s ease-in-out; }
+.ico-nudge-y { --ico-anim: ico-nudge-y 1.8s ease-in-out; }
+.ico-float { --ico-anim: ico-float 3s ease-in-out; }
+.ico-fly { --ico-anim: ico-fly 2.6s ease-in-out; }
+.ico-beat { --ico-anim: ico-beat 1.6s ease-in-out; }
+.ico-spin { --ico-anim: ico-spin 9s linear; }
+.ico-swing { --ico-anim: ico-swing 2.8s ease-in-out; }
+.ico-twinkle { --ico-anim: ico-twinkle 2.4s ease-in-out; }
+.ico-still { animation: none; }
+.ico-p1 { --ico-phase: -0.4s; }
+.ico-p2 { --ico-phase: -0.8s; }
+.ico-p3 { --ico-phase: -1.2s; }
+.ico-p4 { --ico-phase: -1.6s; }
+.ico-p5 { --ico-phase: -2s; }
+/* Icons inside the moving strip stagger by position too. */
+.marquee .tag-icon:nth-child(3n + 1) .ico { animation-delay: -0.6s; }
+.marquee .tag-icon:nth-child(3n + 2) .ico { animation-delay: -1.3s; }
+
+@keyframes ico-breathe { 50% { scale: 1.14; } }
+/* "Forward" is right in English and left in Arabic. */
+.ico { --ico-forward: 3px; }
+[dir='rtl'] .ico { --ico-forward: -3px; }
+@keyframes ico-nudge-x { 50% { translate: var(--ico-forward) 0; } }
+@keyframes ico-nudge-y { 50% { translate: 0 2.5px; } }
+@keyframes ico-float { 50% { translate: 0 -2.5px; } }
+@keyframes ico-fly { 50% { translate: 2px -2px; rotate: -6deg; } }
+@keyframes ico-beat { 15%, 45% { scale: 1.18; } 30% { scale: 1.04; } 0%, 60%, 100% { scale: 1; } }
+@keyframes ico-spin { to { rotate: 360deg; } }
+@keyframes ico-swing { 25% { rotate: -9deg; } 75% { rotate: 9deg; } }
+@keyframes ico-twinkle { 50% { scale: 1.16; rotate: 12deg; opacity: 0.8; } }
+
+/* Small, non-vestibular motions stay on even when the device asks for less motion, just slower. */
+@media (prefers-reduced-motion: reduce) {
+  .ico:not(.ico-still) {
+    animation: var(--ico-anim) var(--ico-phase, 0s) infinite !important;
+    animation-duration: 5s !important;
+  }
+  .ico-spin {
+    animation-duration: 18s !important;
+  }
 }

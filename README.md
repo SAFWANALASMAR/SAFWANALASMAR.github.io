@@ -102,18 +102,14 @@ public/
    - **المفتاح العام (Site key)** ← ضعه في `turnstileSiteKey` داخل `apps/web/src/content/settings.yaml`.
    - **المفتاح السري (Secret key)** ← للخطوة 4.
 2. أنشئ حساباً مجانياً في [Resend](https://resend.com) بالبريد نفسه الموجود في `MAIL_TO` بملف `apps/api/wrangler.jsonc`، وأنشئ مفتاح API (صلاحية الإرسال فقط).
-3. سجّل الدخول من الطرفية: `npx wrangler login`.
-4. أدخل المفتاحين بنفسك (لا يُكتبان في أي ملف ولا يُرسلان في محادثة):
-   ```bash
-   cd apps/api
-   npx wrangler secret put TURNSTILE_SECRET
-   npx wrangler secret put RESEND_API_KEY
-   ```
-5. انشر من الجذر:
-   ```bash
-   npm run deploy:api
-   SITE_URL=https://safwan-web.<اسمك-الفرعي>.workers.dev npm run deploy:web
-   ```
+3. من Cloudflare: **My Profile ← API Tokens ← Create Token** بقالب **Edit Cloudflare Workers**، وانسخ أيضاً **Account ID** من الصفحة الرئيسية للحساب.
+4. في GitHub: **Settings ← Secrets and variables ← Actions**:
+   - أسرار (Secrets): `CLOUDFLARE_API_TOKEN` و`CLOUDFLARE_ACCOUNT_ID`.
+   - متغيّر (Variables): `SITE_URL` = `https://safwan-web.<اسمك-الفرعي>.workers.dev`.
+5. بعد ذلك كل دمج في `main` يشغّل `.github/workflows/deploy.yml`: يفحص ثم ينشر الخادم ثم الواجهة. وقبل إضافة `SITE_URL` يتخطى نفسه.
+6. بعد أول نشر، من لوحة Cloudflare: **Workers & Pages ← safwan-api ← Settings ← Variables and Secrets** أضف سرّين: `TURNSTILE_SECRET` و`RESEND_API_KEY`. لا يُكتبان في أي ملف ولا يُرسلان في محادثة.
+
+النشر اليدوي بديلاً (من جهازك): `npx wrangler login` ثم `npm run deploy:api` ثم `SITE_URL=... npm run deploy:web`.
 
 حتى يُضاف المفتاح العام يفتح النموذج تطبيق البريد لدى الزائر والرسالة جاهزة. زر «اطلب هذه الخدمة» يفتح صفحة التواصل والخدمة مختارة مسبقاً.
 
