@@ -1,6 +1,6 @@
 ---
 import Icon from './Icon.astro';
-import { getSettings, getSite, isPlaceholder, localePath, type Lang } from '../lib/i18n';
+import { emailParts, getSettings, getSite, isPlaceholder, localePath, type Lang } from '../lib/i18n';
 
 interface Props {
   lang: Lang;
@@ -10,6 +10,7 @@ const { lang } = Astro.props;
 const t = await getSite(lang);
 const s = await getSettings();
 const year = new Date().getFullYear();
+const mail = emailParts(s.email);
 ---
 
 <footer class="mt-24 border-t border-line">
@@ -25,7 +26,9 @@ const year = new Date().getFullYear();
         !isPlaceholder(s.email) && (
           <li>
             <a
-              href={`mailto:${s.email}`}
+              href={localePath(lang, '/contact/')}
+              data-u={mail.u}
+              data-d={mail.d}
               class="grid size-10 place-items-center rounded-lg border border-line text-muted hover:border-accent hover:text-accent"
               aria-label={t.contact.emailLabel}
             >
@@ -37,7 +40,7 @@ const year = new Date().getFullYear();
       <li>
         <a
           href={s.linkedin}
-          rel="me noopener"
+          rel="me noopener noreferrer"
           target="_blank"
           class="grid size-10 place-items-center rounded-lg border border-line text-muted hover:border-accent hover:text-accent"
           aria-label={t.contact.linkedinLabel}
@@ -50,7 +53,7 @@ const year = new Date().getFullYear();
           <li>
             <a
               href={s.github}
-              rel="me noopener"
+              rel="me noopener noreferrer"
               target="_blank"
               class="grid size-10 place-items-center rounded-lg border border-line text-muted hover:border-accent hover:text-accent"
               aria-label={t.contact.githubLabel}

@@ -3,40 +3,47 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --bg: #fbfcfb;
+  /* Turquoise with 24-karat gold on a light sky background. */
+  --bg: #f5fafc;
   --surface: #ffffff;
-  --surface-2: #f1f5f3;
-  --text: #15201b;
-  --muted: #4a5a53;
-  --border: #dde5e1;
-  --accent: #1f6b4e;
-  --accent-hover: #185a41;
-  --accent-soft: #e5f1eb;
+  --surface-2: #eaf4f7;
+  --text: #10232a;
+  --muted: #46606a;
+  --border: #d6e6ec;
+  --accent: #0b7285;
+  --accent-hover: #095c6b;
+  --accent-soft: #e1f3f6;
   --on-accent: #ffffff;
-  --grid: rgb(31 107 78 / 0.07);
-  --shadow: 0 1px 2px rgb(16 24 20 / 0.05), 0 8px 24px -12px rgb(16 24 20 / 0.12);
-  --shadow-lg: 0 2px 4px rgb(16 24 20 / 0.06), 0 16px 36px -16px rgb(16 24 20 / 0.22);
-  --code-bg: #0f1a15;
-  --code-text: #dce8e2;
+  --gold: #c9a227;
+  --gold-text: #8a6a0c;
+  --gold-soft: #fbf4dc;
+  --grid: rgb(11 114 133 / 0.07);
+  --shadow: 0 1px 2px rgb(10 40 50 / 0.05), 0 8px 24px -12px rgb(10 40 50 / 0.14);
+  --shadow-lg: 0 2px 4px rgb(10 40 50 / 0.06), 0 16px 36px -16px rgb(10 40 50 / 0.24);
+  --code-bg: #0b1d23;
+  --code-text: #d9eef2;
   color-scheme: light;
 }
 
 .dark {
-  --bg: #0c1210;
-  --surface: #121a17;
-  --surface-2: #18231f;
-  --text: #e6eeea;
-  --muted: #a3b3ac;
-  --border: #25332d;
-  --accent: #6fd3a6;
-  --accent-hover: #8fe0bb;
-  --accent-soft: #15302a;
-  --on-accent: #08231a;
-  --grid: rgb(111 211 166 / 0.06);
+  --bg: #0a1418;
+  --surface: #0f1d22;
+  --surface-2: #142830;
+  --text: #e4f1f4;
+  --muted: #9fb7be;
+  --border: #22383f;
+  --accent: #4fd1d9;
+  --accent-hover: #7fe0e6;
+  --accent-soft: #10323a;
+  --on-accent: #04262b;
+  --gold: #e3c35a;
+  --gold-text: #e3c35a;
+  --gold-soft: #2b2610;
+  --grid: rgb(79 209 217 / 0.06);
   --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px -12px rgb(0 0 0 / 0.5);
   --shadow-lg: 0 2px 4px rgb(0 0 0 / 0.35), 0 16px 36px -16px rgb(0 0 0 / 0.6);
-  --code-bg: #08100d;
-  --code-text: #dce8e2;
+  --code-bg: #061014;
+  --code-text: #d9eef2;
   color-scheme: dark;
 }
 
@@ -51,6 +58,9 @@
   --color-accent-hover: var(--accent-hover);
   --color-accent-soft: var(--accent-soft);
   --color-on-accent: var(--on-accent);
+  --color-gold: var(--gold);
+  --color-gold-text: var(--gold-text);
+  --color-gold-soft: var(--gold-soft);
   --shadow-soft: var(--shadow);
   --shadow-lift: var(--shadow-lg);
   --font-ar: 'IBM Plex Sans Arabic', 'Inter Variable', system-ui, sans-serif;
@@ -241,6 +251,39 @@
 }
 .code-block .k { color: #7fd6ff; }
 .code-block .v { color: #f0f4f2; }
-.code-block .p { color: #9fe6c3; }
+.code-block .p { color: #7fe0e6; }
+.code-block .s { color: #e8c766; }
 .code-block .s { color: #f5c98a; }
 .code-block .c { color: #8a9b94; }
+
+/* Soft turquoise and gold glow behind the hero. */
+.hero-glow {
+  background:
+    radial-gradient(40rem 22rem at 85% 10%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 70%),
+    radial-gradient(30rem 18rem at 10% 90%, color-mix(in srgb, var(--gold) 16%, transparent), transparent 70%);
+}
+
+/* Thin gold rule under section titles. */
+.gold-rule::after {
+  content: '';
+  display: block;
+  width: 3rem;
+  height: 3px;
+  margin-top: 0.6rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--gold), color-mix(in srgb, var(--gold) 30%, transparent));
+}
+
+/* Certificate preview dialog. */
+.lightbox {
+  max-width: min(92vw, 60rem);
+  max-height: 92vh;
+  padding: 0;
+  border: 0;
+  border-radius: 1rem;
+  background: var(--surface);
+  box-shadow: var(--shadow-lg);
+}
+.lightbox::backdrop {
+  background: rgb(5 20 25 / 0.75);
+}

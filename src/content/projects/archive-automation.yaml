@@ -18,7 +18,6 @@ ar:
   result:
     - 7 مشاريع ممولة مؤرشفة بهيكل موحّد
     - سجل بـ100 عمل وفهارس لخمسة أشهر
-    - خفض استهلاك المعالجة بأكثر من 95%
     - نقل مئات الملفات دون فقد ملف واحد
   availability: "【ملاحظة الإتاحة】"
 en:
@@ -36,6 +35,5 @@ en:
   result:
     - 7 funded projects archived in a unified structure
     - A log of 100 deliverables and indexes for five months
-    - Over 95% less processing
     - Hundreds of files moved without losing a single one
   availability: "【ملاحظة الإتاحة】"

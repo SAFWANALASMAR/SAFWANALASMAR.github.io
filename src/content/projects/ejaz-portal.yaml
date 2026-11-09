@@ -1,0 +1,40 @@
+order: 0
+featured: true
+year: 2026
+type: web-system
+status: in-progress
+tags: [Web Portal, RBAC, Encryption, GitHub, AI Agents]
+ar:
+  title: بوابة جمعية إعجاز الإلكترونية
+  summary: بوابة خدمات متكاملة بدل موقع ووردبريس، مهيأة لنحو 30 ألف مستفيد، بحسابات ولوحة إدارة وصلاحيات متدرجة.
+  org: جمعية إعجاز للدراسات والبحوث العلمية
+  challenge: موقع ووردبريس محدود لا يحتمل التوسع، والجمعية تحتاج بوابة تستقبل آلاف المتقدمين وتحفظ بياناتهم بأمان.
+  solution:
+    - بوابة خدمات كاملة بنظام حسابات ورموز تحقق، ولوحة إدارة بصلاحيات متدرجة
+    - تشفير البيانات الحساسة، وإظهارها مقنّعة إلا لعدد محدود من المخوّلين
+    - بنية مرتبة من البداية لتحمّل حتى 30 ألف مستفيد
+  role:
+    - تحليل الاحتياج وتصميم البوابة
+    - التطوير والإشراف التقني
+    - مراجعة أمنية داخلية قبل كل اعتماد
+    - إدارة الشيفرة على GitHub عبر فرع رئيسي محمي
+    - تطوير وكلاء ذكاء اصطناعي يساعدون في العمل
+  tools: [GitHub, سير عمل بالذكاء الاصطناعي, خادم افتراضي خاص]
+  result: البوابة في مرحلة الإطلاق.
+en:
+  title: Ejaz Association Web Portal
+  summary: A complete services portal replacing a WordPress site, built for around 30,000 users, with accounts, an admin panel and tiered permissions.
+  org: Ejaz Association for Studies and Scientific Research
+  challenge: A limited WordPress site that could not scale, while the association needed a portal that takes in thousands of applicants and keeps their data safe.
+  solution:
+    - A full services portal with user accounts, verification codes, and an admin panel with tiered permissions
+    - Encryption of sensitive data, shown masked except to a small number of authorized staff
+    - An architecture organized from day one to handle up to 30,000 users
+  role:
+    - Needs analysis and portal design
+    - Development and technical supervision
+    - Internal security review before every sign-off
+    - Code managed on GitHub through a protected main branch
+    - Building AI agents that support the work
+  tools: [GitHub, AI-assisted workflows, Virtual private server]
+  result: The portal is in its launch phase.

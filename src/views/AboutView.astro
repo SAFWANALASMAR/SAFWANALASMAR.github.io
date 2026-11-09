@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
 import { getSettings, getSite, publicFileExists, tagClass, url, type Lang } from '../lib/i18n';
 
 interface Props {
@@ -11,6 +12,9 @@ const t = await getSite(lang);
 const s = await getSettings();
 const a = t.about;
 const hasPhoto = publicFileExists(s.photo);
+const photoWebp = s.photo.replace(/\.jpe?g$/i, '.webp');
+const hasWebp = photoWebp !== s.photo && publicFileExists(photoWebp);
+const r = a.reviews;
 ---
 
 <Base
@@ -23,13 +27,17 @@ const hasPhoto = publicFileExists(s.photo);
     <div class="grid items-start gap-10 md:grid-cols-[auto_1fr]">
       {
         hasPhoto ? (
-          <img
-            src={url(s.photo)}
-            alt={a.photoAlt}
-            width="176"
-            height="176"
-            class="size-36 rounded-full border-4 border-surface object-cover shadow-soft sm:size-44"
-          />
+          <picture>
+            {hasWebp && <source srcset={url(photoWebp)} type="image/webp" />}
+            <img
+              src={url(s.photo)}
+              alt={a.photoAlt}
+              width="176"
+              height="176"
+              decoding="async"
+              class="size-36 rounded-full object-cover shadow-soft ring-4 ring-gold/70 ring-offset-4 ring-offset-bg sm:size-44"
+            />
+          </picture>
         ) : (
           <div
             class="grid size-36 place-items-center rounded-full bg-accent text-4xl font-bold text-on-accent shadow-soft sm:size-44 sm:text-5xl"
@@ -50,18 +58,39 @@ const hasPhoto = publicFileExists(s.photo);
   <div class="container-x mt-16 grid gap-16 lg:grid-cols-2">
     <!-- Timeline -->
     <section aria-labelledby="timeline">
-      <h2 id="timeline" class="text-2xl font-bold text-text">{a.timelineTitle}</h2>
+      <h2 id="timeline" class="gold-rule text-2xl font-bold text-text">{a.timelineTitle}</h2>
       <ol class="mt-8 space-y-8 border-s-2 border-line ps-6">
         {
           a.timeline.map((item) => (
             <li class="reveal relative">
               <span
-                class="absolute -start-[1.95rem] top-1.5 size-3.5 rounded-full border-2 border-bg bg-accent"
+                class="absolute -start-[1.95rem] top-1.5 size-3.5 rounded-full border-2 border-gold bg-accent"
                 aria-hidden="true"
               />
               <p class="text-sm font-medium text-accent">{item.period}</p>
               <h3 class="mt-1 font-bold text-text">{item.org}</h3>
               <p class="mt-1 text-sm text-muted">{item.role}</p>
+              {item.points && (
+                <ul class="mt-3 space-y-1.5 text-sm text-text">
+                  {item.points.map((point) => (
+                    <li class="flex gap-2">
+                      <span class="mt-2 size-1.5 shrink-0 rounded-full bg-gold" aria-hidden="true" />
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {item.link && (
+                <a
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:underline"
+                >
+                  {item.linkLabel ?? item.link}
+                  <Icon name="external" size={14} />
+                </a>
+              )}
             </li>
           ))
         }
@@ -71,7 +100,7 @@ const hasPhoto = publicFileExists(s.photo);
     <div class="space-y-16">
       <!-- Education -->
       <section aria-labelledby="education">
-        <h2 id="education" class="text-2xl font-bold text-text">{a.educationTitle}</h2>
+        <h2 id="education" class="gold-rule text-2xl font-bold text-text">{a.educationTitle}</h2>
         <ul class="mt-8 space-y-4">
           {
             a.education.map((item) => (
@@ -80,7 +109,18 @@ const hasPhoto = publicFileExists(s.photo);
                   <h3 class="font-bold text-text">{item.title}</h3>
                   {item.org && <p class="mt-0.5 text-sm text-muted">{item.org}</p>}
                 </div>
-                <span class="text-sm font-medium text-accent">{item.date}</span>
+                <span class="text-sm font-medium text-gold-text">{item.date}</span>
+                {item.image && publicFileExists(item.image) && (
+                  <button
+                    type="button"
+                    class="mt-2 inline-flex w-full items-center gap-1.5 text-sm font-semibold text-accent hover:underline"
+                    data-cert={url(item.image)}
+                    data-cert-alt={item.title}
+                  >
+                    <Icon name="document" size={16} />
+                    {a.certificateView}
+                  </button>
+                )}
               </li>
             ))
           }
@@ -89,15 +129,69 @@ const hasPhoto = publicFileExists(s.photo);
 
       <!-- Volunteering -->
       <section aria-labelledby="volunteer">
-        <h2 id="volunteer" class="text-2xl font-bold text-text">{a.volunteerTitle}</h2>
+        <h2 id="volunteer" class="gold-rule text-2xl font-bold text-text">{a.volunteerTitle}</h2>
         <p class="reveal mt-4 text-muted">{a.volunteer}</p>
       </section>
     </div>
   </div>
 
+  <!-- Student reviews -->
+  <section class="container-x mt-20" aria-labelledby="reviews">
+    <div class="card overflow-hidden">
+      <div class="grid gap-8 p-6 sm:p-8 lg:grid-cols-[1fr_1.6fr]">
+        <div>
+          <h2 id="reviews" class="gold-rule text-2xl font-bold text-text">{r.title}</h2>
+          <p class="mt-4 text-muted">{r.intro}</p>
+          <dl class="mt-6 grid grid-cols-2 gap-4">
+            {
+              r.stats.map((st) => (
+                <div class="flex flex-col-reverse rounded-xl bg-surface-2 p-4">
+                  <dt class="text-sm text-muted">{st.label}</dt>
+                  <dd class="text-2xl font-bold text-accent">
+                    <bdi dir="ltr">{st.value}</bdi>
+                  </dd>
+                </div>
+              ))
+            }
+          </dl>
+          <a
+            href={r.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-primary mt-6"
+          >
+            {r.more}
+            <Icon name="external" size={16} />
+          </a>
+        </div>
+        <ul class="grid gap-4 sm:grid-cols-2">
+          {
+            r.items.map((rev) => (
+              <li class="reveal rounded-xl border border-line bg-bg p-5">
+                <p class="text-gold" aria-hidden="true">★★★★★</p>
+                <p class="mt-2 text-text">{rev.text}</p>
+                <p class="mt-3 text-sm text-muted">
+                  <bdi>{rev.name}</bdi> · {rev.date}
+                </p>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <p class="border-t border-line bg-surface-2 px-6 py-3 text-xs text-muted sm:px-8">{r.note}</p>
+    </div>
+  </section>
+
+  <dialog class="lightbox" id="cert-dialog" aria-label={a.certificateView}>
+    <form method="dialog" class="flex justify-end p-2">
+      <button class="btn btn-ghost min-h-0 px-3 py-1 text-sm">{a.certificateClose}</button>
+    </form>
+    <img id="cert-img" alt="" class="block h-auto max-h-[80vh] w-full object-contain" />
+  </dialog>
+
   <!-- Skills -->
   <section class="container-x mt-16" aria-labelledby="skills">
-    <h2 id="skills" class="text-2xl font-bold text-text">{a.skillsTitle}</h2>
+    <h2 id="skills" class="gold-rule text-2xl font-bold text-text">{a.skillsTitle}</h2>
     <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {
         a.skills.map((group) => (
@@ -114,3 +208,20 @@ const hasPhoto = publicFileExists(s.photo);
     </div>
   </section>
 </Base>
+
+<script>
+  // Open a certificate image in the dialog; Escape or the close button dismisses it.
+  const dialog = document.querySelector<HTMLDialogElement>('#cert-dialog');
+  const img = document.querySelector<HTMLImageElement>('#cert-img');
+  document.querySelectorAll<HTMLButtonElement>('[data-cert]').forEach((button) => {
+    button.addEventListener('click', () => {
+      if (!dialog || !img) return;
+      img.src = button.dataset.cert ?? '';
+      img.alt = button.dataset.certAlt ?? '';
+      dialog.showModal();
+    });
+  });
+  dialog?.addEventListener('click', (event) => {
+    if (event.target === dialog) dialog.close();
+  });
+</script>

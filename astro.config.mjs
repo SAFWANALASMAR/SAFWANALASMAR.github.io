@@ -14,6 +14,22 @@ export default defineConfig({
   trailingSlash: 'ignore',
   // Small stylesheet: inlining it removes a render-blocking request (better mobile LCP).
   build: { inlineStylesheets: 'always' },
+  // Content-Security-Policy as a <meta> tag on every page; Astro hashes its own inline scripts and styles.
+  security: {
+    csp: {
+      algorithm: 'SHA-256',
+      directives: [
+        "default-src 'self'",
+        "img-src 'self' data:",
+        "font-src 'self' data:",
+        "connect-src 'self' https://formspree.io",
+        "form-action 'self' https://formspree.io",
+        "base-uri 'self'",
+        "object-src 'none'",
+        'upgrade-insecure-requests',
+      ],
+    },
+  },
   integrations: [
     sitemap({
       i18n: { defaultLocale: 'ar', locales: { ar: 'ar', en: 'en' } },

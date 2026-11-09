@@ -37,6 +37,7 @@ const ogImage = abs(url(`og/${lang}.png`));
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <title>{title}</title>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
@@ -49,7 +50,7 @@ const ogImage = abs(url(`og/${lang}.png`));
     <link rel="icon" href={url('favicon.svg')} type="image/svg+xml" />
     <link rel="icon" href={url('favicon-32.png')} sizes="32x32" type="image/png" />
     <link rel="apple-touch-icon" href={url('apple-touch-icon.png')} />
-    <meta name="theme-color" content="#1F6B4E" />
+    <meta name="theme-color" content="#0B7285" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={t.meta.siteName} />
@@ -71,6 +72,14 @@ const ogImage = abs(url(`og/${lang}.png`));
 
     <script is:inline>
       (function () {
+        // Refuse to be framed by another site (clickjacking).
+        if (window.top !== window.self) {
+          try {
+            window.top.location = window.self.location.href;
+          } catch (e) {
+            document.documentElement.style.display = 'none';
+          }
+        }
         var d = document.documentElement;
         d.classList.add('js');
         var saved = null;
@@ -113,6 +122,14 @@ const ogImage = abs(url(`og/${lang}.png`));
         );
         items.forEach((el) => io.observe(el));
       }
+
+      // Rebuild email links that are kept split in the HTML to stay out of address harvesters.
+      document.querySelectorAll<HTMLElement>('[data-u][data-d]').forEach((el) => {
+        const address = `${el.dataset.u}@${el.dataset.d}`;
+        if (el instanceof HTMLAnchorElement) el.href = `mailto:${address}`;
+        const text = el.querySelector<HTMLElement>('[data-email-text]');
+        if (text) text.textContent = address;
+      });
 
       // Follow system theme changes unless the visitor picked one manually.
       matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {

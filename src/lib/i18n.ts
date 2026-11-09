@@ -25,6 +25,12 @@ export const isPlaceholder = (value: string) => value.includes('【');
 /** Tag class: Arabic tags use the body font instead of the monospace one. */
 export const tagClass = (value: string) => (/\p{Script=Arabic}/u.test(value) ? 'tag tag-ar' : 'tag');
 
+/** Splits an address so it never appears whole in the HTML; a script rebuilds the mailto link. */
+export function emailParts(email: string) {
+  const [u = '', d = ''] = email.split('@');
+  return { u, d, masked: `${u} [at] ${d}` };
+}
+
 export const publicFileExists = (relPath: string) =>
   existsSync(join(process.cwd(), 'public', relPath));
 

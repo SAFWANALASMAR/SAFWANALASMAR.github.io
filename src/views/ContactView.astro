@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import {
+  emailParts,
   getServices,
   getSettings,
   getSite,
@@ -28,6 +29,7 @@ const emailReady = !isPlaceholder(s.email);
 const useMailto = !formReady && emailReady;
 const githubReady = !isPlaceholder(s.github);
 const hasCv = publicFileExists(s.cv);
+const mail = emailParts(s.email);
 
 const linkClass =
   'flex items-center gap-3 rounded-xl border border-line bg-surface p-4 text-text transition-colors hover:border-accent hover:text-accent';
@@ -63,12 +65,12 @@ const linkClass =
           action={
             formReady
               ? `https://formspree.io/f/${s.formspreeId}`
-              : useMailto
-                ? `mailto:${s.email}`
-                : undefined
+              : undefined
           }
           enctype={useMailto ? 'text/plain' : undefined}
-          data-mailto={useMailto ? s.email : undefined}
+          data-mailto={useMailto ? '' : undefined}
+          data-u={useMailto ? mail.u : undefined}
+          data-d={useMailto ? mail.d : undefined}
           data-labels={JSON.stringify({ name: c.name, email: c.email, service: c.service })}
         >
           <input type="hidden" name="_subject" value={c.subject} />
@@ -117,10 +119,12 @@ const linkClass =
           <li>
             {
               emailReady ? (
-                <a href={`mailto:${s.email}`} class={linkClass}>
+                <a href="#" data-u={mail.u} data-d={mail.d} class={linkClass}>
                   <Icon name="mail" />
                   <span class="shrink-0 text-sm whitespace-nowrap text-muted">{c.emailLabel}</span>
-                  <span class="ms-auto min-w-0 truncate font-medium" dir="ltr">{s.email}</span>
+                  <span class="ms-auto min-w-0 truncate font-medium" dir="ltr" data-email-text>
+                    {mail.masked}
+                  </span>
                 </a>
               ) : (
                 <div class={linkClass}>
@@ -132,7 +136,7 @@ const linkClass =
             }
           </li>
           <li>
-            <a href={s.linkedin} target="_blank" rel="me noopener" class={linkClass}>
+            <a href={s.linkedin} target="_blank" rel="me noopener noreferrer" class={linkClass}>
               <Icon name="linkedin" />
               <span class="shrink-0 text-sm whitespace-nowrap text-muted">{c.linkedinLabel}</span>
               <span class="ms-auto truncate font-medium" dir="ltr">in/safwan-alasmar</span>
@@ -141,7 +145,7 @@ const linkClass =
           <li>
             {
               githubReady ? (
-                <a href={s.github} target="_blank" rel="me noopener" class={linkClass}>
+                <a href={s.github} target="_blank" rel="me noopener noreferrer" class={linkClass}>
                   <Icon name="github" />
                   <span class="shrink-0 text-sm whitespace-nowrap text-muted">{c.githubLabel}</span>
                   <span class="ms-auto truncate font-medium" dir="ltr">
@@ -196,7 +200,7 @@ const linkClass =
       String(data.get('message') ?? ''),
     ].join('\n');
     const subject = `${data.get('_subject')} — ${service}`;
-    location.href = `mailto:${form.dataset.mailto}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    location.href = `mailto:${form.dataset.u}@${form.dataset.d}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   });
 
   // Preselect the service when arriving from "Request this service".

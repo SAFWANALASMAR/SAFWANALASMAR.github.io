@@ -48,13 +48,13 @@ stats:
   label: Key numbers
   items:
     - value: "100+"
-      label: documented deliverables
+      label: institutional deliverables documented and archived
     - value: "7"
       label: funded-project archives rebuilt
-    - value: "95%+"
-      label: less processing after archive automation
-    - value: "18"
-      label: participants from 10 countries documented
+    - value: "30,000"
+      label: users the Ejaz portal is built to serve
+    - value: "5.0"
+      label: student rating on Preply from 21 reviews
 
 home:
   servicesTitle: Services
@@ -115,37 +115,90 @@ about:
   title: About
   photoAlt: Photo of Safwan Alasmar
   initials: SA
-  bio: Computer Science graduate from Yanbu Industrial College (Royal Commission for Jubail and Yanbu). I started in business analysis and application development, turning a paper form into a full web system with a tiered approval workflow and a database I designed from scratch. Today I digitize institutional work in the non-profit sector — automating reports and documents, rebuilding archives, leading digital transformation, and building publishing-automation tools. My edge is combining code with a real understanding of what management needs — and building Arabic-first, right-to-left solutions without compromise.
+  bio: "I'm Safwan, a Computer Science graduate from Yanbu Industrial College (Royal Commission for Jubail and Yanbu). I started in business analysis and application development during my co-op, turning a paper form into a web system with a tiered approval workflow and a database I designed from scratch. Today I am Public Relations & Marketing Manager and Head of Media at Al-Maqari Quranic Association in Madinah, where I also lead digital transformation, report and document automation, and archive rebuilding. As a volunteer I am developing the Ejaz Association's web portal, and I teach Arabic to non-native speakers on Preply. I combine writing code with a real understanding of what management needs, and I build Arabic, right-to-left solutions the way they should be built."
   timelineTitle: Experience
   timeline:
+    - period: Oct 2026 – Present
+      org: Ejaz Association for Studies and Scientific Research
+      role: Executive Advisor, Corporate Communications & Digital Transformation (volunteer)
+      points:
+        - Designing and developing the association's web portal, ejaz.sa, to replace a WordPress site and serve around 30,000 users
+        - Admin panel with tiered permissions, encryption of sensitive data, an internal security review, and code managed on a protected main branch
+        - Set up the association's digital presence with one identity across seven platforms, and run its office
     - period: May 2026 – Present
       org: Al-Maqari Quranic Association, Madinah
-      role: Head of Media, leading digital transformation, automation and institutional reporting
+      role: Public Relations & Marketing Manager and Head of Media (since Sep 2026); previously Public Relations & Marketing Officer
+      points:
+        - Oversee the media department, the association's accounts, content plans and daily publishing
+        - Prepare final and periodic reports for donors, and contribute to and follow up on funding applications
+        - Lead digital transformation, including supervising the website's move to a custom build, running the online store, and auditing and securing digital assets
+        - Automated the archive and institutional reporting, and built official document templates
+        - Build partnerships and institutional communication, and draft official letters
+        - Keep the association's data current on regulatory and donor platforms
+    - period: Oct 2025 – Present
+      org: Preply
+      role: Arabic, Quran and Tajweed teacher for non-native speakers (remote, part-time)
+      points:
+        - 196 completed lessons with a 5.0 rating from 21 student reviews
+        - Over 167 teaching hours with 36 students (as of Aug 2026)
+        - Lessons tailored to each level using Al-Arabiyyah Bayna Yadayk, Noor Al-Bayan and Al-Qaidah An-Noraniah
+      link: https://preply.com/en/tutor/7053708
+      linkLabel: My Preply profile
     - period: Mar – May 2026
       org: Ghassan Trading Company
       role: Sales & Marketing Representative
-    - period: Oct 2025 – Present
-      org: Preply
-      role: Arabic teacher for non-native speakers (part-time, remote)
     - period: Jan – Jul 2025
       org: Royal Commission for Jubail and Yanbu — General Administration of IT
       role: "Co-op trainee: business analysis and application development, technical support and infrastructure"
-    - period: 2018 – 2024
-      org: Freelance
-      role: Delivery platforms and customer service — fully funded my university studies
   educationTitle: Education & Certificates
   education:
     - title: B.Sc. in Computer Science
       org: Yanbu Industrial College, Royal Commission for Jubail and Yanbu
-      date: Oct 2025
-    - title: Professional Diploma in E-Commerce and Digital Marketing
-      date: "2021"
+      date: "2025"
+    - title: Co-op Training Program Completion
+      org: Royal Commission for Jubail and Yanbu
+      date: "2025"
     - title: Entrepreneurship & Innovation Program
       org: Monsha'at
       date: "2024"
+    - title: Professional Diploma in E-Commerce and Digital Marketing
+      date: "2021"
     - title: Summer Student Enrichment Program
       org: Saudi Aramco
       date: "2017"
+    - title: Distance Learning Certificate
+      org: Holy Quran Academy at the Prophet's Mosque
+      date: 1439 AH
+  certificateView: View certificate
+  certificateClose: Close
+  reviews:
+    title: What my Preply students say
+    intro: Excerpts from reviews published on my public Preply profile.
+    stats:
+      - value: "5.0"
+        label: average rating
+      - value: "21"
+        label: student reviews
+      - value: "196"
+        label: completed lessons
+      - value: "167+"
+        label: teaching hours
+    items:
+      - name: Muhammad
+        date: Jan 2026
+        text: A very welcoming teacher who quickly assesses your level and goals and gets straight to teaching; patient with tajweed and knows the fine details.
+      - name: Shafia
+        date: Jan 2026
+        text: A great teacher whose English is good enough to convey meaning in Arabic; the lessons were organized and clear.
+      - name: Adhi
+        date: Jan 2026
+        text: I had a great first session; he assessed my level and quickly addressed what I needed in learning Arabic.
+      - name: Mohamed
+        date: Feb 2026
+        text: Very polite, and his teaching is good.
+    more: All reviews on Preply
+    link: https://preply.com/en/tutor/7053708
+    note: Rating, review and lesson counts are from the public Preply profile (Nov 2026); hours and student count are from the tutor dashboard (Aug 2026). Reviews are shortened and paraphrased.
   skillsTitle: Skills
   skills:
     - category: Back end & data

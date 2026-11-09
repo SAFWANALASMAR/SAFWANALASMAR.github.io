@@ -11,6 +11,8 @@ import {
   getSite,
   isPlaceholder,
   localePath,
+  publicFileExists,
+  url,
   type Lang,
 } from '../lib/i18n';
 
@@ -24,6 +26,9 @@ const s = await getSettings();
 const services = await getServices();
 const featured = (await getProjects()).filter((p) => p.data.featured).slice(0, 3);
 const en = await getSite('en');
+const hasPhoto = publicFileExists(s.photo);
+const photoWebp = s.photo.replace(/\.jpe?g$/i, '.webp');
+const hasWebp = photoWebp !== s.photo && publicFileExists(photoWebp);
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -33,7 +38,6 @@ const jsonLd = {
   jobTitle: t.hero.title,
   description: t.hero.value,
   url: new URL(localePath(lang, '/'), Astro.site).href,
-  ...(isPlaceholder(s.email) ? {} : { email: `mailto:${s.email}` }),
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Madinah',
@@ -58,11 +62,27 @@ const jsonLd = {
 >
   <!-- Hero -->
   <section class="relative overflow-hidden">
+    <div class="hero-glow pointer-events-none absolute inset-0" aria-hidden="true"></div>
     <div class="grid-bg pointer-events-none absolute inset-0" aria-hidden="true"></div>
     <div
       class="container-x relative grid items-center gap-12 py-16 sm:py-20 lg:py-28 xl:grid-cols-[1fr_1.2fr]"
     >
       <div>
+        {
+          hasPhoto && (
+            <picture>
+              {hasWebp && <source srcset={url(photoWebp)} type="image/webp" />}
+              <img
+                src={url(s.photo)}
+                alt={t.about.photoAlt}
+                width="96"
+                height="96"
+                fetchpriority="high"
+                class="mb-6 size-20 rounded-full object-cover shadow-soft ring-2 ring-gold ring-offset-4 ring-offset-bg sm:size-24"
+              />
+            </picture>
+          )
+        }
         <p class="eyebrow">{t.hero.title}</p>
         <h1 class="mt-3 text-4xl leading-tight font-bold text-text sm:text-5xl">{t.hero.name}</h1>
         <p class="mt-5 max-w-xl text-lg text-text sm:text-xl">{t.hero.value}</p>

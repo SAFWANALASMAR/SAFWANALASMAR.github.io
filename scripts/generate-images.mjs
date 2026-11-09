@@ -37,16 +37,16 @@ function ogHtml(lang) {
 ${fonts}
 * { margin: 0; box-sizing: border-box; }
 html, body { width: 1200px; height: 630px; overflow: hidden; }
-body { font-family: ${font}; background: #fbfcfb; color: #15201b; position: relative; }
+body { font-family: ${font}; background: #f5fafc; color: #10232a; position: relative; }
 .grid { position: absolute; inset: 0;
-  background-image: linear-gradient(rgb(31 107 78 / .08) 1px, transparent 1px), linear-gradient(90deg, rgb(31 107 78 / .08) 1px, transparent 1px);
+  background-image: linear-gradient(rgb(11 114 133 / .08) 1px, transparent 1px), linear-gradient(90deg, rgb(11 114 133 / .08) 1px, transparent 1px);
   background-size: 40px 40px; }
-.bar { position: absolute; inset-block: 0; inset-inline-start: 0; width: 18px; background: #1f6b4e; }
+.bar { position: absolute; inset-block: 0; inset-inline-start: 0; width: 18px; background: linear-gradient(#0b7285, #c9a227); }
 .wrap { position: relative; padding: 80px 96px; height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 22px; }
-.logo { display: inline-grid; place-items: center; width: 84px; height: 84px; border-radius: 20px; background: #1f6b4e; color: #fff; font: 32px Mono; direction: ltr; }
+.logo { display: inline-grid; place-items: center; width: 84px; height: 84px; border-radius: 20px; background: #0b7285; color: #fff; font: 32px Mono; direction: ltr; }
 h1 { font-size: 84px; font-weight: 700; line-height: 1.15; }
-.title { font-size: 38px; font-weight: 500; color: #1f6b4e; }
-.value { font-size: 30px; font-weight: 500; color: #4a5a53; max-width: 960px; line-height: 1.6; }
+.title { font-size: 38px; font-weight: 500; color: #0b7285; }
+.value { font-size: 30px; font-weight: 500; color: #46606a; max-width: 960px; line-height: 1.6; }
 </style></head><body><div class="grid"></div><div class="bar"></div><div class="wrap">
 <div class="logo">&lt;/&gt;</div>
 <h1>${t.hero.name}</h1>
