@@ -106,7 +106,7 @@ const site = defineCollection({
         z.object({
           value: z.string(),
           label: z.string(),
-          icon: z.enum(['archive', 'document', 'users', 'star', 'web', 'shield']).optional(),
+          icon: z.enum(['archive', 'document', 'users', 'star', 'web', 'shield', 'files', 'folder', 'award']).optional(),
         }),
       ),
     }),
@@ -164,7 +164,7 @@ const site = defineCollection({
           period: z.string(),
           org: z.string(),
           role: z.string(),
-          icon: z.enum(['briefcase', 'web', 'teach', 'analysis', 'nonprofit', 'cart', 'send']).optional(),
+          icon: z.enum(['briefcase', 'web', 'teach', 'analysis', 'nonprofit', 'cart', 'send', 'book', 'utensils', 'cake', 'car', 'code']).optional(),
           points: z.array(z.string()).optional(),
           link: z.url().optional(),
           linkLabel: z.string().optional(),
@@ -176,6 +176,7 @@ const site = defineCollection({
           title: z.string(),
           org: z.string().optional(),
           date: z.string(),
+          icon: z.enum(['cap', 'briefcase', 'sparkles', 'cart', 'chart', 'star', 'book', 'award', 'code']).optional(),
           image: z.string().optional(),
         }),
       ),
@@ -209,7 +210,9 @@ const site = defineCollection({
       skillsTitle: z.string(),
       skills: z.array(z.object({ category: z.string(), items: z.array(z.string()) })),
       volunteerTitle: z.string(),
-      volunteer: z.string(),
+      volunteer: z.array(z.object({ icon: z.enum(['mosque', 'droplet', 'heart']), title: z.string(), period: z.string() })),
+      languagesTitle: z.string(),
+      languages: z.array(z.object({ name: z.string(), level: z.string() })),
     }),
     contact: z.object({
       title: z.string(),
@@ -224,6 +227,7 @@ const site = defineCollection({
       submit: z.string(),
       formMailto: z.string(),
       formNotReady: z.string(),
+      extraServices: z.array(z.object({ id: z.string().regex(/^[a-z0-9-]+$/), label: z.string() })),
       status: z.object({
         sending: z.string(),
         sent: z.string(),
@@ -253,7 +257,7 @@ const settings = defineCollection({
     linkedin: z.string(),
     github: z.string(),
     turnstileSiteKey: z.string(),
-    cv: z.string(),
+    cv: z.object({ ar: z.string(), en: z.string() }),
     photo: z.string(),
   }),
 });

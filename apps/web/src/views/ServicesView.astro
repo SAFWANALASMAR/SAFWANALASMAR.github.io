@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import SectionHeading from '../components/SectionHeading.astro';
+import CardMarquee from '../components/CardMarquee.astro';
 import { getServices, getSite, localePath, type Lang } from '../lib/i18n';
 
 interface Props {
@@ -21,19 +22,44 @@ const services = await getServices();
 >
   <section class="container-x pt-14 sm:pt-20">
     <SectionHeading as="h1" icon="briefcase" title={t.services.title} intro={t.services.intro} />
-
-    <div class="mt-12 grid gap-6 lg:grid-cols-2">
+  </section>
+  <CardMarquee label={t.services.title} dir={lang === 'ar' ? 'rtl' : 'ltr'} repeat={3}>
+    {
+      services.map((service) => (
+        <li class="cm-item cm-chip">
+          <a href={`#${service.id}`} class="chip-link">
+            <span class="icon-badge size-8 rounded-lg">
+              <Icon name={service.data.icon} size={16} />
+            </span>
+            {service.data[lang].title}
+          </a>
+        </li>
+      ))
+    }
+  </CardMarquee>
+  <section class="container-x">
+    <div class="mt-6 space-y-8">
       {
-        services.map((service) => {
+        services.map((service, i) => {
           const st = service.data[lang];
           return (
-            <article id={service.id} class="card card-hover reveal flex scroll-mt-24 flex-col p-6 sm:p-8">
+            <article
+              id={service.id}
+              class:list={['card card-hover service-row reveal scroll-mt-28', i % 2 ? 'from-end' : 'from-start']}
+            >
+              <div class:list={['service-art', { 'is-flipped': i % 2 }]} aria-hidden="true">
+                <span class="service-num" dir="ltr">{String(i + 1).padStart(2, '0')}</span>
+                <span class="service-art-icon">
+                  <Icon name={service.data.icon} size={44} />
+                </span>
+              </div>
+              <div class="service-body p-6 sm:p-8">
               <div class="flex items-start gap-4">
                 <span class="icon-badge size-12 rounded-xl">
                   <Icon name={service.data.icon} size={24} />
                 </span>
                 <div>
-                  <h2 class="text-xl leading-snug font-bold text-text">{st.title}</h2>
+                  <h2 class="text-2xl leading-snug font-bold text-text">{st.title}</h2>
                   <p class="mt-2 text-muted">{st.summary}</p>
                 </div>
               </div>
@@ -66,6 +92,7 @@ const services = await getServices();
                   {t.services.request}
                   <Icon name="arrow" size={18} class="rtl:-scale-x-100" />
                 </a>
+              </div>
               </div>
             </article>
           );

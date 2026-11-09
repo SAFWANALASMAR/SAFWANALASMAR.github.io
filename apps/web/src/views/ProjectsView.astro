@@ -2,7 +2,9 @@
 import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import SectionHeading from '../components/SectionHeading.astro';
-import { getProjects, getSite, type Lang } from '../lib/i18n';
+import CardMarquee from '../components/CardMarquee.astro';
+import Icon from '../components/Icon.astro';
+import { getProjects, getSite, localePath, type Lang } from '../lib/i18n';
 
 interface Props {
   lang: Lang;
@@ -23,6 +25,22 @@ const types = [...new Set(projects.map((p) => p.data.type))];
 >
   <section class="container-x pt-14 sm:pt-20">
     <SectionHeading as="h1" icon="folder" title={t.projects.title} intro={t.projects.intro} />
+  </section>
+  <CardMarquee label={t.projects.title} dir={lang === 'ar' ? 'rtl' : 'ltr'} reverse repeat={3}>
+    {
+      projects.map((project) => (
+        <li class="cm-item cm-chip">
+          <a href={localePath(lang, `/projects/${project.id}/`)} class="chip-link">
+            <span class="icon-badge size-8 rounded-lg">
+              <Icon name="folder" size={16} />
+            </span>
+            {project.data[lang].title}
+          </a>
+        </li>
+      ))
+    }
+  </CardMarquee>
+  <section class="container-x">
 
     <div
       role="group"

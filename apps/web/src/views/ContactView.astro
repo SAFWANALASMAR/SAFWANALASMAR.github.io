@@ -31,7 +31,8 @@ const emailReady = !isPlaceholder(s.email);
 // Until the Turnstile key is set, the form opens the visitor's email app with the message filled in.
 const useMailto = !formReady && emailReady;
 const githubReady = !isPlaceholder(s.github);
-const hasCv = publicFileExists(s.cv);
+const cvPath = s.cv[lang];
+const hasCv = publicFileExists(cvPath);
 const mail = emailParts(s.email);
 
 const linkClass =
@@ -115,6 +116,7 @@ const linkClass =
             <select id="service" name="service" required class="field">
               <option value="" disabled selected>{c.servicePlaceholder}</option>
               {services.map((service) => <option value={service.id}>{service.data[lang].title}</option>)}
+              {c.extraServices.map((extra) => <option value={extra.id}>{extra.label}</option>)}
               <option value="other">{c.serviceOther}</option>
             </select>
           </div>
@@ -203,7 +205,7 @@ const linkClass =
         <div class="mt-6">
           {
             hasCv ? (
-              <a href={url(s.cv)} download class="btn btn-ghost w-full">
+              <a href={url(cvPath)} download class="btn btn-ghost w-full">
                 <Icon name="download" size={18} />
                 {c.cv}
               </a>

@@ -36,7 +36,7 @@ export default defineConfig({
   integrations: [
     sitemap({
       i18n: { defaultLocale: 'ar', locales: { ar: 'ar', en: 'en' } },
-      filter: (page) => !page.includes('/404'),
+      filter: (page) => !page.includes('/404') && !page.includes('/cv-print'),
     }),
   ],
   vite: { plugins: [tailwindcss()] },

@@ -24,7 +24,7 @@ const isActive = (linkPath: string) =>
 ---
 
 <header class="site-header sticky top-0 z-40 px-2 pt-2 sm:px-4 sm:pt-3">
-  <div class="header-shell mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 ps-2.5 pe-2 sm:ps-3">
+  <div class="header-shell mx-auto flex h-[4.5rem] max-w-6xl items-center justify-between gap-3 ps-2.5 pe-2 sm:ps-3">
     <div class="scroll-progress" aria-hidden="true"></div>
 
     <a href={localePath(lang, '/')} class="brand flex min-w-0 items-center gap-3" aria-label={t.hero.name}>
@@ -32,8 +32,8 @@ const isActive = (linkPath: string) =>
         <span class="brand-core"><Icon name="code" size={19} /></span>
       </span>
       <span class="hidden min-w-0 flex-col leading-tight min-[360px]:flex">
-        <span class="brand-name truncate text-base font-bold sm:text-lg">{t.hero.name}</span>
-        <span class="hidden truncate text-xs text-muted lg:block">{t.hero.title}</span>
+        <span class="brand-name truncate text-lg font-bold sm:text-xl">{t.hero.name}</span>
+        <span class="hidden truncate text-sm text-muted lg:block">{t.hero.title}</span>
       </span>
     </a>
 
@@ -47,7 +47,7 @@ const isActive = (linkPath: string) =>
                 aria-current={isActive(link.path) ? 'page' : undefined}
                 class="nav-link"
               >
-                <Icon name={link.icon} size={16} class="hidden lg:block" />
+                <Icon name={link.icon} size={18} class="hidden lg:block" />
                 <span>{link.label}</span>
               </a>
             </li>
@@ -62,7 +62,7 @@ const isActive = (linkPath: string) =>
         lang={other}
         hreflang={other}
         aria-label={t.nav.switchLangLabel}
-        class="ctrl-btn h-10 gap-1.5 px-3.5 text-sm font-semibold"
+        class="ctrl-btn h-11 gap-1.5 px-4 text-base font-semibold"
       >
         <Icon name="globe" size={16} />
         <span>{t.nav.switchLang}</span>
@@ -72,7 +72,7 @@ const isActive = (linkPath: string) =>
         data-theme-toggle
         aria-label={t.nav.themeToggle}
         aria-pressed="false"
-        class="ctrl-btn theme-btn size-10"
+        class="ctrl-btn theme-btn size-11"
       >
         <Icon name="moon" class="dark:hidden" />
         <Icon name="sun" class="hidden dark:block" />
@@ -83,7 +83,7 @@ const isActive = (linkPath: string) =>
         aria-expanded="false"
         aria-controls="mobile-menu"
         aria-label={t.nav.menu}
-        class="ctrl-btn size-10 md:hidden"
+        class="ctrl-btn size-11 md:hidden"
       >
         <Icon name="menu" class="menu-open-icon" />
         <Icon name="close" class="menu-close-icon hidden" />

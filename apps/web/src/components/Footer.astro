@@ -18,8 +18,8 @@ const mail = emailParts(s.email);
     class="container-x flex flex-col gap-6 py-10 sm:flex-row sm:items-center sm:justify-between"
   >
     <div>
-      <a href={localePath(lang, '/')} class="brand flex items-center gap-3 font-bold text-text"><span class="brand-mark" aria-hidden="true"><span class="brand-core"><Icon name="code" size={19} /></span></span><span class="brand-name text-lg">{t.hero.name}</span></a>
-      <p class="mt-1 text-sm text-muted">{t.footer.tagline}</p>
+      <a href={localePath(lang, '/')} class="brand flex items-center gap-3 font-bold text-text"><span class="brand-mark" aria-hidden="true"><span class="brand-core"><Icon name="code" size={19} /></span></span><span class="brand-name text-xl">{t.hero.name}</span></a>
+      <p class="mt-2 text-base text-muted">{t.footer.tagline}</p>
     </div>
     <ul class="flex items-center gap-2">
       {
@@ -65,7 +65,7 @@ const mail = emailParts(s.email);
       }
     </ul>
   </div>
-  <div class="container-x border-t border-line/60 py-5 text-xs text-muted">
+  <div class="container-x border-t border-line/60 py-5 text-sm text-muted">
     © <span dir="ltr">{year}</span>{' '}{t.hero.name}. {t.footer.rights}
   </div>
 </footer>

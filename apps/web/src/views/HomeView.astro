@@ -71,7 +71,7 @@ const jsonLd = {
     <div class="hero-glow pointer-events-none absolute inset-0" aria-hidden="true"></div>
     <div class="grid-bg pointer-events-none absolute inset-0" aria-hidden="true"></div>
     <div
-      class="container-x relative grid items-center gap-12 py-16 sm:py-20 lg:py-28 xl:grid-cols-[1fr_1.2fr]"
+      class="container-x relative grid items-center gap-12 pt-16 pb-10 sm:pt-20 lg:pt-28 lg:pb-14 xl:grid-cols-[1fr_1.1fr]"
     >
       <div>
         {
@@ -91,14 +91,13 @@ const jsonLd = {
         }
         <p class="eyebrow chip-eyebrow"><span class="pulse-dot" aria-hidden="true"></span>{t.hero.title}</p>
         <h1 class="mt-3 text-4xl leading-tight font-bold text-text sm:text-5xl">
-          <span class="name-underline"><span class="text-gradient">{t.hero.name}</span></span>
+          <span class="name-underline"><span class="name-gradient">{t.hero.name}</span></span>
         </h1>
         <p class="mt-4 text-lg font-semibold text-gold-text sm:text-xl">
           {t.hero.rotatingLead}{' '}
           <span class="rotator text-accent" data-rotate={JSON.stringify(t.hero.rotating)}>{t.hero.rotating[0]}</span>
         </p>
-        <p class="mt-4 max-w-xl text-lg text-text sm:text-xl">{t.hero.value}</p>
-        <p class="mt-4 text-sm text-muted">{t.hero.support}</p>
+        <p class="mt-4 text-base text-muted sm:text-lg">{t.hero.support}</p>
         <div class="mt-8 flex flex-wrap gap-3">
           <a href={localePath(lang, '/contact/')} class="btn btn-primary">
             {t.hero.ctaPrimary}
@@ -126,19 +125,22 @@ const jsonLd = {
         }
       </div>
     </div>
+    <div class="container-x relative pb-12 sm:pb-16">
+      <p class="hero-statement reveal">{t.hero.value}</p>
+    </div>
   </section>
 
   <!-- Stats -->
   <section aria-label={t.stats.label} class="band-glass border-y border-line">
-    <dl class="stagger container-x grid grid-cols-2 gap-x-6 gap-y-8 py-10 lg:grid-cols-4">
+    <dl class="stagger container-x grid grid-cols-2 gap-4 py-10 lg:grid-cols-4">
       {
         t.stats.items.map((item) => (
-          <div class="reveal flex flex-col-reverse gap-1">
-            <dt class="text-sm text-muted">{item.label}</dt>
+          <div class="stat-card reveal flex flex-col-reverse gap-1.5">
+            <dt class="text-sm font-medium text-muted">{item.label}</dt>
             <dd class="flex items-center gap-3 text-3xl font-bold text-accent sm:text-4xl">
               {item.icon && (
-                <span class="icon-badge size-11">
-                  <Icon name={item.icon} size={22} />
+                <span class="icon-badge size-12 rounded-xl">
+                  <Icon name={item.icon} size={24} />
                 </span>
               )}
               <bdi dir="ltr" data-count={item.value}>{item.value}</bdi>
@@ -170,8 +172,9 @@ const jsonLd = {
       <SectionHeading id="home-services" icon="briefcase" title={t.home.servicesTitle} intro={t.home.servicesIntro} />
       <a
         href={localePath(lang, '/services/')}
-        class="inline-flex items-center gap-1.5 font-semibold text-accent hover:underline"
+        class="more-pill"
       >
+        <span class="icon-badge size-8 rounded-lg"><Icon name="briefcase" size={16} /></span>
         {t.home.servicesMore}
         <Icon name="arrow" size={16} class="rtl:-scale-x-100" />
       </a>
@@ -204,8 +207,9 @@ const jsonLd = {
       <SectionHeading id="home-projects" icon="folder" title={t.home.projectsTitle} intro={t.home.projectsIntro} />
       <a
         href={localePath(lang, '/projects/')}
-        class="inline-flex items-center gap-1.5 font-semibold text-accent hover:underline"
+        class="more-pill"
       >
+        <span class="icon-badge size-8 rounded-lg"><Icon name="folder" size={16} /></span>
         {t.home.projectsMore}
         <Icon name="arrow" size={16} class="rtl:-scale-x-100" />
       </a>
@@ -248,7 +252,7 @@ const jsonLd = {
       <span class="cta-orb cta-orb-b" aria-hidden="true"></span>
       <span class="cta-icon mx-auto mb-5" aria-hidden="true"><Icon name="send" size={26} /></span>
       <p class="relative mx-auto max-w-2xl text-2xl leading-relaxed font-bold sm:text-3xl">{t.home.cta}</p>
-      <a href={localePath(lang, '/contact/')} class="btn cta-btn relative mt-7">
+      <a href={localePath(lang, '/contact/')} class="btn cta-btn cta-pulse relative mt-7 text-lg">
         {t.home.ctaButton}
         <Icon name="arrow" size={18} class="rtl:-scale-x-100" />
       </a>

@@ -53,10 +53,10 @@ hero:
 stats:
   label: Key numbers
   items:
-    - icon: archive
+    - icon: files
       value: "100+"
       label: institutional deliverables documented and archived
-    - icon: document
+    - icon: folder
       value: "7"
       label: funded-project archives rebuilt
     - icon: users
@@ -136,7 +136,7 @@ about:
         - Designing and developing the association's web portal, ejaz.sa, to replace a WordPress site and serve around 30,000 users
         - Admin panel with tiered permissions, encryption of sensitive data, an internal security review, and code managed on a protected main branch
         - Set up the association's digital presence with one identity across seven platforms, and run its office
-    - icon: nonprofit
+    - icon: book
       period: May 2026 – Present
       org: Al-Maqari Quranic Association, Madinah
       role: Public Relations & Marketing Manager and Head of Media (since Sep 2026); previously Public Relations & Marketing Officer
@@ -161,22 +161,22 @@ about:
       period: Mar – May 2026
       org: Arabian Agencies Company for Mechanical, Electrical and Electronic Projects
       role: Sales and Marketing Representative
-    - icon: cart
+    - icon: utensils
       period: Feb – Mar 2026
       org: Asr Al-Najah Company (restaurant)
       role: Cashier and Assistant Supervisor
-    - icon: analysis
+    - icon: code
       period: Jan – Jul 2025
       org: Royal Commission for Jubail and Yanbu — General Directorate of IT
       role: "Co-op trainee: business analysis, app development, technical support and infrastructure"
-    - icon: cart
+    - icon: cake
       period: Apr – Jun 2024
       org: Rosh Sweet Trading (sweets shop)
       role: Cashier and Assistant to the Owner
       points:
         - Marketing for the shop, plus day-to-day management and supervision
         - Responsible for the shop and its inventory
-    - icon: send
+    - icon: car
       period: 2019 – 2025 (approx.)
       org: Freelance delivery and ride-hailing via apps
       role: HungerStation, Mrsool, Jeeny, Careem, Uber
@@ -185,24 +185,35 @@ about:
     - title: B.Sc. in Computer Science
       org: Yanbu Industrial College, Royal Commission for Jubail and Yanbu
       date: "2025"
+      icon: cap
     - title: Co-op Training Program Completion
       org: Royal Commission for Jubail and Yanbu
       date: "2025"
+      icon: briefcase
     - title: Entrepreneurship & Innovation Program
       org: Monsha'at
       date: "2024"
+      icon: sparkles
     - title: Professional Diploma in E-Commerce and Digital Marketing
       org: Texas Professional University — 120 hours, grade Excellent
       date: Oct 2021
+      icon: award
     - title: "Digital Marketing: The Code of Effective Marketing"
       org: Al Mohanad Training Institute — 32 training hours
       date: Jul 2021
+      icon: chart
+    - title: "Course: Secrets of the E-Business World"
+      org: Al Mohanad Training Institute — 69 training hours
+      date: Jul 2021
+      icon: cart
     - title: Summer Student Enrichment Program
       org: Saudi Aramco
       date: "2017"
+      icon: star
     - title: Distance Learning Certificate
       org: Holy Quran Academy at the Prophet's Mosque
       date: 1439 AH
+      icon: book
   marketing:
     title: Marketing and Sales
     intro: Before and alongside software, I have worked in marketing, sales and direct selling, and founded my own online store.
@@ -240,6 +251,10 @@ about:
         org: Al Mohanad Training Institute
         date: Jul 2021
         note: 32 training hours
+      - title: Secrets of the E-Business World
+        org: Al Mohanad Training Institute
+        date: Jun – Jul 2021
+        note: 69 training hours
   showMore: Show details
   certificateView: View certificate
   certificateClose: Close
@@ -268,6 +283,12 @@ about:
       - name: Mohamed
         date: Feb 2026
         text: Very polite, and his teaching is good.
+      - name: Abdulbari
+        date: Jan 2026
+        text: I highly recommend him as an excellent, highly competent teacher — patient, professional and focused on what each student needs.
+      - name: Ali
+        date: Jan 2026
+        text: We started with vocabulary from the very first session; I'm happy with my progress and we'll move on to sentences next.
     more: All reviews on Preply
     link: https://preply.com/en/tutor/7053708
     note: Rating, review and lesson counts are from the public Preply profile (Nov 2026); hours and student count are from the tutor dashboard (Aug 2026). Reviews are shortened and paraphrased.
@@ -285,10 +306,20 @@ about:
       items: [Business analysis, Requirements documents, Approval workflow & permissions design, Process redesign]
     - category: Platforms
       items: [Salla, Jisr, Donor platforms]
-    - category: Languages
-      items: [Arabic (native), English (professional)]
   volunteerTitle: Volunteering
-  volunteer: Mosque imam by official appointment from the Ministry of Islamic Affairs (2025 – present) · Regular blood donor (2020 – present).
+  volunteer:
+    - icon: mosque
+      title: Mosque imam by official appointment from the Ministry of Islamic Affairs
+      period: 2025 – Present
+    - icon: droplet
+      title: Regular blood donor (20+ donations)
+      period: 2020 – Present
+  languagesTitle: Languages
+  languages:
+    - name: Arabic
+      level: Native
+    - name: English
+      level: Professional
 
 contact:
   title: Contact
@@ -303,6 +334,15 @@ contact:
   submit: Send
   formMailto: Sending opens your email app with the message ready.
   formNotReady: The contact form isn't active yet — please email me directly.
+  extraServices:
+    - id: digital-marketing
+      label: Digital marketing and account management
+    - id: web-mobile-apps
+      label: Website and app development
+    - id: online-stores
+      label: Online store setup
+    - id: arabic-quran-teaching
+      label: Arabic and Quran teaching
   status:
     sending: Sending…
     sent: Your message arrived, thank you. I will reply to your email soon.

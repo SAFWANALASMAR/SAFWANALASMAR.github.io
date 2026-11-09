@@ -6,5 +6,7 @@ github: "https://github.com/SAFWANALASMAR"
 # حتى يُضاف المفتاح يفتح النموذج تطبيق البريد لدى الزائر بدل الإرسال المباشر
 turnstileSiteKey: "【مفتاح Turnstile العام】"
 # المسارات داخل مجلد public/
-cv: "cv/Safwan-Alasmar-CV.pdf"
+cv:
+  ar: "cv/Safwan-Alasmar-CV-ar.pdf"
+  en: "cv/Safwan-Alasmar-CV-en.pdf"
 photo: "images/profile.jpg"
