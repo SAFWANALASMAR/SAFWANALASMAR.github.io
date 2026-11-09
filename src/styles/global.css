@@ -471,9 +471,8 @@ html[dir='ltr'] .scroll-progress {
   transition: opacity 0.3s ease;
   background: radial-gradient(
     16rem circle at var(--mx, 50%) var(--my, 50%),
-    color-mix(in srgb, var(--accent) 12%, transparent),
-    color-mix(in srgb, var(--gold) 6%, transparent) 40%,
-    transparent 70%
+    color-mix(in srgb, var(--accent) 7%, transparent),
+    transparent 65%
   );
 }
 .card-hover:hover::before {
@@ -647,31 +646,15 @@ body {
   }
 }
 
-/* Animated turquoise-gold border on cards when hovered. */
-@property --border-angle {
-  syntax: '<angle>';
-  inherits: false;
-  initial-value: 0deg;
-}
+/* Calm hover on cards: a steady gold-tinted border, no shifting colours. */
 .card-hover:hover {
-  border-color: transparent;
-  background:
-    linear-gradient(var(--surface), var(--surface)) padding-box,
-    conic-gradient(from var(--border-angle), var(--accent), var(--gold), var(--accent-soft), var(--accent))
-      border-box;
-  animation: border-spin 4s linear infinite;
-}
-@keyframes border-spin {
-  to {
-    --border-angle: 360deg;
-  }
+  border-color: color-mix(in srgb, var(--gold) 45%, var(--border));
 }
 
 @media (prefers-reduced-motion: reduce) {
   html,
   body::before,
-  body::after,
-  .card-hover:hover {
+  body::after {
     animation: none !important;
   }
 }
@@ -689,12 +672,6 @@ body {
 .card {
   background: var(--card-bg);
   backdrop-filter: blur(10px);
-}
-.card-hover:hover {
-  background:
-    var(--card-bg) padding-box,
-    conic-gradient(from var(--border-angle), var(--accent), var(--gold), var(--accent-soft), var(--accent))
-      border-box;
 }
 .glass-soft {
   background: linear-gradient(
