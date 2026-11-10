@@ -152,3 +152,66 @@ test('contact form asks for verification before sending', async ({ page }) => {
   await expect(page.getByRole('status')).toContainText('خانة التحقق');
   expect(called).toBe(false);
 });
+
+test.describe('request a project', () => {
+  test('walks through four steps and sends a complete request', async ({ page }) => {
+    const violations = watchCsp(page);
+    await stubTurnstile(page);
+    let sent: Record<string, unknown> | undefined;
+    await page.route('**/api/project-request', async (route) => {
+      sent = route.request().postDataJSON();
+      await route.fulfill({ json: { ok: true } });
+    });
+
+    await page.goto('/request/');
+    await page.locator('label.req-card', { hasText: 'التسويق الرقمي' }).click();
+    await page.locator('label.req-chip', { hasText: 'إدارة حسابات التواصل' }).click();
+    await page.getByRole('button', { name: 'التالي' }).click();
+
+    // Step 2 refuses to continue without a description.
+    await page.getByRole('button', { name: 'التالي' }).click();
+    await expect(page.locator('#req-desc')).toBeVisible();
+    await page.locator('#req-desc').fill('إدارة حسابات الجمعية على إنستقرام وإكس مع خطة شهرية.');
+    await page.locator('#req-link').fill('https://drive.google.com/file/d/abc');
+    await page.getByRole('button', { name: 'التالي' }).click();
+
+    await page.locator('label.req-chip', { hasText: 'إنستقرام' }).click();
+    await page.locator('label.req-chip', { hasText: 'خلال شهر' }).click();
+    await page.getByRole('button', { name: 'التالي' }).click();
+
+    await page.locator('#req-name').fill('عميل تجريبي');
+    await page.locator('#req-email').fill('client@example.com');
+    // WhatsApp needs a phone number.
+    await page.locator('label.req-chip:has(input[name="contactMethod"][value="whatsapp"])').click();
+    await page.getByRole('button', { name: 'إرسال الطلب' }).click();
+    expect(sent).toBeUndefined();
+    await page.locator('#req-phone').fill('+966 500000000');
+    await page.getByRole('button', { name: 'إرسال الطلب' }).click();
+
+    await expect(page.getByRole('heading', { name: 'وصل طلبك' })).toBeVisible();
+    expect(sent).toMatchObject({
+      category: 'marketing',
+      type: 'social-accounts',
+      stage: 'partial',
+      features: ['instagram'],
+      timeline: 'month',
+      budget: 'unsure',
+      contactMethod: 'whatsapp',
+      phone: '+966 500000000',
+      link: 'https://drive.google.com/file/d/abc',
+      lang: 'ar',
+      turnstileToken: 'test-token',
+    });
+    expect(violations).toEqual([]);
+  });
+
+  test('preselects the request type from the services page', async ({ page }) => {
+    await page.goto('/request/?service=document-automation');
+    await expect(page.locator('input[value="software:automation"]')).toBeChecked();
+  });
+
+  test('the request API refuses other origins', async ({ request }) => {
+    const res = await request.post('/api/project-request', { headers: { origin: 'https://evil.example' }, data: {} });
+    expect(res.status()).toBe(403);
+  });
+});

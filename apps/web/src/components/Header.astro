@@ -32,8 +32,8 @@ const isActive = (linkPath: string) =>
         <span class="brand-core"><Icon name="code" size={19} /></span>
       </span>
       <span class="hidden min-w-0 flex-col leading-tight min-[360px]:flex">
-        <span class="brand-name truncate text-lg font-bold sm:text-xl">{t.hero.name}</span>
-        <span class="hidden truncate text-sm text-muted lg:block">{t.hero.title}</span>
+        <span class="brand-name truncate text-base font-bold sm:text-xl">{t.hero.name}</span>
+        <span class="hidden truncate text-sm text-muted 2xl:block">{t.hero.title}</span>
       </span>
     </a>
 
@@ -58,21 +58,29 @@ const isActive = (linkPath: string) =>
 
     <div class="flex items-center gap-1.5">
       <a
+        href={localePath(lang, '/request/')}
+        aria-current={isActive('/request/') ? 'page' : undefined}
+        class="request-cta hidden whitespace-nowrap xl:inline-flex"
+      >
+        <Icon name="send" size={17} />
+        {t.nav.request}
+      </a>
+      <a
         href={localePath(other, path)}
         lang={other}
         hreflang={other}
         aria-label={t.nav.switchLangLabel}
-        class="ctrl-btn h-11 gap-1.5 px-4 text-base font-semibold"
+        class="ctrl-btn h-10 gap-1.5 px-3 text-sm font-semibold sm:h-11 sm:px-4 sm:text-base"
       >
         <Icon name="globe" size={16} />
-        <span>{t.nav.switchLang}</span>
+        <span class="max-[420px]:sr-only">{t.nav.switchLang}</span>
       </a>
       <button
         type="button"
         data-theme-toggle
         aria-label={t.nav.themeToggle}
         aria-pressed="false"
-        class="ctrl-btn theme-btn size-11"
+        class="ctrl-btn theme-btn size-10 sm:size-11"
       >
         <Icon name="moon" class="dark:hidden" />
         <Icon name="sun" class="hidden dark:block" />
@@ -83,7 +91,7 @@ const isActive = (linkPath: string) =>
         aria-expanded="false"
         aria-controls="mobile-menu"
         aria-label={t.nav.menu}
-        class="ctrl-btn size-11 md:hidden"
+        class="ctrl-btn size-10 sm:size-11 md:hidden"
       >
         <Icon name="menu" class="menu-open-icon" />
         <Icon name="close" class="menu-close-icon hidden" />
@@ -93,6 +101,15 @@ const isActive = (linkPath: string) =>
 
   <nav id="mobile-menu" aria-label={t.nav.primary} class="mobile-panel mx-auto mt-2 hidden max-w-6xl md:hidden">
     <ul class="flex flex-col gap-1 p-2">
+      <li>
+        <a href={localePath(lang, '/request/')} class="mobile-link mobile-request">
+          <span class="icon-badge size-9">
+            <Icon name="send" size={18} />
+          </span>
+          <span class="flex-1">{t.nav.request}</span>
+          <Icon name="arrow" size={16} class="rtl:-scale-x-100" />
+        </a>
+      </li>
       {
         links.map((link) => (
           <li>

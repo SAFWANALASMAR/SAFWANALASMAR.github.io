@@ -163,3 +163,69 @@ describe('other routes', () => {
     expect(res.status).toBe(404);
   });
 });
+
+describe('POST /api/project-request', () => {
+  const request = {
+    category: 'software',
+    type: 'system',
+    stage: 'partial',
+    description: 'نظام لإدارة طلبات المستفيدين مع لوحة تحكم.',
+    link: 'https://drive.google.com/file/d/abc',
+    features: ['accounts', 'dashboard'],
+    budget: '15-40k',
+    timeline: 'quarter',
+    name: 'عميل',
+    org: 'جمعية',
+    email: 'client@example.com',
+    phone: '',
+    contactMethod: 'email',
+    lang: 'ar',
+    turnstileToken: 'token',
+  };
+  const send = (body: unknown, headers: Record<string, string> = {}) =>
+    app.request(
+      `${ORIGIN}/api/project-request`,
+      {
+        method: 'POST',
+        headers: { origin: ORIGIN, 'content-type': 'application/json', 'cf-connecting-ip': '203.0.113.7', ...headers },
+        body: JSON.stringify(body),
+      },
+      env(),
+    );
+
+  it('emails a readable Arabic summary', async () => {
+    const res = await send(request);
+    expect(res.status).toBe(200);
+    const [[, init]] = resendCalls() as [[string, RequestInit]];
+    const payload = JSON.parse(String(init.body));
+    expect(payload.subject).toContain('برمجة وتطوير');
+    expect(payload.text).toContain('نظام إداري أو بوابة خدمات');
+    expect(payload.text).toContain('لوحة تحكم وإدارة');
+    expect(payload.text).toContain('15,000 – 40,000 ريال');
+    expect(payload.reply_to).toBe('client@example.com');
+  });
+
+  it('rejects a type that does not belong to the category', async () => {
+    expect((await send({ ...request, type: 'campaigns' })).status).toBe(400);
+  });
+
+  it('rejects unknown features', async () => {
+    expect((await send({ ...request, features: ['hack'] })).status).toBe(400);
+  });
+
+  it('rejects non-https links', async () => {
+    expect((await send({ ...request, link: 'javascript:alert(1)' })).status).toBe(400);
+    expect((await send({ ...request, link: 'http://example.com' })).status).toBe(400);
+  });
+
+  it('requires a phone number when WhatsApp is preferred', async () => {
+    expect((await send({ ...request, contactMethod: 'whatsapp' })).status).toBe(400);
+    expect((await send({ ...request, contactMethod: 'whatsapp', phone: '+966 500000000' })).status).toBe(200);
+  });
+
+  it('keeps the same protections as the contact form', async () => {
+    expect((await send(request, { origin: 'https://evil.example' })).status).toBe(403);
+    allowRate = false;
+    expect((await send(request)).status).toBe(429);
+  });
+});

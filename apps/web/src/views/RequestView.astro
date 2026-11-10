@@ -1,0 +1,432 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon, { type IconName } from '../components/Icon.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { emailParts, getSettings, getSite, isPlaceholder, type Lang } from '../lib/i18n';
+import {
+  REQUEST_BUDGETS,
+  REQUEST_CATEGORIES,
+  REQUEST_CONTACT_METHODS,
+  REQUEST_PATH,
+  REQUEST_STAGES,
+  REQUEST_TIMELINES,
+} from '@safwan/shared/request-options';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = await getSite(lang);
+const s = await getSettings();
+const r = t.request;
+const ar = lang === 'ar';
+const desc = (o: { descAr: string; descEn: string }) => (ar ? o.descAr : o.descEn);
+
+// Same switch as the contact form: the Turnstile key turns on direct sending; until then, the email app opens.
+const siteKey: string = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || s.turnstileSiteKey;
+const apiReady = !isPlaceholder(siteKey);
+const mail = emailParts(s.email);
+const stageIcons: IconName[] = ['sparkles', 'document', 'check'];
+---
+
+<Base lang={lang} path="/request/" title={t.meta.pages.request.title} description={t.meta.pages.request.description}>
+  <section class="container-x pt-14 sm:pt-20">
+    <SectionHeading as="h1" icon="send" title={r.title} intro={r.intro} />
+
+    <form
+      class="req-form card mt-10 scroll-mt-28 overflow-hidden"
+      method="POST"
+      action={apiReady ? REQUEST_PATH : undefined}
+      data-request
+      data-api={apiReady ? '' : undefined}
+      data-lang={lang}
+      data-u={mail.u}
+      data-d={mail.d}
+      data-subject={r.subject}
+      data-status-text={JSON.stringify(t.contact.status)}
+      novalidate
+    >
+      <!-- Progress -->
+      <ol class="req-steps" aria-hidden="true">
+        {
+          r.steps.map((label, i) => (
+            <li class:list={['req-step-dot', { 'is-current': i === 0 }]} data-dot={i}>
+              <span class="req-step-num" dir="ltr">{i + 1}</span>
+              <span class="req-step-label">{label}</span>
+            </li>
+          ))
+        }
+      </ol>
+      <div class="req-progress" aria-hidden="true"><span data-progress></span></div>
+
+      <div class="p-6 sm:p-8">
+        <!-- Step 1: category and type -->
+        <fieldset class="req-panel" data-step="0">
+          <legend class="req-legend">{r.categoryLabel}</legend>
+          <div class="grid gap-3 sm:grid-cols-2">
+            {
+              REQUEST_CATEGORIES.map((c, i) => (
+                <label class="req-card">
+                  <input type="radio" name="category" value={c.id} required checked={i === 0} />
+                  <span class="icon-badge size-12 rounded-xl">
+                    <Icon name={c.icon as IconName} size={24} />
+                  </span>
+                  <span>
+                    <span class="block text-lg font-bold text-text">{c[lang]}</span>
+                    <span class="mt-0.5 block text-sm text-muted">{desc(c)}</span>
+                  </span>
+                </label>
+              ))
+            }
+          </div>
+
+          <p class="req-legend mt-8">{r.typeLabel}</p>
+          {
+            REQUEST_CATEGORIES.map((c, ci) => (
+              <div class="req-chips" data-cat={c.id} hidden={ci !== 0}>
+                {c.types.map((type, ti) => (
+                  <label class="req-chip">
+                    <input type="radio" name="type" value={`${c.id}:${type.id}`} checked={ci === 0 && ti === 0} />
+                    <span>{type[lang]}</span>
+                  </label>
+                ))}
+              </div>
+            ))
+          }
+        </fieldset>
+
+        <!-- Step 2: stage, description, link -->
+        <fieldset class="req-panel" data-step="1">
+          <legend class="req-legend">{r.stageLabel}</legend>
+          <div class="grid gap-3 sm:grid-cols-3">
+            {
+              REQUEST_STAGES.map((st, i) => (
+                <label class="req-card req-card-sm">
+                  <input type="radio" name="stage" value={st.id} required checked={i === 1} />
+                  <span class="icon-badge size-10 rounded-xl">
+                    <Icon name={stageIcons[i] ?? 'check'} size={20} />
+                  </span>
+                  <span>
+                    <span class="block font-bold text-text">{st[lang]}</span>
+                    <span class="mt-0.5 block text-sm text-muted">{desc(st)}</span>
+                  </span>
+                </label>
+              ))
+            }
+          </div>
+          <label for="req-desc" class="req-legend mt-8 block">{r.descLabel}</label>
+          <textarea
+            id="req-desc"
+            name="description"
+            rows="6"
+            required
+            minlength="10"
+            maxlength="5000"
+            class="field resize-y"
+            placeholder={r.descPlaceholder}></textarea>
+          <label for="req-link" class="mt-6 mb-1.5 block text-sm font-medium text-text">{r.linkLabel}</label>
+          <input id="req-link" name="link" type="url" inputmode="url" dir="ltr" pattern="https://.*" maxlength="500" class="field" placeholder="https://" />
+          <p class="mt-1.5 flex items-center gap-1.5 text-sm text-muted">
+            <Icon name="cloud" size={16} class="shrink-0 text-accent" />
+            {r.linkHint}
+          </p>
+        </fieldset>
+
+        <!-- Step 3: features, budget, timeline -->
+        <fieldset class="req-panel" data-step="2">
+          {
+            REQUEST_CATEGORIES.filter((c) => c.features.length).map((c, ci) => (
+              <div data-cat={c.id} hidden={ci !== 0}>
+                <p class="req-legend">{r.featuresLabel}</p>
+                <div class="req-chips">
+                  {c.features.map((f) => (
+                    <label class="req-chip req-check">
+                      <input type="checkbox" name="features" value={`${c.id}:${f.id}`} />
+                      <Icon name="check" size={14} class="req-tick" />
+                      <span>{f[lang]}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            ))
+          }
+          <p class="req-legend mt-8">{r.budgetLabel}</p>
+          <div class="req-chips">
+            {
+              REQUEST_BUDGETS.map((b) => (
+                <label class="req-chip">
+                  <input type="radio" name="budget" value={b.id} required checked={b.id === 'unsure'} />
+                  <span>{b[lang]}</span>
+                </label>
+              ))
+            }
+          </div>
+          <p class="req-legend mt-8">{r.timelineLabel}</p>
+          <div class="req-chips">
+            {
+              REQUEST_TIMELINES.map((tl) => (
+                <label class="req-chip">
+                  <input type="radio" name="timeline" value={tl.id} required checked={tl.id === 'flexible'} />
+                  <span>{tl[lang]}</span>
+                </label>
+              ))
+            }
+          </div>
+        </fieldset>
+
+        <!-- Step 4: contact -->
+        <fieldset class="req-panel" data-step="3">
+          <legend class="sr-only">{r.steps[3]}</legend>
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label for="req-name" class="mb-1.5 block text-sm font-medium text-text">{r.nameLabel}</label>
+              <input id="req-name" name="name" type="text" required minlength="2" maxlength="100" autocomplete="name" class="field" />
+            </div>
+            <div>
+              <label for="req-org" class="mb-1.5 block text-sm font-medium text-text">
+                {r.orgLabel} <span class="text-muted">({r.optional})</span>
+              </label>
+              <input id="req-org" name="org" type="text" maxlength="120" autocomplete="organization" class="field" />
+            </div>
+            <div>
+              <label for="req-email" class="mb-1.5 block text-sm font-medium text-text">{r.emailLabel}</label>
+              <input id="req-email" name="email" type="email" required maxlength="254" autocomplete="email" dir="ltr" class="field" />
+            </div>
+            <div>
+              <label for="req-phone" class="mb-1.5 block text-sm font-medium text-text">
+                {r.phoneLabel} <span class="text-muted">({r.optional})</span>
+              </label>
+              <input id="req-phone" name="phone" type="tel" pattern="\+?[0-9 ]{8,16}" maxlength="16" autocomplete="tel" dir="ltr" class="field" placeholder="+966" />
+              <p class="mt-1 text-xs text-muted">{r.phoneHint}</p>
+            </div>
+          </div>
+          <p class="req-legend mt-8">{r.contactLabel}</p>
+          <div class="req-chips">
+            {
+              REQUEST_CONTACT_METHODS.map((m, i) => (
+                <label class="req-chip">
+                  <input type="radio" name="contactMethod" value={m.id} required checked={i === 0} />
+                  <span>{m[lang]}</span>
+                </label>
+              ))
+            }
+          </div>
+          <div class="hp" aria-hidden="true">
+            <label for="req-website">Website</label>
+            <input id="req-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+          {
+            apiReady && (
+              <div class="cf-turnstile mt-6" data-sitekey={siteKey} data-action="contact" data-language={lang} data-theme="auto" data-size="flexible" />
+            )
+          }
+          {!apiReady && <p class="mt-6 rounded-xl border border-line bg-surface-2 p-3 text-sm text-text">{r.mailtoNote}</p>}
+        </fieldset>
+
+        <p data-status role="status" aria-live="polite" class="mt-4 text-sm font-medium empty:hidden"></p>
+
+        <div class="req-nav mt-8 flex flex-wrap items-center justify-between gap-3">
+          <button type="button" class="btn btn-ghost" data-back>
+            <Icon name="arrow" size={18} class="ltr:-scale-x-100" />
+            {r.back}
+          </button>
+          <button type="button" class="btn btn-primary" data-next>
+            {r.next}
+            <Icon name="arrow" size={18} class="rtl:-scale-x-100" />
+          </button>
+          <button type="submit" class="btn btn-primary" data-submit>
+            {r.submit}
+            <Icon name="send" size={18} />
+          </button>
+        </div>
+      </div>
+
+      <div class="req-done p-8 text-center sm:p-12" data-done hidden>
+        <span class="icon-badge mx-auto size-16 rounded-2xl">
+          <Icon name="check" size={32} />
+        </span>
+        <h2 class="mt-5 text-2xl font-bold text-text">{r.sentTitle}</h2>
+        <p class="mt-2 text-muted">{r.sentText}</p>
+        <button type="button" class="btn btn-ghost mt-6" data-restart>{r.newRequest}</button>
+      </div>
+    </form>
+  </section>
+</Base>
+
+{apiReady && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+
+<script>
+  import { formatProjectRequest, type RequestSummary } from '@safwan/shared/request-options';
+
+  // Services page links pass ?service=<id>; preselect the matching request type.
+  const SERVICE_TO_TYPE: Record<string, string> = {
+    'web-systems': 'software:system',
+    'document-automation': 'software:automation',
+    'digital-archiving': 'other:archive',
+    'nonprofit-transformation': 'other:transformation',
+    'business-analysis': 'other:analysis',
+  };
+
+  const form = document.querySelector<HTMLFormElement>('form[data-request]');
+  if (form) {
+    form.classList.add('is-wizard');
+    const panels = [...form.querySelectorAll<HTMLFieldSetElement>('[data-step]')];
+    const dots = [...form.querySelectorAll<HTMLElement>('[data-dot]')];
+    const bar = form.querySelector<HTMLElement>('[data-progress]')!;
+    const back = form.querySelector<HTMLButtonElement>('[data-back]')!;
+    const next = form.querySelector<HTMLButtonElement>('[data-next]')!;
+    const submit = form.querySelector<HTMLButtonElement>('[data-submit]')!;
+    const status = form.querySelector<HTMLElement>('[data-status]')!;
+    const text: Record<string, string> = JSON.parse(form.dataset.statusText ?? '{}');
+    let step = 0;
+
+    const value = (name: string) => (form.elements.namedItem(name) as RadioNodeList | HTMLInputElement | null)?.value ?? '';
+    const category = () => value('category');
+
+    // Show only the type chips and feature checkboxes that belong to the chosen category.
+    const syncCategory = () => {
+      const cat = category();
+      form.querySelectorAll<HTMLElement>('[data-cat]').forEach((group) => {
+        const active = group.dataset.cat === cat;
+        group.hidden = !active;
+        group.querySelectorAll<HTMLInputElement>('input').forEach((input) => (input.disabled = !active));
+      });
+      const checkedType = form.querySelector<HTMLInputElement>(`[data-cat="${cat}"] input[name="type"]:checked`);
+      if (!checkedType) form.querySelector<HTMLInputElement>(`[data-cat="${cat}"] input[name="type"]`)!.checked = true;
+    };
+
+    const syncPhone = () => {
+      const phone = form.querySelector<HTMLInputElement>('#req-phone')!;
+      phone.required = value('contactMethod') === 'whatsapp';
+    };
+
+    const show = (n: number) => {
+      step = Math.max(0, Math.min(panels.length - 1, n));
+      panels.forEach((p, i) => p.classList.toggle('is-active', i === step));
+      dots.forEach((d, i) => {
+        d.classList.toggle('is-current', i === step);
+        d.classList.toggle('is-done', i < step);
+      });
+      bar.style.setProperty('--p', String((step + 1) / panels.length));
+      back.hidden = step === 0;
+      next.hidden = step === panels.length - 1;
+      submit.hidden = step !== panels.length - 1;
+      status.textContent = '';
+    };
+
+    const validStep = () => {
+      const fields = [...panels[step]!.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input, textarea')].filter(
+        (f) => !f.disabled && f.type !== 'hidden' && f.name !== 'website',
+      );
+      for (const field of fields) {
+        if (!field.checkValidity()) {
+          field.reportValidity();
+          return false;
+        }
+      }
+      return true;
+    };
+
+    form.addEventListener('change', (e) => {
+      const target = e.target as HTMLInputElement;
+      if (target.name === 'category') syncCategory();
+      if (target.name === 'contactMethod') syncPhone();
+    });
+    next.addEventListener('click', () => {
+      if (validStep()) {
+        show(step + 1);
+        form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+    back.addEventListener('click', () => show(step - 1));
+
+    const collect = (): RequestSummary & { lang: string; website: string } => {
+      const data = new FormData(form);
+      const strip = (v: string) => v.split(':')[1] ?? v;
+      return {
+        category: category(),
+        type: strip(String(data.get('type') ?? '')),
+        stage: String(data.get('stage') ?? ''),
+        description: String(data.get('description') ?? '').trim(),
+        link: String(data.get('link') ?? '').trim(),
+        features: data.getAll('features').map((f) => strip(String(f))),
+        budget: String(data.get('budget') ?? ''),
+        timeline: String(data.get('timeline') ?? ''),
+        name: String(data.get('name') ?? '').trim(),
+        org: String(data.get('org') ?? '').trim(),
+        email: String(data.get('email') ?? '').trim(),
+        phone: String(data.get('phone') ?? '').trim(),
+        contactMethod: String(data.get('contactMethod') ?? ''),
+        lang: form.dataset.lang ?? 'ar',
+        website: String(data.get('website') ?? ''),
+      };
+    };
+
+    const done = () => {
+      form.querySelector<HTMLElement>('.p-6')!.hidden = true;
+      form.querySelector<HTMLElement>('.req-steps')!.hidden = true;
+      form.querySelector<HTMLElement>('[data-done]')!.hidden = false;
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!validStep()) return;
+      const request = collect();
+      const lang = request.lang === 'en' ? 'en' : 'ar';
+
+      if (form.dataset.api === undefined) {
+        // Email app fallback until the API is live.
+        const subject = `${form.dataset.subject} — ${request.name}`;
+        const body = formatProjectRequest(request, lang);
+        location.href = `mailto:${form.dataset.u}@${form.dataset.d}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        return;
+      }
+
+      const token = String(new FormData(form).get('cf-turnstile-response') ?? '');
+      if (!token) {
+        status.textContent = text.captcha ?? '';
+        return;
+      }
+      submit.disabled = true;
+      status.textContent = text.sending ?? '';
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ...request, turnstileToken: token }),
+        });
+        const result = await res.json().catch(() => ({ ok: false, error: 'unavailable' }));
+        if (result.ok) done();
+        else status.textContent = text[result.error] ?? text.unavailable ?? '';
+      } catch {
+        status.textContent = text.unavailable ?? '';
+      } finally {
+        submit.disabled = false;
+        (window as unknown as { turnstile?: { reset: () => void } }).turnstile?.reset();
+      }
+    });
+
+    form.querySelector('[data-restart]')?.addEventListener('click', () => {
+      form.reset();
+      form.querySelector<HTMLElement>('.p-6')!.hidden = false;
+      form.querySelector<HTMLElement>('.req-steps')!.hidden = false;
+      form.querySelector<HTMLElement>('[data-done]')!.hidden = true;
+      syncCategory();
+      syncPhone();
+      show(0);
+    });
+
+    const preset = SERVICE_TO_TYPE[new URLSearchParams(location.search).get('service') ?? ''];
+    if (preset) {
+      const [cat] = preset.split(':');
+      form.querySelector<HTMLInputElement>(`input[name="category"][value="${cat}"]`)!.checked = true;
+      syncCategory();
+      const type = form.querySelector<HTMLInputElement>(`input[name="type"][value="${preset}"]`);
+      if (type) type.checked = true;
+    }
+    syncCategory();
+    syncPhone();
+    show(0);
+  }
+</script>

@@ -18,6 +18,9 @@ meta:
     contact:
       title: Contact — Safwan Alasmar
       description: Got a manual process eating your time every month? Tell me about it.
+    request:
+      title: Request a project — Safwan Alasmar
+      description: Send your idea or requirements, complete or partial — software, digital marketing, media and content — and I will get back to you with the next step.
     notFound:
       title: Page not found — Safwan Alasmar
       description: The page you are looking for does not exist.
@@ -28,6 +31,7 @@ nav:
   projects: Projects
   about: About
   contact: Contact
+  request: Request a project
   switchLang: العربية
   switchLangLabel: التبديل إلى العربية
   themeToggle: Toggle dark mode
@@ -358,6 +362,36 @@ contact:
   cv: Download CV
   cvPending: "【يُضاف الملف】"
   subject: Service request from the website
+
+request:
+  title: Request a project
+  intro: An idea, a partial description or full requirements — tell me what you have in four short steps and I will get back to you with the next step.
+  steps: [Request type, Idea, Details, Contact]
+  categoryLabel: What do you need?
+  typeLabel: Be more specific
+  stageLabel: How far along is your idea?
+  descLabel: Describe your idea or request
+  descPlaceholder: What problem do you want to solve? Who will use the solution? What must it do first?
+  linkLabel: File link (optional)
+  linkHint: A document, images or a diagram on Drive or any share link starting with https — direct uploads coming soon.
+  featuresLabel: What do you need? (pick any)
+  budgetLabel: Approximate budget
+  timelineLabel: Timeline
+  nameLabel: Name
+  orgLabel: Organization or company
+  emailLabel: Email
+  contactLabel: Preferred contact
+  phoneLabel: Phone number
+  phoneHint: Required if you choose WhatsApp.
+  optional: optional
+  next: Next
+  back: Back
+  submit: Send request
+  mailtoNote: Sending opens your email app with the full request written out — just press send.
+  sentTitle: Your request arrived
+  sentText: Thank you. I will review it and get back to you the way you chose.
+  newRequest: New request
+  subject: Project request from the website
 
 footer:
   tagline: Digital Solutions Developer for Organizations · Madinah
