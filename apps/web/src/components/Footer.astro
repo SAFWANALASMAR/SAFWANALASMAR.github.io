@@ -73,6 +73,8 @@ const mail = emailParts(s.email);
   </div>
   <div class="container-x border-t border-line/60 py-5 text-sm text-muted">
     © <span dir="ltr">{year}</span>{' '}{t.hero.name}. {t.footer.rights}
+    <span aria-hidden="true"> · </span>
+    <a href={localePath(lang, '/privacy/')} class="font-semibold text-accent hover:underline">{t.footer.privacy}</a>
   </div>
 </footer>
 

@@ -3,7 +3,7 @@ import Tag from '../components/Tag.astro';
 import type { CollectionEntry } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
-import { getSite, localePath, toList, type Lang } from '../lib/i18n';
+import { getSite, localePath, publicFileExists, toList, url, type Lang } from '../lib/i18n';
 
 interface Props {
   lang: Lang;
@@ -25,6 +25,40 @@ const sections = [
   { label: L.result, items: toList(text.result) },
   { label: L.availability, items: toList(text.availability) },
 ].filter((s) => s.items.length > 0);
+
+const image = p.image && publicFileExists(p.image) ? p.image : undefined;
+const imageSmall = image?.replace(/\.webp$/, '-778.webp');
+const hasSmall = !!imageSmall && imageSmall !== image && publicFileExists(imageSmall);
+const domain = p.link?.replace(/^https?:\/\/|\/$/g, '');
+const abs = (path: string) => new URL(path, Astro.site).href;
+const pageUrl = abs(localePath(lang, `/projects/${project.id}/`));
+// Tells search engines what this page is: a piece of work by this person, and where it sits in the site.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'CreativeWork',
+      name: text.title,
+      description: text.summary,
+      url: pageUrl,
+      inLanguage: lang,
+      dateCreated: String(p.year),
+      keywords: p.tags.join(', '),
+      author: { '@type': 'Person', name: t.hero.name, url: abs(localePath(lang, '/')) },
+      ...(text.org ? { sourceOrganization: { '@type': 'Organization', name: text.org } } : {}),
+      ...(p.link ? { sameAs: p.link } : {}),
+      ...(image ? { image: abs(url(image)) } : {}),
+    },
+    {
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: t.nav.home, item: abs(localePath(lang, '/')) },
+        { '@type': 'ListItem', position: 2, name: t.nav.projects, item: abs(localePath(lang, '/projects/')) },
+        { '@type': 'ListItem', position: 3, name: text.title, item: pageUrl },
+      ],
+    },
+  ],
+};
 ---
 
 <Base
@@ -32,6 +66,7 @@ const sections = [
   path={`/projects/${project.id}/`}
   title={`${text.title} — ${t.meta.siteName}`}
   description={text.summary}
+  jsonLd={jsonLd}
 >
   <article class="container-x max-w-4xl pt-10 sm:pt-14">
     <a
@@ -52,6 +87,31 @@ const sections = [
             {t.projects.visit}
             <span class="visit-domain" dir="ltr">{p.link.replace(/^https?:\/\/|\/$/g, '')}</span>
           </a>
+        )
+      }
+
+      {
+        image && (
+          <figure class="browser-frame case-shot mt-8">
+            <div class="browser-bar" aria-hidden="true">
+              <span class="browser-dots"><i /><i /><i /></span>
+              {domain && (
+                <span class="browser-url" dir="ltr">
+                  <Icon name="shield" size={12} />
+                  {domain}
+                </span>
+              )}
+            </div>
+            <img
+              src={url(image)}
+              srcset={hasSmall ? `${url(imageSmall!)} 778w, ${url(image)} ${p.imageSize?.[0] ?? 1556}w` : undefined}
+              sizes="(min-width: 56rem) 54rem, 92vw"
+              alt={text.title}
+              width={p.imageSize?.[0]}
+              height={p.imageSize?.[1]}
+              decoding="async"
+            />
+          </figure>
         )
       }
 

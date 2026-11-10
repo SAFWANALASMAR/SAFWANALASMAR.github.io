@@ -52,6 +52,8 @@ const projects = defineCollection({
     tags: z.array(z.string()),
     link: z.url().optional(),
     image: z.string().optional(),
+    // Pixel size of `image`, so the page reserves its space before it loads.
+    imageSize: z.tuple([z.number(), z.number()]).optional(),
     ar: projectText,
     en: projectText,
   }),
@@ -71,6 +73,7 @@ const site = defineCollection({
         about: pageMeta,
         contact: pageMeta,
         request: pageMeta,
+        privacy: pageMeta,
         notFound: pageMeta,
       }),
     }),
@@ -259,6 +262,8 @@ const site = defineCollection({
       linkedinLabel: z.string(),
       githubLabel: z.string(),
       cv: z.string(),
+      booking: z.string(),
+      bookingHint: z.string(),
       cvPending: z.string(),
       subject: z.string(),
     }),
@@ -309,7 +314,25 @@ const site = defineCollection({
     }),
     faq: z.object({ title: z.string(), items: z.array(z.object({ q: z.string(), a: z.string() })) }),
     pwa: z.object({ install: z.string() }),
-    footer: z.object({ tagline: z.string(), rights: z.string() }),
+    privacy: z.object({
+      title: z.string(),
+      intro: z.string(),
+      updated: z.string(),
+      sections: z.array(
+        z.object({
+          icon: z.enum(['files', 'send', 'user-check', 'shield', 'clock']),
+          title: z.string(),
+          points: z.array(z.string()),
+          // Shown instead of `points` once the forms send directly (Turnstile key set).
+          pointsDirect: z.array(z.string()).optional(),
+        }),
+      ),
+      contactText: z.string(),
+      contactCta: z.string(),
+      formNote: z.string(),
+      formLink: z.string(),
+    }),
+    footer: z.object({ tagline: z.string(), rights: z.string(), privacy: z.string() }),
     notFound: z.object({ title: z.string(), text: z.string(), back: z.string() }),
   }),
 });
@@ -322,6 +345,8 @@ const settings = defineCollection({
     github: z.string(),
     turnstileSiteKey: z.string(),
     cv: z.object({ ar: z.string(), en: z.string() }),
+    // Optional link to a booking page (e.g. a Google Calendar appointment schedule); empty hides the button.
+    booking: z.union([z.literal(''), z.url()]),
     photo: z.string(),
   }),
 });

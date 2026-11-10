@@ -230,8 +230,8 @@ const jsonLd = {
                 srcset={spotSmall ? `${url(spotSmall)} 778w, ${url(spot.data.image!)} 1556w` : undefined}
                 sizes="(min-width: 64rem) 36rem, 92vw"
                 alt={t.home.spotlight.imageAlt}
-                width="1556"
-                height="620"
+                width={spot.data.imageSize?.[0]}
+                height={spot.data.imageSize?.[1]}
                 loading="lazy"
                 decoding="async"
               />
@@ -405,6 +405,14 @@ const jsonLd = {
           {t.home.ctaButton}
           <Icon name="arrow" size={18} class="rtl:-scale-x-100" />
         </a>
+        {
+          s.booking && (
+            <a href={s.booking} target="_blank" rel="noopener noreferrer" class="btn cta-btn-ghost text-lg" data-booking>
+              <Icon name="calendar" size={18} />
+              {t.contact.booking}
+            </a>
+          )
+        }
       </div>
     </div>
   </section>

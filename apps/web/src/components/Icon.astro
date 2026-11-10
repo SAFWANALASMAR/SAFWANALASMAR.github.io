@@ -66,6 +66,7 @@ const paths = {
   mosque: '<path d="M3 21h18M5 21v-9M19 21v-9M8 21v-5a4 4 0 0 1 8 0v5M12 3c1.5 1.6 4 2.6 4 6H8c0-3.4 2.5-4.4 4-6zM5 12V9M19 12V9"/>',
   droplet: '<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/><path d="M9 14a3 3 0 0 0 3 3"/>',
   clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  calendar: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M8 14h3M8 17h6"/>',
   help: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7M12 17h.01"/>',
   plus: '<path d="M12 5v14M5 12h14"/>',
   install: '<rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M12 7v7M9 11l3 3 3-3M10 18h4"/>',
@@ -89,7 +90,7 @@ const motions: Partial<Record<IconName, string>> = {
   sparkles: 'spin', sun: 'spin', globe: 'spin',
   briefcase: 'swing', award: 'swing', moon: 'swing', teach: 'swing', key: 'swing', lock: 'swing', cart: 'swing', home: 'float', user: 'float', utensils: 'swing', car: 'nudge-x', droplet: 'beat', cake: 'twinkle', book: 'swing', mosque: 'float',
   star: 'twinkle', bolt: 'twinkle', shield: 'twinkle', check: 'twinkle',
-  clock: 'swing', help: 'swing', install: 'nudge-y',
+  clock: 'swing', help: 'swing', install: 'nudge-y', calendar: 'float',
   menu: 'still', close: 'still', plus: 'still',
 };
 const motion = motions[name] ?? 'breathe';

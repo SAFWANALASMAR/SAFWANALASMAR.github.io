@@ -4,6 +4,7 @@ year: 2026
 type: web-system
 link: https://ejaz.sa/
 image: /images/ejaz-portal.webp
+imageSize: [1556, 620]
 tags: [Web Portal, RBAC, Encryption, GitHub, AI Agents]
 ar:
   title: بوابة جمعية إعجاز الإلكترونية

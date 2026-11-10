@@ -21,6 +21,9 @@ meta:
     request:
       title: Request a project — Safwan Alasmar
       description: Send your idea or requirements, complete or partial — software, digital marketing, media and content — and I will get back to you with the next step.
+    privacy:
+      title: Privacy — Safwan Alasmar
+      description: What this site collects when you use the contact and project request forms, and how it is handled.
     notFound:
       title: Page not found — Safwan Alasmar
       description: The page you are looking for does not exist.
@@ -387,6 +390,8 @@ contact:
   linkedinLabel: LinkedIn
   githubLabel: GitHub
   cv: Download CV
+  booking: Book a call
+  bookingHint: A short online intro session; pick a time from the available slots.
   cvPending: "【يُضاف الملف】"
   subject: Service request from the website
 
@@ -451,9 +456,49 @@ faq:
       a: Yes. I build Arabic solutions right-to-left the way they should be, across interfaces, reports and documents, with an English version when needed.
 pwa:
   install: Install the site as an app
+privacy:
+  title: Privacy
+  intro: This page explains in plain terms what the site collects when you use the contact and project request forms, and how I handle it.
+  updated: "Last updated: November 2026"
+  sections:
+    - icon: files
+      title: What do I collect?
+      points:
+        - "Contact form: your name, email address, the service you are interested in, and your message."
+        - "Project request form: the services and options you choose, the project description, a file link if you add one, the approximate budget and timeline, your name, your organization if you mention it, your email address, your phone number if you enter it, and your preferred contact method."
+        - I do not ask for anything else, and no account is needed.
+    - icon: send
+      title: How does it reach me?
+      points:
+        - When you press send, the site opens the email app on your device with a ready message, and you send it from your own mailbox.
+        - The site keeps no copy of the message.
+      pointsDirect:
+        - The data is sent straight to my email inbox through an email delivery service, and is not stored in a database on the site.
+        - Cloudflare Turnstile is used to check that the sender is not an automated program.
+    - icon: user-check
+      title: What do I use it for?
+      points:
+        - To reply to your message or request, and to follow up on the work if we agree to proceed.
+        - I do not sell it or share it with anyone for marketing.
+    - icon: shield
+      title: Cookies and tracking
+      points:
+        - The site uses no advertising and no tracking tools.
+        - Your browser keeps, on your device, your light or dark mode choice and a copy of the pages you visited so they open quickly.
+        - The hosting provider may record routine technical data such as the network address, as with any website.
+    - icon: clock
+      title: Retention and your rights
+      points:
+        - I keep the correspondence in my mailbox while the engagement is ongoing or likely.
+        - You may ask at any time to see, correct or delete your data.
+  contactText: To ask about your data or have it deleted, write to me from the contact page.
+  contactCta: Contact page
+  formNote: Your details are used only to reply to you.
+  formLink: Privacy
 footer:
   tagline: Digital Solutions Developer for Organizations · Madinah
   rights: All rights reserved.
+  privacy: Privacy
 
 notFound:
   title: Page not found

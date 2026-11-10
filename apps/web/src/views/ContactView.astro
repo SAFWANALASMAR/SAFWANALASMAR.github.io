@@ -8,6 +8,7 @@ import {
   getSettings,
   getSite,
   isPlaceholder,
+  localePath,
   publicFileExists,
   url,
   type Lang,
@@ -148,6 +149,10 @@ const linkClass =
             <Icon name="arrow" size={18} class="rtl:-scale-x-100" />
           </button>
           <p data-status role="status" aria-live="polite" class="text-sm font-medium empty:hidden"></p>
+          <p class="text-sm text-muted">
+            {t.privacy.formNote}{' '}
+            <a href={localePath(lang, '/privacy/')} class="font-semibold text-accent hover:underline">{t.privacy.formLink}</a>
+          </p>
         </form>
       </div>
 
@@ -202,6 +207,17 @@ const linkClass =
           </li>
         </ul>
 
+        {
+          s.booking && (
+            <div class="mt-6">
+              <a href={s.booking} target="_blank" rel="noopener noreferrer" class="btn btn-primary w-full" data-booking>
+                <Icon name="calendar" size={18} />
+                {c.booking}
+              </a>
+              <p class="mt-2 text-sm text-muted">{c.bookingHint}</p>
+            </div>
+          )
+        }
         <div class="mt-6">
           {
             hasCv ? (

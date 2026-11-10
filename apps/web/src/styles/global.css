@@ -2469,3 +2469,11 @@ body {
 .is-away *::after {
   animation-play-state: paused !important;
 }
+
+/* Case-study screenshot: the same browser frame as the home spotlight, flat and still. */
+.browser-frame.case-shot,
+[dir='rtl'] .browser-frame.case-shot {
+  margin-inline: 0;
+  transform: none;
+  animation: none;
+}

@@ -298,3 +298,24 @@ for (const path of ['/', '/about/']) {
     expect((await recalcs()) - before).toBeLessThan(80);
   });
 }
+
+test('privacy page is linked from the footer and the forms', async ({ page }) => {
+  await page.goto('/contact/');
+  await expect(page.locator('form a[href$="/privacy/"]')).toBeVisible();
+  await page.goto('/request/');
+  await expect(page.locator('form a[href$="/privacy/"]')).toHaveCount(1);
+  await page.locator('footer a[href$="/privacy/"]').click();
+  await expect(page).toHaveURL(/\/privacy\/$/);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('الخصوصية');
+  // The tests run with a Turnstile key, so the page must describe direct sending rather than the email app.
+  await expect(page.locator('main')).toContainText('Cloudflare Turnstile');
+  await expect(page.locator('main')).not.toContainText('تطبيق البريد');
+});
+
+test('a project page shows its screenshot and describes itself to search engines', async ({ page }) => {
+  await page.goto('/projects/ejaz-portal/');
+  await expect(page.locator('figure.case-shot img')).toBeVisible();
+  const data = JSON.parse((await page.locator('script[type="application/ld+json"]').first().textContent()) ?? '{}');
+  expect(data['@graph'][0]).toMatchObject({ '@type': 'CreativeWork', sameAs: 'https://ejaz.sa/' });
+  expect(data['@graph'][1]['@type']).toBe('BreadcrumbList');
+});

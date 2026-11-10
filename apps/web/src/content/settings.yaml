@@ -10,3 +10,5 @@ cv:
   ar: "cv/Safwan-Alasmar-CV-ar.pdf"
   en: "cv/Safwan-Alasmar-CV-en.pdf"
 photo: "images/profile.jpg"
+# رابط صفحة حجز المواعيد (مثل جدول المواعيد في تقويم قوقل). اتركه فارغاً لإخفاء زر «احجز موعداً»
+booking: ""
