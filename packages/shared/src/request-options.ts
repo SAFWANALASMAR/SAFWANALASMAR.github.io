@@ -135,9 +135,10 @@ export const REQUEST_CONTACT_METHODS = [
 ] as const;
 
 /** Plain-text summary used by the email (API) and the mailto fallback (web). Arabic labels with English ids. */
+/** Types and features are "<category>:<id>" so one request can span several services. */
 export type RequestSummary = {
-  category: string;
-  type: string;
+  categories: string[];
+  types: string[];
   stage: string;
   description: string;
   link?: string | undefined;
@@ -153,24 +154,35 @@ export type RequestSummary = {
 
 export function formatProjectRequest(r: RequestSummary, lang: 'ar' | 'en' = 'ar'): string {
   const L = (list: readonly Option[], id: string): string => list.find((o) => o.id === id)?.[lang] ?? id;
-  const category: (typeof REQUEST_CATEGORIES)[number] = REQUEST_CATEGORIES.find((c) => c.id === r.category)!;
   const t = (ar: string, en: string) => (lang === 'ar' ? ar : en);
+  const sep = lang === 'ar' ? '، ' : ', ';
+  const pick = (values: string[], cat: string) => values.filter((v) => v.startsWith(`${cat}:`)).map((v) => v.slice(cat.length + 1));
+  const services = REQUEST_CATEGORIES.filter((c) => r.categories.includes(c.id)).flatMap((c) => {
+    const types = pick(r.types, c.id).map((id) => L(c.types, id));
+    const needs = pick(r.features, c.id).map((id) => L(c.features, id));
+    return [
+      `• ${c[lang]}: ${types.join(sep)}`,
+      needs.length ? `  ${t('المطلوب', 'Needs')}: ${needs.join(sep)}` : '',
+    ].filter(Boolean);
+  });
   const lines = [
-    `${t('نوع الطلب', 'Request')}: ${category[lang]} — ${L(category.types, r.type)}`,
+    `${t('الخدمات المطلوبة', 'Services requested')}:`,
+    ...services,
+    '',
     `${t('مرحلة الفكرة', 'Stage')}: ${L(REQUEST_STAGES, r.stage)}`,
-    r.features.length ? `${t('المطلوب', 'Needs')}: ${r.features.map((f) => L(category.features, f)).join('، ')}` : '',
     `${t('الميزانية', 'Budget')}: ${L(REQUEST_BUDGETS, r.budget)}`,
     `${t('المدة', 'Timeline')}: ${L(REQUEST_TIMELINES, r.timeline)}`,
-    r.link ? `${t('رابط ملف', 'File link')}: ${r.link}` : '',
+    r.link ? `${t('رابط ملف', 'File link')}: ${r.link}` : null,
     '',
     `${t('الاسم', 'Name')}: ${r.name}`,
-    r.org ? `${t('الجهة', 'Organization')}: ${r.org}` : '',
+    r.org ? `${t('الجهة', 'Organization')}: ${r.org}` : null,
     `${t('البريد', 'Email')}: ${r.email}`,
-    r.phone ? `${t('الجوال', 'Phone')}: ${r.phone}` : '',
+    r.phone ? `${t('الجوال', 'Phone')}: ${r.phone}` : null,
     `${t('التواصل المفضل', 'Preferred contact')}: ${L(REQUEST_CONTACT_METHODS, r.contactMethod)}`,
     '',
     `${t('الوصف', 'Description')}:`,
     r.description,
   ];
-  return lines.filter((line, i, all) => line !== '' || (i > 0 && all[i - 1] !== '')).join('\n');
+  // null = optional line left out; '' = a deliberate blank line between sections.
+  return lines.filter((line) => line !== null).join('\n');
 }

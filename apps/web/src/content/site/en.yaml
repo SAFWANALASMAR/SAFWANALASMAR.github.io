@@ -367,8 +367,10 @@ request:
   title: Request a project
   intro: An idea, a partial description or full requirements — tell me what you have in four short steps and I will get back to you with the next step.
   steps: [Request type, Idea, Details, Contact]
-  categoryLabel: What do you need?
-  typeLabel: Be more specific
+  categoryLabel: Which services do you need? (pick one or more)
+  typeLabel: Specify what you need in each service (pick any)
+  pickService: Choose at least one service.
+  pickType: Pick at least one type for each service you chose.
   stageLabel: How far along is your idea?
   descLabel: Describe your idea or request
   descPlaceholder: What problem do you want to solve? Who will use the solution? What must it do first?

@@ -154,7 +154,7 @@ test('contact form asks for verification before sending', async ({ page }) => {
 });
 
 test.describe('request a project', () => {
-  test('walks through four steps and sends a complete request', async ({ page }) => {
+  test('walks through four steps and sends one request for two services', async ({ page }) => {
     const violations = watchCsp(page);
     await stubTurnstile(page);
     let sent: Record<string, unknown> | undefined;
@@ -164,8 +164,13 @@ test.describe('request a project', () => {
     });
 
     await page.goto('/request/');
+    // Software is chosen by default; add marketing as a second service.
     await page.locator('label.req-card', { hasText: 'التسويق الرقمي' }).click();
+    // Each chosen service needs at least one type before moving on.
+    await page.getByRole('button', { name: 'التالي' }).click();
+    await expect(page.getByRole('status')).toContainText('في كل خدمة');
     await page.locator('label.req-chip', { hasText: 'إدارة حسابات التواصل' }).click();
+    await page.locator('label.req-chip', { hasText: 'متجر إلكتروني' }).first().click();
     await page.getByRole('button', { name: 'التالي' }).click();
 
     // Step 2 refuses to continue without a description.
@@ -175,7 +180,9 @@ test.describe('request a project', () => {
     await page.locator('#req-link').fill('https://drive.google.com/file/d/abc');
     await page.getByRole('button', { name: 'التالي' }).click();
 
+    // Needs of both services are offered together.
     await page.locator('label.req-chip', { hasText: 'إنستقرام' }).click();
+    await page.locator('label.req-chip', { hasText: 'لوحة تحكم وإدارة' }).click();
     await page.locator('label.req-chip', { hasText: 'خلال شهر' }).click();
     await page.getByRole('button', { name: 'التالي' }).click();
 
@@ -190,10 +197,10 @@ test.describe('request a project', () => {
 
     await expect(page.getByRole('heading', { name: 'وصل طلبك' })).toBeVisible();
     expect(sent).toMatchObject({
-      category: 'marketing',
-      type: 'social-accounts',
+      categories: ['software', 'marketing'],
+      types: ['software:website', 'software:store', 'marketing:social-accounts'],
       stage: 'partial',
-      features: ['instagram'],
+      features: ['software:dashboard', 'marketing:instagram'],
       timeline: 'month',
       budget: 'unsure',
       contactMethod: 'whatsapp',
@@ -208,6 +215,14 @@ test.describe('request a project', () => {
   test('preselects the request type from the services page', async ({ page }) => {
     await page.goto('/request/?service=document-automation');
     await expect(page.locator('input[value="software:automation"]')).toBeChecked();
+    await expect(page.locator('input[name="type"]:checked')).toHaveCount(1);
+  });
+
+  test('refuses to continue with no service chosen', async ({ page }) => {
+    await page.goto('/request/');
+    await page.locator('label.req-card', { hasText: 'برمجة وتطوير' }).click();
+    await page.getByRole('button', { name: 'التالي' }).click();
+    await expect(page.getByRole('status')).toContainText('خدمة واحدة على الأقل');
   });
 
   test('the request API refuses other origins', async ({ request }) => {

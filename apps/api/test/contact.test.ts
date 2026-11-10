@@ -166,12 +166,12 @@ describe('other routes', () => {
 
 describe('POST /api/project-request', () => {
   const request = {
-    category: 'software',
-    type: 'system',
+    categories: ['software', 'marketing'],
+    types: ['software:system', 'marketing:social-accounts'],
     stage: 'partial',
     description: 'نظام لإدارة طلبات المستفيدين مع لوحة تحكم.',
     link: 'https://drive.google.com/file/d/abc',
-    features: ['accounts', 'dashboard'],
+    features: ['software:accounts', 'software:dashboard', 'marketing:instagram'],
     budget: '15-40k',
     timeline: 'quarter',
     name: 'عميل',
@@ -199,18 +199,30 @@ describe('POST /api/project-request', () => {
     const [[, init]] = resendCalls() as [[string, RequestInit]];
     const payload = JSON.parse(String(init.body));
     expect(payload.subject).toContain('برمجة وتطوير');
+    expect(payload.subject).toContain('التسويق الرقمي');
+    expect(payload.text).toContain('إدارة حسابات التواصل');
+    expect(payload.text).toContain('إنستقرام');
     expect(payload.text).toContain('نظام إداري أو بوابة خدمات');
     expect(payload.text).toContain('لوحة تحكم وإدارة');
     expect(payload.text).toContain('15,000 – 40,000 ريال');
     expect(payload.reply_to).toBe('client@example.com');
   });
 
-  it('rejects a type that does not belong to the category', async () => {
-    expect((await send({ ...request, type: 'campaigns' })).status).toBe(400);
+  it('rejects a type from a service that was not chosen', async () => {
+    expect((await send({ ...request, types: [...request.types, 'media:writing'] })).status).toBe(400);
   });
 
-  it('rejects unknown features', async () => {
-    expect((await send({ ...request, features: ['hack'] })).status).toBe(400);
+  it('requires at least one type for every chosen service', async () => {
+    expect((await send({ ...request, types: ['software:system'] })).status).toBe(400);
+  });
+
+  it('rejects unknown or foreign features', async () => {
+    expect((await send({ ...request, features: ['software:hack'] })).status).toBe(400);
+    expect((await send({ ...request, features: ['media:video'] })).status).toBe(400);
+  });
+
+  it('rejects an empty service list', async () => {
+    expect((await send({ ...request, categories: [], types: [] })).status).toBe(400);
   });
 
   it('rejects non-https links', async () => {

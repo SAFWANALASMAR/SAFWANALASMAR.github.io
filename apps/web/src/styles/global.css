@@ -1814,3 +1814,36 @@ body {
     animation: vt-in 0.4s ease both;
   }
 }
+
+/* Several services per request: tick on chosen cards and a title per service group. */
+@layer components {
+  .req-card-tick {
+    position: absolute;
+    top: 0.6rem;
+    inset-inline-end: 0.6rem;
+    display: grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 999px;
+    border: 2px solid var(--border);
+    color: transparent;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+  }
+  .req-card:has(input:checked) .req-card-tick {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #fff;
+  }
+  .req-group + .req-group {
+    margin-top: 1.25rem;
+  }
+  .req-group-title {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 0.6rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+}

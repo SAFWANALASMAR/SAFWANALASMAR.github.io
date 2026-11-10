@@ -41,10 +41,10 @@ export async function sendContactEmail(env: Env, input: ContactInput): Promise<b
 /** Sends a project request as plain text, with Arabic labels, reply-to set to the client. */
 export async function sendProjectRequestEmail(env: Env, input: ProjectRequest): Promise<boolean> {
   const oneLine = (s: string) => s.replace(/[\r\n]+/g, ' ').trim();
-  const category = REQUEST_CATEGORIES.find((c) => c.id === input.category);
+  const services = REQUEST_CATEGORIES.filter((c) => input.categories.includes(c.id)).map((c) => c.ar);
   const { turnstileToken: _t, website: _w, ...request } = input;
   return sendEmail(env, {
-    subject: oneLine(`طلب مشروع — ${category?.ar ?? input.category} — ${input.name}`).slice(0, 200),
+    subject: oneLine(`طلب مشروع — ${services.join('، ')} — ${input.name}`).slice(0, 200),
     text: formatProjectRequest(request, 'ar'),
     replyTo: input.email,
   });

@@ -253,6 +253,8 @@ const site = defineCollection({
       steps: z.array(z.string()).length(4),
       categoryLabel: z.string(),
       typeLabel: z.string(),
+      pickService: z.string(),
+      pickType: z.string(),
       stageLabel: z.string(),
       descLabel: z.string(),
       descPlaceholder: z.string(),

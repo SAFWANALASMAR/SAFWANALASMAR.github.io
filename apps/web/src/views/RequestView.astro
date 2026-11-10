@@ -44,7 +44,7 @@ const stageIcons: IconName[] = ['sparkles', 'document', 'check'];
       data-u={mail.u}
       data-d={mail.d}
       data-subject={r.subject}
-      data-status-text={JSON.stringify(t.contact.status)}
+      data-status-text={JSON.stringify({ ...t.contact.status, pickService: r.pickService, pickType: r.pickType })}
       novalidate
     >
       <!-- Progress -->
@@ -68,7 +68,10 @@ const stageIcons: IconName[] = ['sparkles', 'document', 'check'];
             {
               REQUEST_CATEGORIES.map((c, i) => (
                 <label class="req-card">
-                  <input type="radio" name="category" value={c.id} required checked={i === 0} />
+                  <input type="checkbox" name="category" value={c.id} checked={i === 0} />
+                  <span class="req-card-tick" aria-hidden="true">
+                    <Icon name="check" size={14} />
+                  </span>
                   <span class="icon-badge size-12 rounded-xl">
                     <Icon name={c.icon as IconName} size={24} />
                   </span>
@@ -84,13 +87,20 @@ const stageIcons: IconName[] = ['sparkles', 'document', 'check'];
           <p class="req-legend mt-8">{r.typeLabel}</p>
           {
             REQUEST_CATEGORIES.map((c, ci) => (
-              <div class="req-chips" data-cat={c.id} hidden={ci !== 0}>
-                {c.types.map((type, ti) => (
-                  <label class="req-chip">
-                    <input type="radio" name="type" value={`${c.id}:${type.id}`} checked={ci === 0 && ti === 0} />
-                    <span>{type[lang]}</span>
-                  </label>
-                ))}
+              <div class="req-group" data-cat={c.id} hidden={ci !== 0}>
+                <p class="req-group-title">
+                  <Icon name={c.icon as IconName} size={16} />
+                  {c[lang]}
+                </p>
+                <div class="req-chips">
+                  {c.types.map((type, ti) => (
+                    <label class="req-chip req-check">
+                      <input type="checkbox" name="type" value={`${c.id}:${type.id}`} checked={ci === 0 && ti === 0} />
+                      <Icon name="check" size={14} class="req-tick" />
+                      <span>{type[lang]}</span>
+                    </label>
+                  ))}
+                </div>
               </div>
             ))
           }
@@ -137,8 +147,10 @@ const stageIcons: IconName[] = ['sparkles', 'document', 'check'];
         <fieldset class="req-panel" data-step="2">
           {
             REQUEST_CATEGORIES.filter((c) => c.features.length).map((c, ci) => (
-              <div data-cat={c.id} hidden={ci !== 0}>
-                <p class="req-legend">{r.featuresLabel}</p>
+              <div class="req-group" data-cat={c.id} hidden={ci !== 0}>
+                <p class="req-legend">
+                  {r.featuresLabel} — {c[lang]}
+                </p>
                 <div class="req-chips">
                   {c.features.map((f) => (
                     <label class="req-chip req-check">
@@ -282,18 +294,17 @@ const stageIcons: IconName[] = ['sparkles', 'document', 'check'];
     let step = 0;
 
     const value = (name: string) => (form.elements.namedItem(name) as RadioNodeList | HTMLInputElement | null)?.value ?? '';
-    const category = () => value('category');
+    const categories = () =>
+      [...form.querySelectorAll<HTMLInputElement>('input[name="category"]:checked')].map((input) => input.value);
 
-    // Show only the type chips and feature checkboxes that belong to the chosen category.
+    // Show the type chips and feature checkboxes of every chosen service; hidden ones are disabled so they aren't sent.
     const syncCategory = () => {
-      const cat = category();
+      const chosen = categories();
       form.querySelectorAll<HTMLElement>('[data-cat]').forEach((group) => {
-        const active = group.dataset.cat === cat;
+        const active = chosen.includes(group.dataset.cat ?? '');
         group.hidden = !active;
         group.querySelectorAll<HTMLInputElement>('input').forEach((input) => (input.disabled = !active));
       });
-      const checkedType = form.querySelector<HTMLInputElement>(`[data-cat="${cat}"] input[name="type"]:checked`);
-      if (!checkedType) form.querySelector<HTMLInputElement>(`[data-cat="${cat}"] input[name="type"]`)!.checked = true;
     };
 
     const syncPhone = () => {
@@ -316,6 +327,17 @@ const stageIcons: IconName[] = ['sparkles', 'document', 'check'];
     };
 
     const validStep = () => {
+      if (step === 0) {
+        const chosen = categories();
+        if (!chosen.length) {
+          status.textContent = text.pickService ?? '';
+          return false;
+        }
+        if (chosen.some((cat) => !form.querySelector(`[data-cat="${cat}"] input[name="type"]:checked`))) {
+          status.textContent = text.pickType ?? '';
+          return false;
+        }
+      }
       const fields = [...panels[step]!.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input, textarea')].filter(
         (f) => !f.disabled && f.type !== 'hidden' && f.name !== 'website',
       );
@@ -343,14 +365,13 @@ const stageIcons: IconName[] = ['sparkles', 'document', 'check'];
 
     const collect = (): RequestSummary & { lang: string; website: string } => {
       const data = new FormData(form);
-      const strip = (v: string) => v.split(':')[1] ?? v;
       return {
-        category: category(),
-        type: strip(String(data.get('type') ?? '')),
+        categories: categories(),
+        types: data.getAll('type').map(String),
         stage: String(data.get('stage') ?? ''),
         description: String(data.get('description') ?? '').trim(),
         link: String(data.get('link') ?? '').trim(),
-        features: data.getAll('features').map((f) => strip(String(f))),
+        features: data.getAll('features').map(String),
         budget: String(data.get('budget') ?? ''),
         timeline: String(data.get('timeline') ?? ''),
         name: String(data.get('name') ?? '').trim(),
@@ -420,8 +441,8 @@ const stageIcons: IconName[] = ['sparkles', 'document', 'check'];
     const preset = SERVICE_TO_TYPE[new URLSearchParams(location.search).get('service') ?? ''];
     if (preset) {
       const [cat] = preset.split(':');
+      form.querySelectorAll<HTMLInputElement>('input[name="category"], input[name="type"]').forEach((input) => (input.checked = false));
       form.querySelector<HTMLInputElement>(`input[name="category"][value="${cat}"]`)!.checked = true;
-      syncCategory();
       const type = form.querySelector<HTMLInputElement>(`input[name="type"][value="${preset}"]`);
       if (type) type.checked = true;
     }
