@@ -466,6 +466,7 @@ privacy:
       points:
         - "Contact form: your name, email address, the service you are interested in, and your message."
         - "Project request form: the services and options you choose, the project description, a file link if you add one, the approximate budget and timeline, your name, your organization if you mention it, your email address, your phone number if you enter it, and your preferred contact method."
+        - "Booking a call: this happens on a Google Calendar page, which asks for your name and email address to confirm the slot and send the meeting link."
         - I do not ask for anything else, and no account is needed.
     - icon: send
       title: How does it reach me?

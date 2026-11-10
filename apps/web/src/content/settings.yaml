@@ -11,4 +11,4 @@ cv:
   en: "cv/Safwan-Alasmar-CV-en.pdf"
 photo: "images/profile.jpg"
 # رابط صفحة حجز المواعيد (مثل جدول المواعيد في تقويم قوقل). اتركه فارغاً لإخفاء زر «احجز موعداً»
-booking: ""
+booking: "https://calendar.google.com/calendar/appointments/schedules/AcZssZ0P2NK3KBOSGSsdtU3CdfiNpN2ulQf039R661eT1Mzgm2bcvtk98V81pOHI-AIHU47nklO-ONGo"

@@ -319,3 +319,14 @@ test('a project page shows its screenshot and describes itself to search engines
   expect(data['@graph'][0]).toMatchObject({ '@type': 'CreativeWork', sameAs: 'https://ejaz.sa/' });
   expect(data['@graph'][1]['@type']).toBe('BreadcrumbList');
 });
+
+test('the booking button opens the Google Calendar booking page in a new tab', async ({ page }) => {
+  for (const path of ['/contact/', '/']) {
+    await page.goto(path);
+    const button = page.locator('[data-booking]');
+    await expect(button).toBeVisible();
+    await expect(button).toHaveAttribute('href', /^https:\/\/calendar\.google\.com\/calendar\/appointments\/schedules\//);
+    await expect(button).toHaveAttribute('target', '_blank');
+    await expect(button).toHaveAttribute('rel', /noopener/);
+  }
+});
