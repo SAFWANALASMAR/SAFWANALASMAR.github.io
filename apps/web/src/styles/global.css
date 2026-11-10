@@ -2005,3 +2005,9 @@ body {
     }
   }
 }
+
+/* Moving strips: no backdrop blur on cards in motion — keeps fast scrolling smooth on phones. */
+.card-marquee .card {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}

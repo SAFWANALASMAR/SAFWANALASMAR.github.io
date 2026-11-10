@@ -129,7 +129,7 @@ about:
   title: About
   photoAlt: Photo of Safwan Alasmar
   initials: SA
-  bio: "I'm Safwan, a Computer Science graduate from Yanbu Industrial College (Royal Commission for Jubail and Yanbu). I started in business analysis and application development during my co-op, turning a paper form into a web system with a tiered approval workflow and a database I designed from scratch. Today I am Public Relations & Marketing Manager and Head of Media at Al-Maqari Quranic Association in Madinah, where I also lead digital transformation, report and document automation, and archive rebuilding. As a volunteer I am developing the Ejaz Association's web portal, and I teach Arabic to non-native speakers on Preply. I combine writing code with a real understanding of what management needs, and I build Arabic, right-to-left solutions the way they should be built."
+  bio: "I'm Safwan, a Computer Science graduate from Yanbu Industrial College (Royal Commission for Jubail and Yanbu). I started in business analysis and application development during my co-op, turning a paper form into a web system with a tiered approval workflow and a database I designed from scratch. Today I am Public Relations & Marketing Manager and Head of Media at Al-Maqari Quranic Association in Madinah, where I also lead digital transformation, report and document automation, and archive rebuilding. As a volunteer I built the Ejaz Association's web portal, launched in November 2026, and I teach Arabic to non-native speakers on Preply. I combine writing code with a real understanding of what management needs, and I build Arabic, right-to-left solutions the way they should be built."
   timelineTitle: Experience
   timeline:
     - icon: web
@@ -137,9 +137,11 @@ about:
       org: Ejaz Association for Studies and Scientific Research
       role: Executive Advisor, Corporate Communications & Digital Transformation (volunteer)
       points:
-        - Designing and developing the association's web portal, ejaz.sa, to replace a WordPress site and serve around 30,000 users
+        - Designing and developing the association's web portal, ejaz.sa (launched November 2026), to replace a WordPress site and serve around 30,000 users
         - Admin panel with tiered permissions, encryption of sensitive data, an internal security review, and code managed on a protected main branch
         - Set up the association's digital presence with one identity across seven platforms, and run its office
+      link: https://ejaz.sa/
+      linkLabel: Visit the portal
     - icon: book
       period: May 2026 – Present
       org: Al-Maqari Quranic Association, Madinah

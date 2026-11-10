@@ -2,7 +2,7 @@ order: 0
 featured: true
 year: 2026
 type: web-system
-status: in-progress
+link: https://ejaz.sa/
 tags: [Web Portal, RBAC, Encryption, GitHub, AI Agents]
 ar:
   title: بوابة جمعية إعجاز الإلكترونية
@@ -20,7 +20,7 @@ ar:
     - إدارة الشيفرة على GitHub عبر فرع رئيسي محمي
     - تطوير وكلاء ذكاء اصطناعي يساعدون في العمل
   tools: [GitHub, سير عمل بالذكاء الاصطناعي, خادم افتراضي خاص]
-  result: البوابة في مرحلة الإطلاق.
+  result: أُطلقت البوابة رسمياً في نوفمبر 2026.
 en:
   title: Ejaz Association Web Portal
   summary: A complete services portal replacing a WordPress site, built for around 30,000 users, with accounts, an admin panel and tiered permissions.
@@ -37,4 +37,4 @@ en:
     - Code managed on GitHub through a protected main branch
     - Building AI agents that support the work
   tools: [GitHub, AI-assisted workflows, Virtual private server]
-  result: The portal is in its launch phase.
+  result: The portal launched officially in November 2026.
