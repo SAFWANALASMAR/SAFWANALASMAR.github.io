@@ -27,7 +27,13 @@ const t = await getSite(lang);
 const s = await getSettings();
 const services = await getServices();
 const dir = lang === 'ar' ? 'rtl' : 'ltr';
-const featured = (await getProjects()).filter((p) => p.data.featured).slice(0, 3);
+const projects = await getProjects();
+const featured = projects.filter((p) => p.data.featured).slice(0, 3);
+// The live, featured project with a screenshot gets a spotlight and the launch bar.
+const spot = projects.find((p) => p.data.featured && p.data.link && p.data.image && publicFileExists(p.data.image));
+const spotDomain = spot?.data.link?.replace(/^https?:\/\/|\/$/g, '');
+const r = t.about.reviews;
+const quote = r.items.reduce((a, b) => (b.text.length > a.text.length ? b : a));
 const en = await getSite('en');
 const stack = [...new Set(t.about.skills.slice(0, 4).flatMap((g) => g.items))].filter(
   (item) => !/\p{Script=Arabic}/u.test(item),
@@ -70,8 +76,29 @@ const jsonLd = {
   <section class="relative overflow-hidden">
     <div class="hero-glow pointer-events-none absolute inset-0" aria-hidden="true"></div>
     <div class="grid-bg pointer-events-none absolute inset-0" aria-hidden="true"></div>
+    {
+      spot && (
+        <div class="container-x relative pt-8 sm:pt-10">
+          <a href={spot.data.link} target="_blank" rel="noopener noreferrer" class="launch-bar">
+            <span class="launch-badge">
+              <Icon name="sparkles" size={14} />
+              {t.home.launch.badge}
+            </span>
+            <span class="launch-text">{t.home.launch.text}</span>
+            <span class="launch-cta">
+              {t.home.launch.cta}
+              <bdi dir="ltr" class="launch-domain">{spotDomain}</bdi>
+              <Icon name="external" size={15} />
+            </span>
+          </a>
+        </div>
+      )
+    }
     <div
-      class="container-x relative grid items-center gap-12 pt-16 pb-10 sm:pt-20 lg:pt-28 lg:pb-14 xl:grid-cols-[1fr_1.1fr]"
+      class:list={[
+        'container-x relative grid items-center gap-12 pb-10 lg:pb-14 xl:grid-cols-[1fr_1.1fr]',
+        spot ? 'pt-10 sm:pt-12 lg:pt-16' : 'pt-16 sm:pt-20 lg:pt-28',
+      ]}
     >
       <div>
         {
@@ -89,7 +116,13 @@ const jsonLd = {
             </picture>
           )
         }
-        <p class="eyebrow chip-eyebrow"><span class="pulse-dot" aria-hidden="true"></span>{t.hero.title}</p>
+        <div class="flex flex-wrap items-center gap-2">
+          <p class="eyebrow chip-eyebrow"><span class="pulse-dot" aria-hidden="true"></span>{t.hero.title}</p>
+          <a href={localePath(lang, '/request/')} class="available-pill">
+            <span class="available-dot" aria-hidden="true"></span>
+            {t.home.available}
+          </a>
+        </div>
         <h1 class="mt-3 text-4xl leading-tight font-bold text-text sm:text-5xl">
           <span class="name-underline"><span class="name-gradient">{t.hero.name}</span></span>
         </h1>
@@ -167,6 +200,70 @@ const jsonLd = {
   </section>
 
   <!-- Services -->
+  {
+    spot && (
+      <section class="container-x pt-20 sm:pt-24" aria-labelledby="home-spotlight">
+        <div class="spotlight reveal">
+          <div class="spotlight-media">
+            <div class="browser-frame">
+              <div class="browser-bar" aria-hidden="true">
+                <span class="browser-dots"><i></i><i></i><i></i></span>
+                <span class="browser-url" dir="ltr">
+                  <Icon name="shield" size={12} />
+                  {spotDomain}
+                </span>
+              </div>
+              <img
+                src={url(spot.data.image!)}
+                alt={t.home.spotlight.imageAlt}
+                width="1556"
+                height="620"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+            <span class="spotlight-live" aria-hidden="true">
+              <span class="pulse-dot"></span>
+              {t.projects.live}
+            </span>
+          </div>
+          <div class="spotlight-body">
+            <p class="eyebrow chip-eyebrow">
+              <Icon name="star" size={14} />
+              {t.home.spotlight.eyebrow}
+            </p>
+            <h2 id="home-spotlight" class="mt-4 text-2xl leading-snug font-bold text-text sm:text-3xl">
+              {spot.data[lang].title}
+              <span class="spotlight-tag">{t.home.spotlight.title}</span>
+            </h2>
+            <p class="mt-3 text-muted">{spot.data[lang].summary}</p>
+            <ul class="mt-6 grid gap-3 sm:grid-cols-2">
+              {t.home.spotlight.points.map((pt) => (
+                <li class="spotlight-point">
+                  <span class="icon-badge size-9 rounded-lg">
+                    <Icon name={pt.icon} size={18} />
+                  </span>
+                  <span>{pt.text}</span>
+                </li>
+              ))}
+            </ul>
+            <div class="mt-7 flex flex-wrap items-center gap-3">
+              <a href={spot.data.link} target="_blank" rel="noopener noreferrer" class="visit-btn visit-btn-lg">
+                <Icon name="external" size={20} />
+                {t.projects.visit}
+                <span class="visit-domain" dir="ltr">{spotDomain}</span>
+              </a>
+              <a href={localePath(lang, `/projects/${spot.id}/`)} class="btn btn-ghost">
+                {t.projects.viewCase}
+                <Icon name="arrow" size={18} class="rtl:-scale-x-100" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
   <section class="container-x pt-20 sm:pt-24" aria-labelledby="home-services">
     <div class="flex flex-wrap items-end justify-between gap-4">
       <SectionHeading id="home-services" icon="briefcase" title={t.home.servicesTitle} intro={t.home.servicesIntro} />
@@ -226,6 +323,37 @@ const jsonLd = {
   </CardMarquee>
 
   <!-- How I work -->
+  <section class="container-x pt-20 sm:pt-24" aria-labelledby="home-rating">
+    <div class="rating-spot reveal">
+      <div class="rating-score">
+        <span class="rating-num" dir="ltr" data-count={r.stats[0].value}>{r.stats[0].value}</span>
+        <span class="rating-stars" role="img" aria-label={t.home.rating.starsLabel}>
+          {[0, 1, 2, 3, 4].map((i) => <Icon name="star" size={22} class={`ico-still star-${i}`} />)}
+        </span>
+        <h2 id="home-rating" class="mt-2 font-bold text-text">{t.home.rating.title}</h2>
+        <ul class="rating-stats">
+          {r.stats.slice(1).map((st) => (
+            <li>
+              <bdi dir="ltr" data-count={st.value}>{st.value}</bdi>
+              <small>{st.label}</small>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <figure class="rating-quote">
+        <Icon name="quote" size={34} class="quote-mark" />
+        <blockquote dir="auto">{quote.text}</blockquote>
+        <figcaption>
+          <span dir="auto">{quote.name}</span> · {quote.date}
+        </figcaption>
+        <a href={localePath(lang, '/about/#reviews')} class="more-pill mt-5">
+          {t.home.rating.more}
+          <Icon name="arrow" size={16} class="rtl:-scale-x-100" />
+        </a>
+      </figure>
+    </div>
+  </section>
+
   <section class="container-x pt-20 sm:pt-24" aria-labelledby="home-process">
     <SectionHeading id="home-process" icon="flow" title={t.home.processTitle} />
   </section>

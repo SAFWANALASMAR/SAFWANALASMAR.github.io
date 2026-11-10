@@ -89,6 +89,24 @@ home:
       text: تسليم مع دليل استخدام، ودعم بعد الإطلاق.
   cta: عندك إجراء يدوي يأخذ وقتك كل شهر؟ أخبرني عنه.
   ctaButton: تواصل معي
+  available: متاح لمشاريع جديدة
+  launch:
+    badge: جديد
+    text: أُطلقت بوابة جمعية إعجاز الإلكترونية
+    cta: زيارة البوابة
+  spotlight:
+    eyebrow: المشروع المميز
+    title: منشور ومتاح الآن
+    imageAlt: الواجهة الرئيسية لبوابة جمعية إعجاز الإلكترونية
+    points:
+      - { icon: users, text: مهيأة لنحو 30 ألف مستفيد }
+      - { icon: shield, text: تشفير البيانات الحساسة وإظهارها مقنّعة }
+      - { icon: layout, text: لوحة إدارة بصلاحيات متدرجة }
+      - { icon: user-check, text: حسابات للمستفيدين برموز تحقق }
+  rating:
+    title: تقييم كامل من طلابي
+    starsLabel: 5 من 5 نجوم
+    more: اقرأ آراء الطلاب
 
 services:
   title: الخدمات
@@ -191,6 +209,7 @@ about:
   educationTitle: التعليم والشهادات
   education:
     - title: بكالوريوس علوم الحاسب الآلي
+      highlight: true
       org: كلية ينبع الصناعية، الهيئة الملكية للجبيل وينبع
       date: "2025"
       icon: cap
@@ -203,6 +222,7 @@ about:
       date: "2024"
       icon: sparkles
     - title: دبلوم مهني في التجارة الإلكترونية والتسويق الرقمي
+      highlight: true
       org: Texas Professional University
       date: أكتوبر 2021
       icon: award
@@ -263,6 +283,7 @@ about:
         org: معهد المهند للتدريب
         date: يونيو – يوليو 2021
         note: 69 ساعة تدريبية
+  highlightLabel: شهادة أساسية
   showMore: عرض التفاصيل
   certificateView: عرض الشهادة
   certificateClose: إغلاق

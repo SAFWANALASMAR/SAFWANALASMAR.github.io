@@ -89,6 +89,24 @@ home:
       text: Handover with a user guide, and support after launch.
   cta: Got a manual process eating your time every month? Tell me about it.
   ctaButton: Get in touch
+  available: Available for new projects
+  launch:
+    badge: New
+    text: The Ejaz Association web portal is live
+    cta: Visit the portal
+  spotlight:
+    eyebrow: Featured project
+    title: Live now
+    imageAlt: Home page of the Ejaz Association web portal
+    points:
+      - { icon: users, text: "Built for around 30,000 users" }
+      - { icon: shield, text: Sensitive data encrypted and shown masked }
+      - { icon: layout, text: Admin panel with tiered permissions }
+      - { icon: user-check, text: User accounts with verification codes }
+  rating:
+    title: A perfect score from my students
+    starsLabel: 5 out of 5 stars
+    more: Read student reviews
 
 services:
   title: Services
@@ -191,6 +209,7 @@ about:
   educationTitle: Education & Certificates
   education:
     - title: B.Sc. in Computer Science
+      highlight: true
       org: Yanbu Industrial College, Royal Commission for Jubail and Yanbu
       date: "2025"
       icon: cap
@@ -203,6 +222,7 @@ about:
       date: "2024"
       icon: sparkles
     - title: Professional Diploma in E-Commerce and Digital Marketing
+      highlight: true
       org: Texas Professional University — 120 hours, grade Excellent
       date: Oct 2021
       icon: award
@@ -263,6 +283,7 @@ about:
         org: Al Mohanad Training Institute
         date: Jun – Jul 2021
         note: 69 training hours
+  highlightLabel: Key credential
   showMore: Show details
   certificateView: View certificate
   certificateClose: Close

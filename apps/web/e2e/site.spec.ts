@@ -244,3 +244,12 @@ for (const width of [390, 800, 980, 1100, 1366]) {
     await page.close();
   });
 }
+
+test('the live project is promoted on the home page', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('a.launch-bar')).toHaveAttribute('href', 'https://ejaz.sa/');
+  await expect(page.locator('a.launch-bar')).toBeVisible();
+  await expect(page.locator('.spotlight a.visit-btn')).toHaveAttribute('href', 'https://ejaz.sa/');
+  await expect(page.locator('.available-pill')).toBeVisible();
+  await expect(page.locator('.rating-stars svg')).toHaveCount(5);
+});

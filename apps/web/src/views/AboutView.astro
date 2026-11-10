@@ -160,7 +160,13 @@ const dir = lang === 'ar' ? 'rtl' : 'ltr';
     <CardMarquee label={a.educationTitle} dir={dir}>
       {
         a.education.map((item) => (
-          <li class="cm-item cm-edu card card-hover flex flex-col gap-3 p-5">
+          <li class:list={['cm-item cm-edu card card-hover flex flex-col gap-3 p-5', item.highlight && 'edu-key']}>
+            {item.highlight && (
+              <span class="edu-ribbon">
+                <Icon name="award" size={13} class="ico-still" />
+                {a.highlightLabel}
+              </span>
+            )}
             <div class="flex items-center justify-between gap-3">
               <span class="icon-badge size-11 rounded-xl">
                 <Icon name={item.icon ?? 'award'} size={22} />
