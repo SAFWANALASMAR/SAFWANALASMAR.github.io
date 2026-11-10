@@ -288,7 +288,7 @@ const dir = lang === 'ar' ? 'rtl' : 'ltr';
               ))
             }
           </ul>
-          <div class="mt-4 flex items-center justify-center gap-2" data-rev-dots>
+          <div class="mt-4 flex items-center justify-center" data-rev-dots>
             {r.items.map((_, i) => <button type="button" class:list={['rev-dot', { 'is-active': i === 0 }]} aria-label={`${i + 1} / ${r.items.length}`} data-rev-dot={i} />)}
           </div>
         </div>

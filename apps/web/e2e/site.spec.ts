@@ -272,3 +272,29 @@ test('FAQ answers open and close, and each page has its own preview card', async
   await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /og\/ar-request\.png$/);
   expect((await request.get('/manifest.webmanifest')).ok()).toBe(true);
 });
+
+test('looping motions rest off-screen and resume when scrolled to', async ({ page }) => {
+  await page.goto('/');
+  const state = (selector: string) =>
+    page.locator(selector).first().evaluate((el) => getComputedStyle(el).animationPlayState);
+  await expect.poll(() => state('footer svg.ico')).toBe('paused');
+  expect(await state('main svg.ico')).toBe('running');
+  await page.locator('footer').scrollIntoViewIfNeeded();
+  await expect.poll(() => state('footer svg.ico')).toBe('running');
+});
+
+// Guards phone performance: a looping animation that runs on the main thread restyles the page every frame
+// (about 120 times in two seconds). The rotating hero word and the reviews carousel add short bursts (up to ~55).
+for (const path of ['/', '/about/']) {
+  test(`${path} is quiet when idle (looping motions stay off the main thread)`, async ({ page }) => {
+    await page.goto(path);
+    const cdp = await page.context().newCDPSession(page);
+    await cdp.send('Performance.enable');
+    const recalcs = async () =>
+      (await cdp.send('Performance.getMetrics')).metrics.find((m) => m.name === 'RecalcStyleCount')!.value;
+    await page.waitForTimeout(2500); // entrance effects and the number count-up finish
+    const before = await recalcs();
+    await page.waitForTimeout(2000);
+    expect((await recalcs()) - before).toBeLessThan(80);
+  });
+}

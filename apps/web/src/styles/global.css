@@ -292,16 +292,23 @@
 }
 
 /* Rotating turquoise-to-gold ring around the profile photo. */
-@property --ring-angle {
-  syntax: '<angle>';
-  inherits: false;
-  initial-value: 0deg;
-}
+/* The ring is its own round layer that turns (no overflow clip on the parent: clipping a rotating
+   layer to rounded corners pushed the animation back onto the main thread). */
 .photo-ring {
+  position: relative;
+  isolation: isolate;
   display: inline-block;
   padding: 4px;
   border-radius: 999px;
-  background: conic-gradient(from var(--ring-angle), var(--accent), var(--gold), var(--accent-soft), var(--accent));
+}
+.photo-ring::before,
+.brand-mark::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: conic-gradient(var(--accent), var(--gold), var(--accent-soft), var(--accent));
   animation: ring-spin 8s linear infinite;
 }
 .photo-ring img {
@@ -311,7 +318,7 @@
 }
 @keyframes ring-spin {
   to {
-    --ring-angle: 360deg;
+    transform: rotate(360deg);
   }
 }
 
@@ -396,7 +403,8 @@ html[dir='ltr'] .name-underline {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .photo-ring,
+  .photo-ring::before,
+  .brand-mark::before,
   .float-soft {
     animation: none !important;
   }
@@ -627,7 +635,6 @@ html {
   );
   background-size: 200% 200%;
   background-attachment: fixed;
-  animation: sky-shift 30s ease-in-out infinite alternate;
 }
 body {
   background: transparent;
@@ -640,11 +647,6 @@ body {
 @keyframes drift-b {
   to {
     transform: translate(20vmax, -18vmax) scale(1.1);
-  }
-}
-@keyframes sky-shift {
-  to {
-    background-position: 100% 100%;
   }
 }
 
@@ -673,7 +675,6 @@ body {
 }
 .card {
   background: var(--card-bg);
-  backdrop-filter: blur(10px);
 }
 .glass-soft {
   background: linear-gradient(
@@ -690,17 +691,29 @@ body {
     color-mix(in srgb, var(--gold-soft) 75%, transparent),
     color-mix(in srgb, var(--accent-soft) 75%, transparent)
   );
-  background-size: 300% 100%;
-  backdrop-filter: blur(8px);
-  animation: band-shift 20s ease-in-out infinite alternate;
+  background-size: 100% 100%;
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
 }
-@keyframes band-shift {
+.band-glass::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 300%;
+  z-index: -1;
+  background: inherit;
+  animation: band-slide 20s ease-in-out infinite alternate;
+}
+@keyframes band-slide {
   to {
-    background-position: 100% 0;
+    transform: translateX(-66.666%);
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .band-glass {
+  .band-glass::before {
     animation: none !important;
   }
 }
@@ -714,8 +727,9 @@ body {
   overflow: hidden;
 }
 
-/* Living icons: every icon loops a small motion. Uses the individual translate/rotate/scale
-   properties so it never overrides an icon's own transform (e.g. the RTL-flipped arrow). */
+/* Living icons: every icon loops a small motion. The keyframes animate `transform`, which the browser runs
+   off the main thread for <svg> (the individual translate/rotate/scale properties are not, and hundreds of them
+   kept phones busy). Flips such as the RTL arrow use the separate `scale` property, so they are never overridden. */
 .ico {
   transform-box: fill-box;
   transform-origin: center;
@@ -740,18 +754,16 @@ body {
 .marquee .tag-icon:nth-child(3n + 1) .ico { animation-delay: -0.6s; }
 .marquee .tag-icon:nth-child(3n + 2) .ico { animation-delay: -1.3s; }
 
-@keyframes ico-breathe { 50% { scale: 1.14; } }
-/* "Forward" is right in English and left in Arabic. */
-.ico { --ico-forward: 3px; }
-[dir='rtl'] .ico { --ico-forward: -3px; }
-@keyframes ico-nudge-x { 50% { translate: var(--ico-forward) 0; } }
-@keyframes ico-nudge-y { 50% { translate: 0 2.5px; } }
-@keyframes ico-float { 50% { translate: 0 -2.5px; } }
-@keyframes ico-fly { 50% { translate: 2px -2px; rotate: -6deg; } }
-@keyframes ico-beat { 15%, 45% { scale: 1.18; } 30% { scale: 1.04; } 0%, 60%, 100% { scale: 1; } }
-@keyframes ico-spin { to { rotate: 360deg; } }
-@keyframes ico-swing { 25% { rotate: -9deg; } 75% { rotate: 9deg; } }
-@keyframes ico-twinkle { 50% { scale: 1.16; rotate: 12deg; opacity: 0.8; } }
+@keyframes ico-breathe { 50% { transform: scale(1.14); } }
+/* The nudge runs in the icon's own (possibly flipped) space, so an arrow always moves the way it points. */
+@keyframes ico-nudge-x { 50% { transform: translateX(3px); } }
+@keyframes ico-nudge-y { 50% { transform: translateY(2.5px); } }
+@keyframes ico-float { 50% { transform: translateY(-2.5px); } }
+@keyframes ico-fly { 50% { transform: translate(2px, -2px) rotate(-6deg); } }
+@keyframes ico-beat { 15%, 45% { transform: scale(1.18); } 30% { transform: scale(1.04); } 0%, 60%, 100% { transform: scale(1); } }
+@keyframes ico-spin { to { transform: rotate(360deg); } }
+@keyframes ico-swing { 25% { transform: rotate(-9deg); } 75% { transform: rotate(9deg); } }
+@keyframes ico-twinkle { 50% { transform: scale(1.16) rotate(12deg); opacity: 0.8; } }
 
 /* Small, non-vestibular motions stay on even when the device asks for less motion, just slower. */
 @media (prefers-reduced-motion: reduce) {
@@ -799,8 +811,10 @@ body {
   width: 2.6rem;
   height: 2.6rem;
   border-radius: 999px;
-  background: conic-gradient(from var(--ring-angle), var(--accent), var(--gold), var(--accent-soft), var(--accent));
-  animation: ring-spin 6s linear infinite;
+  isolation: isolate;
+}
+.brand-mark::before {
+  animation-duration: 6s;
 }
 .brand-core {
   display: grid;
@@ -1424,7 +1438,20 @@ body {
     animation: chip-bob 3.5s ease-in-out infinite;
   }
   .cta-pulse {
+    position: relative;
     animation: cta-glow 2.4s ease-in-out infinite;
+  }
+  .cta-pulse::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow:
+      0 0 0 8px rgb(255 255 255 / 0.15),
+      0 14px 30px -10px rgb(0 0 0 / 0.45);
+    opacity: 0;
+    pointer-events: none;
+    animation: glow-fade 2.4s ease-in-out infinite;
   }
 
   /* Services page: alternating rows with a large icon panel that slide in from each side. */
@@ -1527,9 +1554,22 @@ body {
     width: 20rem;
   }
   .skill-tags .tag-icon {
-    animation: tag-glow 3.6s ease-in-out infinite;
+    position: relative;
+    isolation: isolate;
   }
-  .skill-tags .tag-icon:nth-child(3n + 2) {
+  .skill-tags .tag-icon::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+    border-radius: inherit;
+    border: 1px solid color-mix(in srgb, var(--gold) 65%, transparent);
+    background: var(--gold-soft);
+    opacity: 0;
+    pointer-events: none;
+    animation: glow-fade 3.6s ease-in-out infinite;
+  }
+  .skill-tags .tag-icon:nth-child(3n + 2)::after {
     animation-delay: -1.2s;
   }
   .skill-tags .tag-icon:nth-child(3n) {
@@ -1569,7 +1609,16 @@ body {
     translate: 0 0;
     pointer-events: auto;
   }
+  /* The button is a 24px touch target; the visible dot is drawn inside it. */
   .rev-dot {
+    display: grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    transition: width 0.3s;
+  }
+  .rev-dot::before {
+    content: '';
     width: 0.6rem;
     height: 0.6rem;
     border-radius: 999px;
@@ -1577,6 +1626,9 @@ body {
     transition: width 0.3s, background-color 0.3s;
   }
   .rev-dot.is-active {
+    width: 2.2rem;
+  }
+  .rev-dot.is-active::before {
     width: 1.6rem;
     background: linear-gradient(90deg, var(--accent), var(--gold));
   }
@@ -1584,16 +1636,13 @@ body {
 
 @keyframes cta-glow {
   50% {
-    box-shadow:
-      0 0 0 8px rgb(255 255 255 / 0.15),
-      0 14px 30px -10px rgb(0 0 0 / 0.45);
     translate: 0 -2px;
   }
 }
-@keyframes tag-glow {
+/* Glows fade a ready-made layer in and out (opacity only), instead of animating box-shadow or colours. */
+@keyframes glow-fade {
   50% {
-    border-color: color-mix(in srgb, var(--gold) 65%, transparent);
-    background: var(--gold-soft);
+    opacity: 1;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1866,7 +1915,18 @@ body {
     box-shadow:
       0 14px 28px -10px rgb(10 40 50 / 0.55),
       0 0 0 1px rgb(255 255 255 / 0.35) inset;
-    animation: fab-pulse 2.8s ease-in-out infinite;
+  }
+  .request-fab::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow:
+      0 18px 32px -10px rgb(10 40 50 / 0.6),
+      0 0 0 6px rgb(201 162 39 / 0.22);
+    opacity: 0;
+    pointer-events: none;
+    animation: glow-fade 2.8s ease-in-out infinite;
   }
   .cta-btn-ghost {
     color: #fff;
@@ -1894,14 +1954,7 @@ body {
     }
   }
 }
-/* Glow only: the button itself stays still so it is easy to tap. */
-@keyframes fab-pulse {
-  50% {
-    box-shadow:
-      0 18px 32px -10px rgb(10 40 50 / 0.6),
-      0 0 0 6px rgb(201 162 39 / 0.22);
-  }
-}
+/* Glow only (.request-fab::after): the button itself stays still so it is easy to tap. */
 
 /* Between the tablet and wide layouts the header is tight (English labels are longer): slimmer pills. */
 @layer components {
@@ -2004,12 +2057,6 @@ body {
       padding-inline: 0.4rem;
     }
   }
-}
-
-/* Moving strips: no backdrop blur on cards in motion — keeps fast scrolling smooth on phones. */
-.card-marquee .card {
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
 }
 
 /* Live-site button: clearly visible on cards, case pages and the timeline. */
@@ -2275,7 +2322,7 @@ body {
 .rating-stars .star-2 { animation-delay: 0.3s; }
 .rating-stars .star-3 { animation-delay: 0.45s; }
 .rating-stars .star-4 { animation-delay: 0.6s; }
-@keyframes star-twinkle { 0%, 70%, 100% { scale: 1; rotate: 0deg; } 80% { scale: 1.25; rotate: 12deg; } }
+@keyframes star-twinkle { 0%, 70%, 100% { transform: none; } 80% { transform: scale(1.25) rotate(12deg); } }
 .rating-stats { display: flex; gap: 1.25rem; margin-top: 1rem; }
 .rating-stats li { display: flex; flex-direction: column; align-items: center; }
 .rating-stats bdi { font-size: 1.35rem; font-weight: 800; color: var(--accent); }
@@ -2415,3 +2462,11 @@ body {
 
 /* ===== Install button ===== */
 .install-btn[hidden] { display: none; }
+
+/* Sections that are off-screen rest their looping motions (class set in Base.astro); they resume on approach. */
+.is-away,
+.is-away *,
+.is-away *::before,
+.is-away *::after {
+  animation-play-state: paused !important;
+}

@@ -128,6 +128,23 @@ const ogImage = abs(url(publicFileExists(pageOg) ? pageOg : `og/${lang}.png`));
         items.forEach((el) => io.observe(el));
       }
 
+      // Rest looping motions in parts of the page that are off-screen (see .is-away); they resume on approach.
+      // Very tall sections are split into their children so only what is near the screen keeps moving.
+      if ('IntersectionObserver' in window) {
+        const zones: Element[] = [];
+        const collect = (el: Element, depth: number) => {
+          if (depth < 3 && el.children.length > 1 && el.getBoundingClientRect().height > innerHeight * 1.5) {
+            for (const child of el.children) collect(child, depth + 1);
+          } else zones.push(el);
+        };
+        document.querySelectorAll('main > *, body > footer').forEach((el) => collect(el, 0));
+        const rest = new IntersectionObserver(
+          (entries) => entries.forEach((e) => e.target.classList.toggle('is-away', !e.isIntersecting)),
+          { rootMargin: '25% 0px' },
+        );
+        zones.forEach((zone) => rest.observe(zone));
+      }
+
       // Cycle the hero role words.
       const rotator = document.querySelector<HTMLElement>('[data-rotate]');
       if (rotator && !reduce) {

@@ -33,6 +33,9 @@ const featured = projects.filter((p) => p.data.featured).slice(0, 3);
 // The live, featured project with a screenshot gets a spotlight and the launch bar.
 const spot = projects.find((p) => p.data.featured && p.data.link && p.data.image && publicFileExists(p.data.image));
 const spotDomain = spot?.data.link?.replace(/^https?:\/\/|\/$/g, '');
+// A lighter copy of the screenshot for phones, when one exists next to it.
+const spotSmallPath = spot?.data.image?.replace(/\.webp$/, '-800.webp');
+const spotSmall = spotSmallPath && spotSmallPath !== spot?.data.image && publicFileExists(spotSmallPath) ? spotSmallPath : undefined;
 const r = t.about.reviews;
 const quote = r.items.reduce((a, b) => (b.text.length > a.text.length ? b : a));
 const en = await getSite('en');
@@ -42,6 +45,8 @@ const stack = [...new Set(t.about.skills.slice(0, 4).flatMap((g) => g.items))].f
 const hasPhoto = publicFileExists(s.photo);
 const photoWebp = s.photo.replace(/\.jpe?g$/i, '.webp');
 const hasWebp = photoWebp !== s.photo && publicFileExists(photoWebp);
+const photoSmall = photoWebp.replace(/\.webp$/, '-208.webp');
+const hasSmall = publicFileExists(photoSmall);
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -105,7 +110,13 @@ const jsonLd = {
         {
           hasPhoto && (
             <picture class="photo-ring mb-6 shadow-soft">
-              {hasWebp && <source srcset={url(photoWebp)} type="image/webp" />}
+              {hasWebp && (
+                <source
+                  srcset={hasSmall ? `${url(photoSmall)} 208w, ${url(photoWebp)} 400w` : url(photoWebp)}
+                  sizes="104px"
+                  type="image/webp"
+                />
+              )}
               <img
                 src={url(s.photo)}
                 alt={t.about.photoAlt}
@@ -216,6 +227,8 @@ const jsonLd = {
               </div>
               <img
                 src={url(spot.data.image!)}
+                srcset={spotSmall ? `${url(spotSmall)} 800w, ${url(spot.data.image!)} 1556w` : undefined}
+                sizes="(min-width: 64rem) 36rem, 92vw"
                 alt={t.home.spotlight.imageAlt}
                 width="1556"
                 height="620"
