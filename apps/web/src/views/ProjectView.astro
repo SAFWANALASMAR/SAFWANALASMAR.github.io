@@ -45,6 +45,15 @@ const sections = [
     <header class="mt-6 border-b border-line pb-8">
       <h1 class="text-3xl leading-tight font-bold text-text sm:text-4xl">{text.title}</h1>
       <p class="mt-4 text-lg text-muted">{text.summary}</p>
+      {
+        p.link && (
+          <a href={p.link} target="_blank" rel="noopener noreferrer" class="visit-btn visit-btn-lg mt-6">
+            <Icon name="external" size={20} />
+            {t.projects.visit}
+            <span class="visit-domain" dir="ltr">{p.link.replace(/^https?:\/\/|\/$/g, '')}</span>
+          </a>
+        )
+      }
 
       <dl class="mt-6 grid gap-4 text-sm sm:grid-cols-3">
         <div>
@@ -114,7 +123,7 @@ const sections = [
               href={p.link}
               target="_blank"
               rel="noopener noreferrer"
-              class="inline-flex items-center gap-1.5 font-semibold text-accent hover:underline"
+              class="visit-btn"
               dir="ltr"
             >
               {p.link.replace(/^https?:\/\//, '')}

@@ -139,6 +139,8 @@ const site = defineCollection({
       all: z.string(),
       viewCase: z.string(),
       inProgress: z.string(),
+      live: z.string(),
+      visit: z.string(),
       back: z.string(),
       types: z.record(z.enum(projectTypes), z.string()),
       labels: z.object({

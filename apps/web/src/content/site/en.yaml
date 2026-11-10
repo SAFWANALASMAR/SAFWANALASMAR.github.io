@@ -105,6 +105,8 @@ projects:
   all: All
   viewCase: Case study
   inProgress: In progress
+  live: Live
+  visit: Visit the site
   back: All projects
   types:
     web-system: Web system

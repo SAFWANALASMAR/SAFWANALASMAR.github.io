@@ -105,6 +105,8 @@ projects:
   all: الكل
   viewCase: دراسة الحالة
   inProgress: قيد التطوير
+  live: منشور ومتاح
+  visit: زيارة الموقع
   back: كل المشاريع
   types:
     web-system: نظام ويب

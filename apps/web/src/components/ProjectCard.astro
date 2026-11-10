@@ -37,6 +37,14 @@ const typeIcon = {
           </span>
         )
       }
+      {
+        p.link && (
+          <span class="chip chip-live">
+            <span class="pulse-dot" aria-hidden="true" />
+            {t.projects.live}
+          </span>
+        )
+      }
       <span class="chip">{t.projects.types[p.type]}</span>
       <span class="chip font-mono" dir="ltr">{p.year}</span>
     </div>
@@ -50,8 +58,19 @@ const typeIcon = {
   <ul class="mt-5 flex flex-wrap gap-1.5">
     {p.tags.map((tag) => <Tag text={tag} />)}
   </ul>
-  <span class="case-link mt-6">
-    {t.projects.viewCase}
-    <Icon name="arrow" size={16} class="rtl:-scale-x-100" />
-  </span>
+  <div class="mt-6 flex flex-wrap items-center justify-between gap-3">
+    <span class="case-link">
+      {t.projects.viewCase}
+      <Icon name="arrow" size={16} class="rtl:-scale-x-100" />
+    </span>
+    {
+      p.link && (
+        <a href={p.link} target="_blank" rel="noopener noreferrer" class="visit-btn relative z-10">
+          <Icon name="external" size={16} />
+          {t.projects.visit}
+          <span class="visit-domain" dir="ltr">{p.link.replace(/^https?:\/\/|\/$/g, '')}</span>
+        </a>
+      )
+    }
+  </div>
 </article>
