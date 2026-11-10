@@ -33,8 +33,8 @@ const featured = projects.filter((p) => p.data.featured).slice(0, 3);
 // The live, featured project with a screenshot gets a spotlight and the launch bar.
 const spot = projects.find((p) => p.data.featured && p.data.link && p.data.image && publicFileExists(p.data.image));
 const spotDomain = spot?.data.link?.replace(/^https?:\/\/|\/$/g, '');
-// A lighter copy of the screenshot for phones, when one exists next to it.
-const spotSmallPath = spot?.data.image?.replace(/\.webp$/, '-800.webp');
+// A lighter copy of the screenshot for phones, when one exists next to it (778×310: same proportions as the original).
+const spotSmallPath = spot?.data.image?.replace(/\.webp$/, '-778.webp');
 const spotSmall = spotSmallPath && spotSmallPath !== spot?.data.image && publicFileExists(spotSmallPath) ? spotSmallPath : undefined;
 const r = t.about.reviews;
 const quote = r.items.reduce((a, b) => (b.text.length > a.text.length ? b : a));
@@ -227,7 +227,7 @@ const jsonLd = {
               </div>
               <img
                 src={url(spot.data.image!)}
-                srcset={spotSmall ? `${url(spotSmall)} 800w, ${url(spot.data.image!)} 1556w` : undefined}
+                srcset={spotSmall ? `${url(spotSmall)} 778w, ${url(spot.data.image!)} 1556w` : undefined}
                 sizes="(min-width: 64rem) 36rem, 92vw"
                 alt={t.home.spotlight.imageAlt}
                 width="1556"

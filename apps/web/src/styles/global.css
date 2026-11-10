@@ -683,15 +683,8 @@ body {
     color-mix(in srgb, var(--accent-soft) 55%, transparent)
   );
 }
+/* The band's gradient is a layer three times as wide that slides sideways (transform only). */
 .band-glass {
-  background: linear-gradient(
-    90deg,
-    color-mix(in srgb, var(--accent-soft) 75%, transparent),
-    color-mix(in srgb, var(--surface) 55%, transparent),
-    color-mix(in srgb, var(--gold-soft) 75%, transparent),
-    color-mix(in srgb, var(--accent-soft) 75%, transparent)
-  );
-  background-size: 100% 100%;
   position: relative;
   isolation: isolate;
   overflow: clip;
@@ -704,7 +697,13 @@ body {
   left: 0;
   width: 300%;
   z-index: -1;
-  background: inherit;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--accent-soft) 75%, transparent),
+    color-mix(in srgb, var(--surface) 55%, transparent),
+    color-mix(in srgb, var(--gold-soft) 75%, transparent),
+    color-mix(in srgb, var(--accent-soft) 75%, transparent)
+  );
   animation: band-slide 20s ease-in-out infinite alternate;
 }
 @keyframes band-slide {
