@@ -1,0 +1,72 @@
+---
+import Icon from './Icon.astro';
+import { getSite, localePath, type Lang } from '../lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const c = (await getSite(lang)).calc;
+---
+
+<section class="container-x pt-20 sm:pt-24" aria-labelledby="calc-title">
+  <div class="calc reveal" data-calc>
+    <div class="calc-head">
+      <span class="icon-badge size-12 rounded-xl"><Icon name="clock" size={24} /></span>
+      <div>
+        <h2 id="calc-title" class="text-2xl font-bold text-text sm:text-3xl">{c.title}</h2>
+        <p class="mt-1 text-muted">{c.intro}</p>
+      </div>
+    </div>
+    <div class="calc-grid">
+      <div class="calc-inputs">
+        <label class="calc-field">
+          <span class="calc-label">{c.hours}<output data-out="hours">20</output></span>
+          <input type="range" min="1" max="160" step="1" value="20" data-in="hours" />
+        </label>
+        <label class="calc-field">
+          <span class="calc-label">{c.people}<output data-out="people">1</output></span>
+          <input type="range" min="1" max="20" step="1" value="1" data-in="people" />
+        </label>
+        <label class="calc-field">
+          <span class="calc-label">{c.share}<output data-out="share">70%</output></span>
+          <input type="range" min="30" max="90" step="5" value="70" data-in="share" />
+        </label>
+      </div>
+      <div class="calc-result" aria-live="polite">
+        <p class="calc-result-label">{c.resultLabel}</p>
+        <p class="calc-big"><bdi dir="ltr" data-res="hours">168</bdi> <span>{c.hoursUnit}</span></p>
+        <p class="calc-sub">{c.daysPrefix} <bdi dir="ltr" data-res="days">21</bdi> {c.daysUnit}</p>
+        <a href={localePath(lang, '/request/')} class="btn cta-btn mt-6">
+          {c.cta}
+          <Icon name="arrow" size={18} class="rtl:-scale-x-100" />
+        </a>
+        <p class="calc-note">{c.note}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-calc]').forEach((root) => {
+    const get = (k: string) => Number(root.querySelector<HTMLInputElement>(`[data-in="${k}"]`)!.value);
+    const fmt = (n: number) => Math.round(n).toLocaleString('en-US');
+    const update = () => {
+      const hours = get('hours');
+      const people = get('people');
+      const share = get('share');
+      root.querySelector('[data-out="hours"]')!.textContent = String(hours);
+      root.querySelector('[data-out="people"]')!.textContent = String(people);
+      root.querySelector('[data-out="share"]')!.textContent = `${share}%`;
+      const saved = hours * people * 12 * (share / 100);
+      root.querySelector('[data-res="hours"]')!.textContent = fmt(saved);
+      root.querySelector('[data-res="days"]')!.textContent = fmt(saved / 8);
+      root.querySelectorAll<HTMLInputElement>('input[type="range"]').forEach((input) => {
+        const p = ((Number(input.value) - Number(input.min)) / (Number(input.max) - Number(input.min))) * 100;
+        input.style.setProperty('--fill', `${p}%`);
+      });
+    };
+    root.addEventListener('input', update);
+    update();
+  });
+</script>

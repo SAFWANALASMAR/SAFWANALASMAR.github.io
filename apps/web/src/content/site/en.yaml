@@ -259,6 +259,7 @@ about:
         name: Kukh Alshay — Madinah
         period: "2026"
         role: Marketing and operations analysis and plan for a retail shop
+        link: https://kukhalshay.sa/
         points:
           - Analysed the shop's position and opportunities and built a marketing and operating plan
           - Updated the plan after on-the-ground decisions about opening hours and expansion
@@ -266,6 +267,7 @@ about:
         name: Elhlal platform — elhlal.com
         period: Oct 2026 – Present
         role: Building the digital presence of an online livestock marketplace
+        link: https://elhlal.com/
         points:
           - Set up the social media accounts under one identity
           - Content and reach plan for Saudi Arabia, then the Gulf, using organic channels
@@ -420,6 +422,35 @@ request:
   newRequest: New request
   subject: Project request from the website
 
+calc:
+  title: How many hours can automation save?
+  intro: Move the sliders to match your current work and see the time your team gets back each year.
+  hours: Manual hours per person each month
+  people: People doing this work
+  share: Share of the work that can be automated
+  resultLabel: Time you could save every year
+  hoursUnit: hours
+  daysPrefix: That is about
+  daysUnit: working days (8 hours)
+  cta: Turn this time into a system
+  note: A rough estimate for illustration; the real figure is set after studying the process.
+faq:
+  title: Frequently asked questions
+  items:
+    - q: How do I start?
+      a: Use the "Request a project" page in four short steps, or send a message from the contact page. We then start with a session to understand the current process and the real problem.
+    - q: I only have a rough idea. Is that enough?
+      a: Yes. The request accepts a complete or partial idea, you can attach a link to a file or draft, and we fill in the details together.
+    - q: How much does it cost?
+      a: Pricing depends on the scope of work. In the request form you pick an approximate budget range or "not sure", and you receive a tailored quote.
+    - q: What happens after I send a request?
+      a: I understand the process, document the requirements in a short brief approved before any code, build in stages with a preview at each one, then deliver with a user guide and post-launch support.
+    - q: Can I request more than one service?
+      a: Yes. One request can combine software, marketing and media, each with its own options.
+    - q: Do your systems fully support Arabic?
+      a: Yes. I build Arabic solutions right-to-left the way they should be, across interfaces, reports and documents, with an English version when needed.
+pwa:
+  install: Install the site as an app
 footer:
   tagline: Digital Solutions Developer for Organizations · Madinah
   rights: All rights reserved.

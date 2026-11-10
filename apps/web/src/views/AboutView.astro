@@ -208,6 +208,13 @@ const dir = lang === 'ar' ? 'rtl' : 'ltr';
               </li>
             ))}
           </ul>
+          {pr.link && (
+            <a href={pr.link} target="_blank" rel="noopener noreferrer" class="visit-btn mt-auto self-start">
+              <Icon name="external" size={16} />
+              {t.projects.visit}
+              <span class="visit-domain" dir="ltr">{pr.link.replace(/^https?:\/\/|\/$/g, '')}</span>
+            </a>
+          )}
         </li>
       ))
     }

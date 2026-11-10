@@ -1,4 +1,5 @@
 ---
+import Faq from '../components/Faq.astro';
 import Base from '../layouts/Base.astro';
 import Icon, { type IconName } from '../components/Icon.astro';
 import SectionHeading from '../components/SectionHeading.astro';
@@ -264,6 +265,7 @@ const stageIcons: IconName[] = ['sparkles', 'document', 'check'];
       </div>
     </form>
   </section>
+  <Faq lang={lang} />
 </Base>
 
 {apiReady && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}

@@ -1,0 +1,28 @@
+---
+import Icon from './Icon.astro';
+import SectionTitle from './SectionTitle.astro';
+import { getSite, type Lang } from '../lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const f = (await getSite(lang)).faq;
+---
+
+<section class="container-x pt-20 sm:pt-24" aria-labelledby="faq">
+  <SectionTitle id="faq" icon="help" size="md" title={f.title} />
+  <div class="faq-list mt-8">
+    {
+      f.items.map((item, i) => (
+        <details class="faq-item reveal" open={i === 0}>
+          <summary>
+            <span>{item.q}</span>
+            <Icon name="plus" size={20} class="faq-icon ico-still" />
+          </summary>
+          <p>{item.a}</p>
+        </details>
+      ))
+    }
+  </div>
+</section>

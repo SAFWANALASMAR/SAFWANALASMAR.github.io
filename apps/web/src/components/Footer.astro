@@ -21,7 +21,13 @@ const mail = emailParts(s.email);
       <a href={localePath(lang, '/')} class="brand flex items-center gap-3 font-bold text-text"><span class="brand-mark" aria-hidden="true"><span class="brand-core"><Icon name="code" size={19} /></span></span><span class="brand-name text-xl">{t.hero.name}</span></a>
       <p class="mt-2 text-base text-muted">{t.footer.tagline}</p>
     </div>
-    <ul class="flex items-center gap-2">
+    <ul class="flex flex-wrap items-center gap-2">
+      <li>
+        <button type="button" class="install-btn more-pill" data-install hidden>
+          <Icon name="install" size={18} />
+          {t.pwa.install}
+        </button>
+      </li>
       {
         !isPlaceholder(s.email) && (
           <li>
@@ -69,3 +75,24 @@ const mail = emailParts(s.email);
     © <span dir="ltr">{year}</span>{' '}{t.hero.name}. {t.footer.rights}
   </div>
 </footer>
+
+<script>
+  // Installable app: the browser offers it once the site qualifies; we show our own button for it.
+  type InstallEvent = Event & { prompt: () => Promise<void> };
+  let deferred: InstallEvent | null = null;
+  const btn = document.querySelector<HTMLButtonElement>('[data-install]');
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferred = e as InstallEvent;
+    if (btn) btn.hidden = false;
+  });
+  btn?.addEventListener('click', async () => {
+    if (!deferred) return;
+    await deferred.prompt();
+    deferred = null;
+    btn.hidden = true;
+  });
+  if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    navigator.serviceWorker.register(`${import.meta.env.BASE_URL.replace(/\/$/, '')}/sw.js`).catch(() => {});
+  }
+</script>

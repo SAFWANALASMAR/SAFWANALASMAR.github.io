@@ -7,7 +7,7 @@ import '@fontsource/jetbrains-mono/400.css';
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import { dirOf, getSite, localePath, url, type Lang } from '../lib/i18n';
+import { dirOf, getSite, localePath, publicFileExists, url, type Lang } from '../lib/i18n';
 
 interface Props {
   lang: Lang;
@@ -29,7 +29,10 @@ const alternates = {
   ar: abs(localePath('ar', path)),
   en: abs(localePath('en', path)),
 };
-const ogImage = abs(url(`og/${lang}.png`));
+// A card per page when one was generated (npm run og), else the general one.
+const slug = path.replace(/^\/|\/$/g, '').replace(/\//g, '-') || 'home';
+const pageOg = `og/${lang}-${slug}.png`;
+const ogImage = abs(url(publicFileExists(pageOg) ? pageOg : `og/${lang}.png`));
 ---
 
 <!doctype html>
@@ -50,6 +53,7 @@ const ogImage = abs(url(`og/${lang}.png`));
     <link rel="icon" href={url('favicon.svg')} type="image/svg+xml" />
     <link rel="icon" href={url('favicon-32.png')} sizes="32x32" type="image/png" />
     <link rel="apple-touch-icon" href={url('apple-touch-icon.png')} />
+    <link rel="manifest" href={url('manifest.webmanifest')} />
     <meta name="theme-color" content="#0B7285" />
 
     <meta property="og:type" content="website" />

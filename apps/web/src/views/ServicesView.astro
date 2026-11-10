@@ -3,6 +3,8 @@ import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import CardMarquee from '../components/CardMarquee.astro';
+import SavingsCalc from '../components/SavingsCalc.astro';
+import Faq from '../components/Faq.astro';
 import { getServices, getSite, localePath, type Lang } from '../lib/i18n';
 
 interface Props {
@@ -12,6 +14,11 @@ interface Props {
 const { lang } = Astro.props;
 const t = await getSite(lang);
 const services = await getServices();
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: t.faq.items.map((i) => ({ '@type': 'Question', name: i.q, acceptedAnswer: { '@type': 'Answer', text: i.a } })),
+};
 ---
 
 <Base
@@ -19,6 +26,7 @@ const services = await getServices();
   path="/services/"
   title={t.meta.pages.services.title}
   description={t.meta.pages.services.description}
+  jsonLd={faqLd}
 >
   <section class="container-x pt-14 sm:pt-20">
     <SectionHeading as="h1" icon="briefcase" title={t.services.title} intro={t.services.intro} />
@@ -102,4 +110,6 @@ const services = await getServices();
 
     <p class="reveal mt-10 text-center text-sm text-muted">{t.services.pricing}</p>
   </section>
+  <SavingsCalc lang={lang} />
+  <Faq lang={lang} />
 </Base>

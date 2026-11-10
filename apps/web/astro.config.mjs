@@ -14,6 +14,8 @@ export default defineConfig({
   trailingSlash: 'ignore',
   // Small stylesheet: inlining it removes a render-blocking request (better mobile LCP).
   build: { inlineStylesheets: 'always' },
+  // Start loading a page as soon as its link is hovered or touched: navigation feels instant.
+  prefetch: { prefetchAll: true, defaultStrategy: 'hover' },
   // Content-Security-Policy as a <meta> tag on every page; Astro hashes its own inline scripts and styles.
   security: {
     csp: {
@@ -36,7 +38,7 @@ export default defineConfig({
   integrations: [
     sitemap({
       i18n: { defaultLocale: 'ar', locales: { ar: 'ar', en: 'en' } },
-      filter: (page) => !page.includes('/404') && !page.includes('/cv-print'),
+      filter: (page) => !page.includes('/404') && !page.includes('/cv-print') && !page.includes('/og-cards'),
     }),
   ],
   vite: { plugins: [tailwindcss()] },

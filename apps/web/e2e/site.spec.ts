@@ -253,3 +253,22 @@ test('the live project is promoted on the home page', async ({ page }) => {
   await expect(page.locator('.available-pill')).toBeVisible();
   await expect(page.locator('.rating-stars svg')).toHaveCount(5);
 });
+
+test('the savings calculator updates as the sliders move', async ({ page }) => {
+  await page.goto('/services/');
+  const calc = page.locator('[data-calc]');
+  await expect(calc.locator('[data-res="hours"]')).toHaveText('168');
+  await calc.locator('[data-in="people"]').fill('3');
+  await expect(calc.locator('[data-res="hours"]')).toHaveText('504');
+  await expect(calc.locator('[data-res="days"]')).toHaveText('63');
+});
+
+test('FAQ answers open and close, and each page has its own preview card', async ({ page, request }) => {
+  await page.goto('/request/');
+  const second = page.locator('.faq-item').nth(1);
+  await expect(second.locator('p')).toBeHidden();
+  await second.locator('summary').click();
+  await expect(second.locator('p')).toBeVisible();
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /og\/ar-request\.png$/);
+  expect((await request.get('/manifest.webmanifest')).ok()).toBe(true);
+});
