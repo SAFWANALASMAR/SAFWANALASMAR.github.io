@@ -1914,3 +1914,94 @@ body {
     }
   }
 }
+
+/* Page links always visible: pill nav from tablets, a scrollable row on phones. */
+@layer components {
+  @media (min-width: 48rem) and (max-width: 63.99rem) {
+    .nav-link {
+      padding-inline: 0.55rem;
+      font-size: 0.85rem;
+    }
+    .request-cta {
+      width: 2.75rem;
+      padding-inline: 0;
+      justify-content: center;
+    }
+    .request-cta-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+    }
+  }
+  .mobile-nav ul {
+    display: flex;
+    gap: 0.4rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 0.35rem;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
+    background: color-mix(in srgb, var(--surface) 78%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+  .mobile-nav ul::-webkit-scrollbar {
+    display: none;
+  }
+  .mobile-nav li {
+    flex: 1 0 auto;
+  }
+  .mobile-nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    padding: 0.45rem 0.7rem;
+    border-radius: 999px;
+    white-space: nowrap;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--muted);
+  }
+  .mobile-nav-link[aria-current='page'] {
+    color: var(--on-accent);
+    background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  }
+}
+@layer components {
+  @media (max-width: 30rem) {
+    .mobile-nav-link {
+      padding-inline: 0.5rem;
+      font-size: 0.8rem;
+    }
+    .mobile-nav-link svg {
+      display: none;
+    }
+  }
+  @media (min-width: 48rem) and (max-width: 63.99rem) {
+    .brand-name {
+      font-size: 1rem;
+    }
+  }
+}
+@layer components {
+  @media (min-width: 48rem) and (max-width: 63.99rem) {
+    .brand-mark {
+      width: 2.25rem;
+      height: 2.25rem;
+    }
+    .brand {
+      gap: 0.5rem;
+    }
+    .nav-pill {
+      gap: 0;
+    }
+  }
+  @media (max-width: 23rem) {
+    .mobile-nav-link {
+      padding-inline: 0.4rem;
+    }
+  }
+}

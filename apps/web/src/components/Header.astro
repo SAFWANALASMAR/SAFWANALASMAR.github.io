@@ -37,7 +37,7 @@ const isActive = (linkPath: string) =>
       </span>
     </a>
 
-    <nav aria-label={t.nav.primary} class="hidden lg:block">
+    <nav aria-label={t.nav.primary} class="hidden md:block">
       <ul class="nav-pill">
         {
           links.map((link) => (
@@ -60,10 +60,11 @@ const isActive = (linkPath: string) =>
       <a
         href={localePath(lang, '/request/')}
         aria-current={isActive('/request/') ? 'page' : undefined}
+        aria-label={t.nav.request}
         class="request-cta hidden whitespace-nowrap md:inline-flex"
       >
         <Icon name="send" size={17} />
-        {t.nav.request}
+        <span class="request-cta-label">{t.nav.request}</span>
       </a>
       <a
         href={localePath(other, path)}
@@ -85,44 +86,18 @@ const isActive = (linkPath: string) =>
         <Icon name="moon" class="dark:hidden" />
         <Icon name="sun" class="hidden dark:block" />
       </button>
-      <button
-        type="button"
-        data-menu-toggle
-        aria-expanded="false"
-        aria-controls="mobile-menu"
-        aria-label={t.nav.menu}
-        class="ctrl-btn size-10 sm:size-11 lg:hidden"
-      >
-        <Icon name="menu" class="menu-open-icon" />
-        <Icon name="close" class="menu-close-icon hidden" />
-      </button>
     </div>
   </div>
 
-  <nav id="mobile-menu" aria-label={t.nav.primary} class="mobile-panel mx-auto mt-2 hidden max-w-6xl lg:hidden">
-    <ul class="flex flex-col gap-1 p-2">
-      <li>
-        <a href={localePath(lang, '/request/')} class="mobile-link mobile-request">
-          <span class="icon-badge size-9">
-            <Icon name="send" size={18} />
-          </span>
-          <span class="flex-1">{t.nav.request}</span>
-          <Icon name="arrow" size={16} class="rtl:-scale-x-100" />
-        </a>
-      </li>
+  <!-- Phones: page links always visible in a second row (no hidden menu). -->
+  <nav aria-label={t.nav.primary} class="mobile-nav mx-auto mt-2 max-w-6xl md:hidden">
+    <ul>
       {
         links.map((link) => (
           <li>
-            <a
-              href={localePath(lang, link.path)}
-              aria-current={isActive(link.path) ? 'page' : undefined}
-              class="mobile-link"
-            >
-              <span class="icon-badge size-9">
-                <Icon name={link.icon} size={18} />
-              </span>
-              <span class="flex-1">{link.label}</span>
-              <Icon name="arrow" size={16} class="text-muted rtl:-scale-x-100" />
+            <a href={localePath(lang, link.path)} aria-current={isActive(link.path) ? 'page' : undefined} class="mobile-nav-link">
+              <Icon name={link.icon} size={16} />
+              <span>{link.label}</span>
             </a>
           </li>
         ))
@@ -142,15 +117,6 @@ const isActive = (linkPath: string) =>
 }
 
 <script>
-  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
-  const menu = document.getElementById('mobile-menu');
-  toggle?.addEventListener('click', () => {
-    const open = toggle.getAttribute('aria-expanded') !== 'true';
-    toggle.setAttribute('aria-expanded', String(open));
-    menu?.classList.toggle('hidden', !open);
-    toggle.querySelector('.menu-open-icon')?.classList.toggle('hidden', open);
-    toggle.querySelector('.menu-close-icon')?.classList.toggle('hidden', !open);
-  });
 
   const themeBtn = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
   const root = document.documentElement;
