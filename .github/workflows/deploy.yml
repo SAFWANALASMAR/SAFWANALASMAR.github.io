@@ -2,7 +2,8 @@
 # Deploys the API, then the site, to Cloudflare on every push to main — only after checks pass.
 #
 # One-time setup (by the repo owner, in GitHub → Settings → Secrets and variables → Actions):
-#   Secrets:   CLOUDFLARE_API_TOKEN  (template "Edit Cloudflare Workers"), CLOUDFLARE_ACCOUNT_ID
+#   Secrets:   CLOUDFLARE_API_TOKEN  (template "Edit Cloudflare Workers"), CLOUDFLARE_ACCOUNT_ID,
+#              TURNSTILE_SECRET, RESEND_API_KEY  (copied to the API Worker as Worker secrets on each deploy)
 #   Variables: SITE_URL              (e.g. https://safwan-web.<subdomain>.workers.dev)
 # Until SITE_URL is set this workflow skips itself.
 name: Deploy
@@ -44,4 +45,14 @@ jobs:
       - run: npm run check
       - run: npm test
       - run: npm run deploy:api
+      - name: Sync API secrets
+        working-directory: apps/api
+        env:
+          TURNSTILE_SECRET: ${{ secrets.TURNSTILE_SECRET }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        run: |
+          for name in TURNSTILE_SECRET RESEND_API_KEY; do
+            value="${!name}"
+            if [ -n "$value" ]; then printf '%s' "$value" | npx wrangler secret put "$name"; fi
+          done
       - run: npm run deploy:web
