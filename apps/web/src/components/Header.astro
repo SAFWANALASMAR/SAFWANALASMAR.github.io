@@ -37,7 +37,7 @@ const isActive = (linkPath: string) =>
       </span>
     </a>
 
-    <nav aria-label={t.nav.primary} class="hidden md:block">
+    <nav aria-label={t.nav.primary} class="hidden lg:block">
       <ul class="nav-pill">
         {
           links.map((link) => (
@@ -47,7 +47,7 @@ const isActive = (linkPath: string) =>
                 aria-current={isActive(link.path) ? 'page' : undefined}
                 class="nav-link"
               >
-                <Icon name={link.icon} size={18} class="hidden lg:block" />
+                <Icon name={link.icon} size={18} class="hidden xl:block" />
                 <span>{link.label}</span>
               </a>
             </li>
@@ -60,7 +60,7 @@ const isActive = (linkPath: string) =>
       <a
         href={localePath(lang, '/request/')}
         aria-current={isActive('/request/') ? 'page' : undefined}
-        class="request-cta hidden whitespace-nowrap xl:inline-flex"
+        class="request-cta hidden whitespace-nowrap md:inline-flex"
       >
         <Icon name="send" size={17} />
         {t.nav.request}
@@ -91,7 +91,7 @@ const isActive = (linkPath: string) =>
         aria-expanded="false"
         aria-controls="mobile-menu"
         aria-label={t.nav.menu}
-        class="ctrl-btn size-10 sm:size-11 md:hidden"
+        class="ctrl-btn size-10 sm:size-11 lg:hidden"
       >
         <Icon name="menu" class="menu-open-icon" />
         <Icon name="close" class="menu-close-icon hidden" />
@@ -99,7 +99,7 @@ const isActive = (linkPath: string) =>
     </div>
   </div>
 
-  <nav id="mobile-menu" aria-label={t.nav.primary} class="mobile-panel mx-auto mt-2 hidden max-w-6xl md:hidden">
+  <nav id="mobile-menu" aria-label={t.nav.primary} class="mobile-panel mx-auto mt-2 hidden max-w-6xl lg:hidden">
     <ul class="flex flex-col gap-1 p-2">
       <li>
         <a href={localePath(lang, '/request/')} class="mobile-link mobile-request">
@@ -130,6 +130,16 @@ const isActive = (linkPath: string) =>
     </ul>
   </nav>
 </header>
+
+{
+  /* Phones: the header has no room for the button, so it floats above the page (not on the request page itself). */
+  !path.startsWith('/request') && (
+    <a href={localePath(lang, '/request/')} class="request-fab md:hidden">
+      <Icon name="send" size={18} />
+      {t.nav.request}
+    </a>
+  )
+}
 
 <script>
   const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');

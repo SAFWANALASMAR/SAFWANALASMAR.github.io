@@ -230,3 +230,17 @@ test.describe('request a project', () => {
     expect(res.status()).toBe(403);
   });
 });
+
+// The request entry must be reachable at every width, including phones in "desktop site" mode (~980px).
+for (const width of [390, 800, 980, 1100, 1366]) {
+  test(`request button is visible at ${width}px`, async ({ browser }) => {
+    const page = await browser.newPage({ viewport: { width, height: 800 } });
+    await page.goto('/');
+    const entry = page.locator('.request-cta:visible, .request-fab:visible');
+    await expect(entry).toHaveCount(1);
+    await entry.click();
+    await expect(page).toHaveURL(/\/request\/$/);
+    await expect(page.locator('.request-fab')).toHaveCount(0);
+    await page.close();
+  });
+}

@@ -106,7 +106,7 @@ const jsonLd = {
           <a href={localePath(lang, '/projects/')} class="btn btn-ghost">{t.hero.ctaSecondary}</a>
         </div>
       </div>
-      <div class="relative min-w-0">
+      <div class="hero-side relative min-w-0">
         <div class="float-soft hero-code-glow">
           <HeroCode label={t.hero.codeLabel} />
         </div>
@@ -252,10 +252,16 @@ const jsonLd = {
       <span class="cta-orb cta-orb-b" aria-hidden="true"></span>
       <span class="cta-icon mx-auto mb-5" aria-hidden="true"><Icon name="send" size={26} /></span>
       <p class="relative mx-auto max-w-2xl text-2xl leading-relaxed font-bold sm:text-3xl">{t.home.cta}</p>
-      <a href={localePath(lang, '/contact/')} class="btn cta-btn cta-pulse relative mt-7 text-lg">
-        {t.home.ctaButton}
-        <Icon name="arrow" size={18} class="rtl:-scale-x-100" />
-      </a>
+      <div class="relative mt-7 flex flex-wrap items-center justify-center gap-3">
+        <a href={localePath(lang, '/request/')} class="btn cta-btn cta-pulse text-lg">
+          <Icon name="send" size={18} />
+          {t.nav.request}
+        </a>
+        <a href={localePath(lang, '/contact/')} class="btn cta-btn-ghost text-lg">
+          {t.home.ctaButton}
+          <Icon name="arrow" size={18} class="rtl:-scale-x-100" />
+        </a>
+      </div>
     </div>
   </section>
 </Base>
