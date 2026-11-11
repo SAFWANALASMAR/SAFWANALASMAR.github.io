@@ -1,6 +1,8 @@
 # زر «نشر الموقع»: من تبويب Actions ← نشر الموقع ← Run workflow.
 # Manual publish to GitHub Pages: builds the site from main and pushes it to the gh-pages branch.
 # Runs only when the owner presses the button — never automatically.
+# After publishing it also clears old run history, keeping the newest run of each workflow.
+# بعد النشر يُنظَّف سجل التشغيل القديم تلقائياً ويبقى الأحدث من كل مسار.
 name: نشر الموقع
 
 on:
@@ -8,6 +10,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: pages
@@ -41,3 +44,11 @@ jobs:
           git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
             commit -q -m "Deploy ${GITHUB_SHA::7}"
           git push -f "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" gh-pages
+      - name: Clean old run history
+        continue-on-error: true # a cleanup hiccup must never fail a publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          sleep 20 # let the Pages build started by this push appear, so the previous one counts as old
+          bash "$GITHUB_WORKSPACE/.github/scripts/clean-runs.sh"

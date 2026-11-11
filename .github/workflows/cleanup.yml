@@ -15,16 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
+      - uses: actions/checkout@v5
       - name: Delete old runs
         env:
           GH_TOKEN: ${{ github.token }}
-          REPO: ${{ github.repository }}
-        run: |
-          gh api "repos/$REPO/actions/runs?per_page=100" --paginate \
-            -q '.workflow_runs[] | select(.status == "completed") | "\(.workflow_id) \(.created_at) \(.id)"' \
-            | sort -k1,1 -k2,2r | awk 'seen[$1]++ { print $3 }' > old.txt
-          count=0
-          while read -r id; do
-            gh api -X DELETE "repos/$REPO/actions/runs/$id" && count=$((count + 1))
-          done < old.txt
-          echo "حُذف $count تشغيلاً قديماً، وبقي الأحدث من كل مسار." >> "$GITHUB_STEP_SUMMARY"
+          GH_REPO: ${{ github.repository }}
+        run: bash .github/scripts/clean-runs.sh
