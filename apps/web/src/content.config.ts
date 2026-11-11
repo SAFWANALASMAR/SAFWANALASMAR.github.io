@@ -183,6 +183,8 @@ const site = defineCollection({
           role: z.string(),
           icon: z.enum(['briefcase', 'web', 'teach', 'analysis', 'nonprofit', 'cart', 'send', 'book', 'utensils', 'cake', 'car', 'code']).optional(),
           points: z.array(z.string()).optional(),
+          // Unpaid role: stays on the site timeline, and the CV lists it under volunteering.
+          volunteer: z.boolean().optional(),
           link: z.url().optional(),
           linkLabel: z.string().optional(),
         }),

@@ -5,38 +5,38 @@ type: web-system
 link: https://ejaz.sa/
 image: /images/ejaz-portal.webp
 imageSize: [1556, 620]
-tags: [Web Portal, RBAC, Encryption, GitHub, AI Agents]
+tags: [Web Portal, Laravel, Filament, RBAC, Encryption]
 ar:
   title: بوابة جمعية إعجاز الإلكترونية
-  summary: بوابة خدمات متكاملة بدل موقع ووردبريس، مهيأة لنحو 30 ألف مستفيد، بحسابات ولوحة إدارة وصلاحيات متدرجة.
+  summary: بوابة خدمات جديدة للجمعية بلوحة إدارة فيها أكثر من أربعين قسماً وبنية مصممة لتحمّل 30,000 متقدم، من المتطلبات إلى الإطلاق الرسمي في خمسة أسابيع.
   org: جمعية إعجاز للدراسات والبحوث العلمية
-  challenge: موقع ووردبريس محدود لا يحتمل التوسع، والجمعية تحتاج بوابة تستقبل آلاف المتقدمين وتحفظ بياناتهم بأمان.
+  challenge: موقع سابق لا يخدم احتياج الجمعية، ومسابقة يُتوقع أن يتقدم لها حتى 30,000 متقدم.
   solution:
-    - بوابة خدمات كاملة بنظام حسابات ورموز تحقق، ولوحة إدارة بصلاحيات متدرجة
-    - تشفير البيانات الحساسة، وإظهارها مقنّعة إلا لعدد محدود من المخوّلين
-    - بنية مرتبة من البداية لتحمّل حتى 30 ألف مستفيد
+    - بوابة جديدة بهوية الجمعية، بلوحة إدارة فيها أكثر من أربعين قسماً
+    - "نظام مسابقات كامل: مراحل، وبنك أسئلة، ونتائج، وترتيب تراكمي، وسحب إلكتروني"
+    - حماية بيانات المتسابقين بتشفير أرقام الهوية وصلاحيات اطلاع محددة
+    - مكتبة كتب للقراءة فقط بلا تحميل
+    - "ومن أقسامها: الأخبار والإعلانات، ووثائق الحوكمة، والطلبات والنماذج الإلكترونية، والاجتماعات واللجان، والفرص الوظيفية، وقياس الرضا"
   role:
-    - تحليل الاحتياج وتصميم البوابة
-    - التطوير والإشراف التقني
-    - مراجعة أمنية داخلية قبل كل اعتماد
-    - إدارة الشيفرة على GitHub عبر فرع رئيسي محمي
-    - تطوير وكلاء ذكاء اصطناعي يساعدون في العمل
-  tools: [GitHub, سير عمل بالذكاء الاصطناعي, خادم افتراضي خاص]
-  result: أُطلقت البوابة رسمياً في نوفمبر 2026.
+    - قيادة المشروع من جمع المتطلبات إلى الإطلاق الرسمي
+    - الإشراف الهندسي والمراجعة والاعتماد
+    - "إدارة الاستضافة والتشغيل: مقارنة العروض، وتجهيز متطلبات الرفع، والنسخ الاحتياطي، والتنسيق مع مهندس الاستضافة"
+  tools: [Laravel, Filament]
+  result: أُطلقت البوابة رسمياً يوم 10 نوفمبر 2026.
 en:
   title: Ejaz Association Web Portal
-  summary: A complete services portal replacing a WordPress site, built for around 30,000 users, with accounts, an admin panel and tiered permissions.
-  org: Ejaz Association for Studies and Scientific Research
-  challenge: A limited WordPress site that could not scale, while the association needed a portal that takes in thousands of applicants and keeps their data safe.
+  summary: A new services portal for the association with an admin panel of 40+ modules and an architecture designed to handle 30,000 applicants, taken from requirements to official launch in five weeks.
+  org: Ejaz Association for Scientific Studies and Research
+  challenge: A previous website that did not serve the association's needs, and a competition expected to draw up to 30,000 applicants.
   solution:
-    - A full services portal with user accounts, verification codes, and an admin panel with tiered permissions
-    - Encryption of sensitive data, shown masked except to a small number of authorized staff
-    - An architecture organized from day one to handle up to 30,000 users
+    - A new portal in the association's identity, with an admin panel of 40+ modules
+    - "A full competitions system: stages, question bank, results, cumulative ranking and an electronic draw"
+    - Participant data protected with encrypted national ID numbers and restricted access permissions
+    - A read-only library of books, with no downloads
+    - "Other modules include news and announcements, governance documents, electronic requests and forms, meetings and committees, job opportunities and satisfaction measurement"
   role:
-    - Needs analysis and portal design
-    - Development and technical supervision
-    - Internal security review before every sign-off
-    - Code managed on GitHub through a protected main branch
-    - Building AI agents that support the work
-  tools: [GitHub, AI-assisted workflows, Virtual private server]
-  result: The portal launched officially in November 2026.
+    - Led the project from requirements gathering to official launch
+    - Engineering oversight, review and sign-off
+    - "Hosting and operations: compared offers, prepared deployment requirements and backups, and coordinated with the hosting engineer"
+  tools: [Laravel, Filament]
+  result: The portal was officially launched on 10 November 2026.

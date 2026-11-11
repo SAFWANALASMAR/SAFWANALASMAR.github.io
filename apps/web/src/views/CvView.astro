@@ -20,6 +20,9 @@ const L = ar
 const site = new URL(ar ? '/' : '/en/', Astro.site).href.replace(/\/$/, '');
 // A scannable code on the printed CV that opens the site in the CV's language.
 const qr = await QRCode.toString(`${site}/`, { type: 'svg', margin: 0, errorCorrectionLevel: 'M', color: { dark: '#10232a', light: '#ffffff' } });
+// Paid roles go under experience; unpaid ones (flagged in the content) under volunteering.
+const jobs = a.timeline.filter((item) => !item.volunteer);
+const volunteerRoles = a.timeline.filter((item) => item.volunteer);
 const qrLabel = ar ? 'امسح لفتح الموقع' : 'Scan to open the site';
 ---
 
@@ -53,7 +56,7 @@ const qrLabel = ar ? 'امسح لفتح الموقع' : 'Scan to open the site';
     <section>
       <h2>{L.exp}</h2>
       {
-        a.timeline.map((item) => (
+        jobs.map((item) => (
           <div class="item">
             <div class="row">
               <strong>{item.org}</strong>
@@ -82,6 +85,38 @@ const qrLabel = ar ? 'امسح لفتح الموقع' : 'Scan to open the site';
               {e.org && <span class="sub"> — <bdi>{e.org}</bdi></span>}
             </span>
             <span class="date">{e.date}</span>
+          </div>
+        ))
+      }
+    </section>
+
+    <section>
+      <h2>{L.vol}</h2>
+      {
+        volunteerRoles.map((item) => (
+          <div class="item">
+            <div class="row">
+              <strong>{item.org}</strong>
+              <span class="date">{item.period}</span>
+            </div>
+            <p class="sub">{item.role}</p>
+            {item.points && (
+              <ul>
+                {item.points.map((p) => (
+                  <li>{p}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))
+      }
+      {
+        a.volunteer.map((v) => (
+          <div class="row item">
+            <span>
+              <strong>{v.title}</strong>
+            </span>
+            <span class="date">{v.period}</span>
           </div>
         ))
       }
@@ -118,14 +153,6 @@ const qrLabel = ar ? 'امسح لفتح الموقع' : 'Scan to open the site';
           a.languages.map((l) => (
             <p class="skill">
               <strong>{l.name}:</strong> {l.level}
-            </p>
-          ))
-        }
-        <h2>{L.vol}</h2>
-        {
-          a.volunteer.map((v) => (
-            <p class="skill">
-              {v.title} <span class="date">({v.period})</span>
             </p>
           ))
         }

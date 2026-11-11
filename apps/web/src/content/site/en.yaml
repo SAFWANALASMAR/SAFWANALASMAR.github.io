@@ -54,21 +54,27 @@ hero:
   rotating: [custom web systems, secure service portals, report and document automation, digital transformation for non-profits]
   chips:
     - { icon: star, value: "5.0", label: student rating on Preply }
-    - { icon: users, value: "30,000", label: users for the Ejaz portal }
+    - { icon: users, value: "30,000", label: applicants the Ejaz portal can handle }
   stackLabel: Technologies and tools I work with
 
 stats:
   label: Key numbers
   items:
-    - icon: files
-      value: "100+"
-      label: institutional deliverables documented and archived
-    - icon: folder
-      value: "7"
-      label: funded-project archives rebuilt
     - icon: users
       value: "30,000"
-      label: users the Ejaz portal is built to serve
+      label: applicants the Ejaz portal is built to handle
+    - icon: web
+      value: "5"
+      label: weeks from requirements to the Ejaz portal launch
+    - icon: award
+      value: "39"
+      label: automated skills I built for recurring work
+    - icon: folder
+      value: "901"
+      label: files I reconciled in the digital archive
+    - icon: document
+      value: "5"
+      label: final reports I prepared for donor organizations
     - icon: star
       value: "5.0"
       label: student rating on Preply from 21 reviews
@@ -102,10 +108,10 @@ home:
     title: Live now
     imageAlt: Home page of the Ejaz Association web portal
     points:
-      - { icon: users, text: "Built for around 30,000 users" }
-      - { icon: shield, text: Sensitive data encrypted and shown masked }
-      - { icon: layout, text: Admin panel with tiered permissions }
-      - { icon: user-check, text: User accounts with verification codes }
+      - { icon: users, text: "Architected to handle 30,000 applicants" }
+      - { icon: shield, text: Participant data protected by encryption and restricted access }
+      - { icon: layout, text: Admin panel with 40+ modules }
+      - { icon: user-check, text: A full competitions system with stages and results }
   rating:
     title: A perfect score from my students
     starsLabel: 5 out of 5 stars
@@ -152,17 +158,19 @@ about:
   title: About
   photoAlt: Photo of Safwan Alasmar
   initials: SA
-  bio: "I'm Safwan, a Computer Science graduate from Yanbu Industrial College (Royal Commission for Jubail and Yanbu). I started in business analysis and application development during my co-op, turning a paper form into a web system with a tiered approval workflow and a database I designed from scratch. Today I am Public Relations & Marketing Manager and Head of Media at Al-Maqari Quranic Association in Madinah, where I also lead digital transformation, report and document automation, and archive rebuilding. As a volunteer I built the Ejaz Association's web portal, launched in November 2026, and I teach Arabic to non-native speakers on Preply. I combine writing code with a real understanding of what management needs, and I build Arabic, right-to-left solutions the way they should be built."
+  bio: "I'm Safwan, a Computer Science graduate from Yanbu Industrial College (Royal Commission for Jubail and Yanbu). I started in business analysis and application development during my co-op, turning a paper form into a web system with a tiered approval workflow and a database I designed from scratch. Today I am Public Relations & Marketing Manager and Head of Media at Al-Maqari Quranic Association in Madinah, where I also lead digital transformation, report and document automation, and archive rebuilding. As a volunteer I lead the Ejaz Association's web portal project, officially launched in November 2026, and I teach Arabic to non-native speakers on Preply. I combine writing code with a real understanding of what management needs, and I build Arabic, right-to-left solutions the way they should be built."
   timelineTitle: Experience
   timeline:
     - icon: web
       period: Oct 2026 – Present
-      org: Ejaz Association for Studies and Scientific Research
-      role: Executive Advisor, Corporate Communications & Digital Transformation (volunteer)
+      org: Ejaz Association for Scientific Studies and Research
+      role: Corporate Communications, Digital Transformation & Resource Development Officer (volunteer)
+      volunteer: true
       points:
-        - Designing and developing the association's web portal, ejaz.sa (launched November 2026), to replace a WordPress site and serve around 30,000 users
-        - Admin panel with tiered permissions, encryption of sensitive data, an internal security review, and code managed on a protected main branch
-        - Set up the association's digital presence with one identity across seven platforms, and run its office
+        - Led the association's web portal (ejaz.sa) from requirements gathering to official launch in five weeks, with an admin panel of 40+ modules and an architecture designed to handle 30,000 applicants
+        - "Provided engineering oversight for a full competitions system (stages, question bank, results, cumulative ranking, electronic draw) with participant data governance: encrypted national ID numbers and restricted access permissions"
+        - Built the association's digital presence from two existing accounts to eight platforms under one unified handle and identity, and managed content and official news
+        - Collaborated and communicated with donor organizations, and built the institutional archive and periodic reporting
       link: https://ejaz.sa/
       linkLabel: Visit the portal
     - icon: book
@@ -170,12 +178,13 @@ about:
       org: Al-Maqari Quranic Association, Madinah
       role: Public Relations & Marketing Manager and Head of Media (since Sep 2026); previously Public Relations & Marketing Officer
       points:
-        - Oversee the media department, the association's accounts, content plans and daily publishing
-        - Prepare final and periodic reports for donors, and contribute to and follow up on funding applications
+        - Head the media department after writing its founding document, and relaunched dormant social-media accounts with a daily publishing plan on seven platforms
+        - Prepared and submitted five final reports for donor organizations, among them the Abanumay, Al-Jomaih, Al-Mousa and Al-Eissa foundations, each to its donor's requirements
+        - Prepared the full funding application for the institutional-empowerment project, then managed the project funded by the Sulaiman Abanumay Foundation with an approved operational plan and monthly and periodic reports
+        - Mapped 23 donor organizations and 17 grant platforms, mapped existing partnerships and drafted partnership rules
+        - Activated the Jisr system and prepared six consecutive monthly payrolls through approval and payment, and processed about 300 petty-cash invoices into one consolidated file
+        - Restructured the digital archive and reconciled 901 files, and built 39 AI-automated skills for recurring work
         - Lead digital transformation, including supervising the website's move to a custom build, running the online store, and auditing and securing digital assets
-        - Automated the archive and institutional reporting, and built official document templates
-        - Build partnerships and institutional communication, and draft official letters
-        - Keep the association's data current on regulatory and donor platforms
     - icon: teach
       period: Oct 2025 – Present
       org: Preply
@@ -274,6 +283,22 @@ about:
         points:
           - Set up the social media accounts under one identity
           - Content and reach plan for Saudi Arabia, then the Gulf, using organic channels
+      - icon: send
+        name: Ejaz Association digital presence
+        period: Oct 2026 – Present
+        role: Setup and management (volunteer)
+        points:
+          - From two existing accounts to eight platforms under one handle and one identity
+          - WhatsApp Business set up with its profile, catalogue and quick replies, and the YouTube channel organized into 6 playlists
+          - A publishing calendar and a monthly performance index
+      - icon: chart
+        name: Al-Maqari Quranic Association media
+        period: May 2026 – Present
+        role: Officer, then Head of Media
+        points:
+          - Relaunched dormant accounts with a daily publishing plan of text and video series
+          - Published 18 videos a day for 50 days in support of an international programme
+          - The media department's founding document, a social-media performance report and weekly announcement templates
     certsTitle: Marketing certificates
     certs:
       - title: Professional Diploma in E-Commerce and Digital Marketing
@@ -340,6 +365,10 @@ about:
       items: [Business analysis, Requirements documents, Approval workflow & permissions design, Process redesign]
     - category: Platforms
       items: [Salla, Jisr, Donor platforms]
+    - category: Digital project leadership
+      items: [Requirements analysis, Phase management, Review and sign-off, Service portals with Laravel and Filament]
+    - category: Donors and reporting
+      items: [Donor final reports, Funding applications and project documents, Managing funded projects, Periodic and consolidated reports, Monthly payroll on Jisr]
   volunteerTitle: Volunteering
   volunteer:
     - icon: mosque
