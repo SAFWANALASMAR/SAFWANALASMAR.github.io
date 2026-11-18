@@ -176,6 +176,10 @@ const qrLabel = ar ? 'امسح لفتح الموقع' : 'Scan to open the site';
     line-height: 1.45;
     color: #10232a;
   }
+  /* English text runs longer; slightly tighter lines keep the CV on two pages */
+  html[lang='en'] body {
+    line-height: 1.42;
+  }
   header {
     display: flex;
     align-items: flex-end;
