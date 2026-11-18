@@ -1,0 +1,32 @@
+order: 10
+featured: false
+year: 2026
+type: web-system
+status: in-progress
+tags: [GitHub Pages, Multilingual, Book Design]
+ar:
+  title: موقع شخصي وكتب علمية لأكاديمي في الفيزياء
+  summary: موقع سيرة ومعرض أعمال بأربع لغات على GitHub Pages، وتجهيز خمسة كتب علمية بالعربية والإنجليزية.
+  challenge: أكاديمي يحتاج حضوراً رقمياً يعرّف بسيرته وأعماله، وكتباً علمية مجهزة للنشر.
+  solution:
+    - موقع شخصي للسيرة ومعرض الأعمال بالعربية والإنجليزية والفرنسية والإسبانية، على GitHub Pages
+    - تجهيز خمسة كتب علمية بمحتواها وفهارسها وتصميمها، بنسخة عربية وأخرى إنجليزية، وطبعة كاملة وأخرى مختصرة
+    - مراجع حقيقية متحقق منها في كل كتاب
+  role:
+    - بناء الموقع
+    - تحرير الكتب وتصميمها
+  tools: [GitHub Pages]
+  result: قيد التطوير.
+en:
+  title: Personal Website and Scientific Books for a Physics Academic
+  summary: A four-language CV and portfolio website on GitHub Pages, and five scientific books prepared in Arabic and English.
+  challenge: An academic needing a digital presence for his CV and work, and scientific books ready for publication.
+  solution:
+    - A personal CV and portfolio website in Arabic, English, French and Spanish, on GitHub Pages
+    - Five scientific books prepared with content, indexes and design, in Arabic and English, in full and abridged editions
+    - Real, verified references in every book
+  role:
+    - Built the website
+    - Edited and designed the books
+  tools: [GitHub Pages]
+  result: In development.

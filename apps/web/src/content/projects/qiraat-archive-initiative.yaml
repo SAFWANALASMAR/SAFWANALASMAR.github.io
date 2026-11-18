@@ -1,0 +1,31 @@
+order: 9
+featured: false
+year: 2026
+type: business-analysis
+tags: [Digital Archive, Planning, Risk Management]
+ar:
+  title: مبادرة أرشيف رقمي للقراءات والأسانيد
+  summary: مبادرة موثقة لأرشفة القراءات والأسانيد رقمياً، بثلاث طبقات وثمانية مخرجات بمعايير قبول وخطة اثني عشر شهراً.
+  org: جمعية أهلية
+  challenge: حاجة إلى حفظ القراءات والأسانيد في أرشيف رقمي منظم يُرجع إليه.
+  solution:
+    - تصميم الأرشيف في ثلاث طبقات
+    - ثمانية مخرجات لكل منها معايير قبول
+    - خطة تنفيذ لاثني عشر شهراً بمراحلها ومخاطرها، ونسخ احتياطي ثلاثي
+  role:
+    - تحليل الفجوات وتصميم المبادرة
+    - إعداد وثيقة المبادرة بتصميم إنفوجرافيك
+  result: وثيقة مبادرة من ست صفحات جاهزة للعرض والاعتماد.
+en:
+  title: Digital Archive Initiative for Quranic Readings and Chains of Transmission
+  summary: A documented initiative to archive Quranic readings and chains of transmission digitally, with three layers, eight deliverables with acceptance criteria and a twelve-month plan.
+  org: A non-profit association
+  challenge: A need to preserve Quranic readings and chains of transmission in an organized digital archive.
+  solution:
+    - An archive designed in three layers
+    - Eight deliverables, each with acceptance criteria
+    - A twelve-month implementation plan with phases and risks, and triple backups
+  role:
+    - Gap analysis and initiative design
+    - Prepared the initiative document as an infographic
+  result: A six-page initiative document ready for presentation and approval.

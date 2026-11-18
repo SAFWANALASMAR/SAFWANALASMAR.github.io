@@ -135,6 +135,11 @@ projects:
   live: Live
   visit: Visit the site
   back: All projects
+  portfolio:
+    title: Portfolio
+    text: A comprehensive file of my career, achievements, case studies and certificates, with a 90-second video overview.
+    download: Download the portfolio (PDF)
+    video: Portfolio video
   types:
     web-system: Web system
     automation: Automation

@@ -1,0 +1,33 @@
+order: 8
+featured: false
+year: 2026
+type: digital-transformation
+tags: [Social Media, WhatsApp Business, Digital Archive]
+ar:
+  title: تأسيس الحضور الرقمي لجمعية إعجاز
+  summary: من حسابين قديمين إلى ثماني قنوات بهوية ومعرّف موحدين، مع واتساب الأعمال وأرشيف رقمي للجمعية.
+  org: جمعية إعجاز للدراسات والبحوث العلمية
+  challenge: جمعية ناشئة لا تملك إلا حسابين قديمين على إكس ويوتيوب.
+  solution:
+    - "تأسيس وتوحيد ثماني قنوات بهوية ومعرّف موحدين: إكس، ويوتيوب، وإنستغرام، وفيسبوك، وتيك توك، وتلغرام، وقناة واتساب، وواتساب الأعمال"
+    - تفعيل واتساب الأعمال بكتالوج مشاريع التبرع وقائمة رد آلي مرقّمة
+    - أرشيف رقمي للجمعية بتسعة أقسام
+  role:
+    - التأسيس والإدارة (تطوعي)
+    - صياغة المحتوى والأخبار الرسمية
+    - النشر الموحد في كل المنصات
+  result: حضور رقمي متكامل جاهز للنشر واستقبال التبرعات.
+en:
+  title: Building the Ejaz Association's Digital Presence
+  summary: From two old accounts to eight channels with a unified identity and handle, plus WhatsApp Business and a digital archive for the association.
+  org: Ejaz Association for Scientific Studies and Research
+  challenge: A young association with only two old accounts, on X and YouTube.
+  solution:
+    - "Set up and unified eight channels under one identity and handle: X, YouTube, Instagram, Facebook, TikTok, Telegram, a WhatsApp channel and WhatsApp Business"
+    - Activated WhatsApp Business with a donation-projects catalog and a numbered auto-reply menu
+    - A digital archive for the association with nine sections
+  role:
+    - Setup and management (volunteer)
+    - Content writing and official news
+    - Unified publishing across all platforms
+  result: A complete digital presence, ready for publishing and receiving donations.

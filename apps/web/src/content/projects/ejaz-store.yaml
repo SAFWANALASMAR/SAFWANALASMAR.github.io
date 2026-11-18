@@ -1,0 +1,36 @@
+order: 7
+featured: false
+year: 2026
+type: digital-transformation
+link: https://ejaz.org.sa/
+tags: [Salla, E-commerce, Donations, WhatsApp Business]
+ar:
+  title: متجر جمعية إعجاز على منصة سلة
+  summary: ضبط متجر الجمعية وتصميمه بهويتها، وعرض مشاريع التبرع السبعة فيه بروابط مساهمة مختبرة، وربطه بحسابات الجمعية وكتالوج واتساب الأعمال.
+  org: جمعية إعجاز للدراسات والبحوث العلمية
+  challenge: جمعية ناشئة تحتاج قناة موثوقة لاستقبال التبرعات لمشاريعها، يصل إليها المتبرع من كل حساباتها.
+  solution:
+    - ضبط إعدادات المتجر وتصميمه بهوية الجمعية
+    - عرض مشاريع التبرع السبعة بصورها وأوصافها وروابط مساهمة مباشرة
+    - ربط المشاريع بكتالوج واتساب الأعمال ونشرها في حسابات الجمعية على المنصات
+  role:
+    - ضبط المتجر وتصميمه
+    - إعداد روابط المساهمة واختبارها
+    - ربط المتجر بحسابات الجمعية وواتساب الأعمال
+  tools: [Salla, WhatsApp Business]
+  result: متجر قائم لاستقبال التبرعات، منشور في حسابات الجمعية على المنصات.
+en:
+  title: Ejaz Association Store on Salla
+  summary: Set up and designed the association's store in its identity, listed its seven donation projects with tested contribution links, and connected it to the association's accounts and WhatsApp Business catalog.
+  org: Ejaz Association for Scientific Studies and Research
+  challenge: A young association needing a trustworthy channel for project donations that donors can reach from all its accounts.
+  solution:
+    - Configured the store settings and designed it in the association's identity
+    - Listed the seven donation projects with images, descriptions and direct contribution links
+    - Connected the projects to the WhatsApp Business catalog and published them across the association's social accounts
+  role:
+    - Store setup and design
+    - Set up and tested the contribution links
+    - Connected the store to the association's accounts and WhatsApp Business
+  tools: [Salla, WhatsApp Business]
+  result: A live store for receiving donations, published across the association's social accounts.

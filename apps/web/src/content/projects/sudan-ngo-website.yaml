@@ -1,0 +1,42 @@
+order: 6
+featured: false
+year: 2026
+type: web-system
+status: in-progress
+tags: [Next.js, Node.js, Express, PostgreSQL, Stripe]
+ar:
+  title: موقع منظمة سودانا الإنسانية
+  summary: موقع بالعربية والإنجليزية لمنظمة إنسانية تخاطب العالم، بواجهة مفصولة عن الخادم ولوحة تحكم كاملة، وتبرعات بالتحويل البنكي وبوابة بطاقات جاهزة للتفعيل.
+  org: منظمة سودانا
+  challenge: منظمة إنسانية تحتاج حضوراً رقمياً يخاطب العالم بالعربية والإنجليزية، ويستقبل التبرعات بطريقة موثوقة يمكن التحقق منها.
+  solution:
+    - واجهة بالعربية والإنجليزية فيها الحملات والمشاريع، والسجل الزمني للأعمال، والأكاديمية، والمدونة، والفعاليات، والتقارير
+    - لوحة تحكم يدير منها الفريق المحتوى والإعدادات والرسائل ومشتركي النشرة البريدية
+    - تبرع بالتحويل البنكي برقم مرجعي يطابقه الفريق مع كشف الحساب قبل اعتماده، وإيصال PDF لكل تبرع معتمد
+    - بوابة بطاقات عبر Stripe للتبرع لمرة واحدة والتبرع الشهري، مبنية وجاهزة للتفعيل، ولا تمر بيانات البطاقة على الخادم
+    - حماية بصلاحيات متدرجة وتحقق بخطوتين وقفل بعد المحاولات الفاشلة وسجل لكل العمليات ونسخ احتياطي يومي
+  role:
+    - تصميم المشروع وكتابة الكود كاملاً بفصل الواجهة عن الخادم
+    - بناء مسار التبرعات والتحقق منها وإيصالاتها
+    - الاختبارات الآلية لمسار الدفع والصلاحيات، والفحص الأمني للكود والحزم
+    - تجهيز التشغيل والرابط التجريبي ونصوص الإطلاق على سيرفر
+  tools: [Next.js, React, Node.js, Express, SQLite, PostgreSQL, Stripe]
+  result: الموقع قيد التطوير حتى يكتمل محتواه الرسمي.
+en:
+  title: My Sudan Organization Website
+  summary: An Arabic and English website for a humanitarian organization addressing the world, with a frontend separated from the backend, a full admin dashboard, bank-transfer donations and a card gateway ready to activate.
+  org: My Sudan Organization
+  challenge: A humanitarian organization needing a digital presence that speaks to the world in Arabic and English and accepts donations in a trustworthy, verifiable way.
+  solution:
+    - An Arabic and English site with campaigns and projects, a works timeline, an academy, a blog, events and reports
+    - An admin dashboard where the team manages content, settings, messages and newsletter subscribers
+    - Bank-transfer donations with a reference number that the team matches against the bank statement before approval, and a PDF receipt for every approved donation
+    - A Stripe card gateway for one-time and monthly donations, built and ready to activate, with no card data passing through the server
+    - Security through tiered roles, two-factor sign-in, lockout after failed attempts, a full activity log and daily backups
+  role:
+    - Designed the project and wrote all the code, with the frontend separated from the backend
+    - Built the donation flow, its verification and receipts
+    - Automated tests for the payment flow and permissions, plus security scanning of code and packages
+    - Prepared operations, the demo link and server launch scripts
+  tools: [Next.js, React, Node.js, Express, SQLite, PostgreSQL, Stripe]
+  result: The website is in development until its official content is complete.
