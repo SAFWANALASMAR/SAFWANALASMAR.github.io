@@ -158,7 +158,7 @@ about:
   title: About
   photoAlt: Photo of Safwan Alasmar
   initials: SA
-  bio: "I'm Safwan, a Computer Science graduate from Yanbu Industrial College (Royal Commission for Jubail and Yanbu). I started in business analysis and application development during my co-op, turning a paper form into a web system with a tiered approval workflow and a database I designed from scratch. Today I am Public Relations & Marketing Manager and Head of Media at Al-Maqari Quranic Association in Madinah, where I also lead digital transformation, report and document automation, and archive rebuilding. As a volunteer I lead the Ejaz Association's web portal project, officially launched in November 2026, and I teach Arabic to non-native speakers on Preply. I combine writing code with a real understanding of what management needs, and I build Arabic, right-to-left solutions the way they should be built."
+  bio: "I'm Safwan, a Computer Science graduate from Yanbu Industrial College (Royal Commission for Jubail and Yanbu). I started in business analysis and application development during my co-op, turning a paper form into a web system with a tiered approval workflow and a database I designed from scratch. Today I am Corporate Communications & Partnerships Manager, and Public Relations & Marketing Manager and Head of Media, at Al-Maqari Quranic Association in Madinah, where I also lead digital transformation, report and document automation, and archive rebuilding. As a volunteer I lead the Ejaz Association's web portal project, officially launched in November 2026, and I teach Arabic to non-native speakers on Preply. I combine writing code with a real understanding of what management needs, and I build Arabic, right-to-left solutions the way they should be built."
   timelineTitle: Experience
   timeline:
     - icon: web
@@ -176,8 +176,9 @@ about:
     - icon: book
       period: May 2026 – Present
       org: Al-Maqari Quranic Association, Madinah
-      role: Public Relations & Marketing Manager and Head of Media (since Sep 2026); previously Public Relations & Marketing Officer
+      role: Corporate Communications & Partnerships Manager (since Nov 2026); Public Relations & Marketing Manager and Head of Media (since Sep 2026); previously Public Relations & Marketing Officer
       points:
+        - Lead corporate communications and partnerships in the institutional-empowerment project funded by the Sulaiman Abanumay Foundation, targeting growth in active partnerships from 7 to 20 within 12 months
         - Head the media department after writing its founding document, and relaunched dormant social-media accounts with a daily publishing plan on seven platforms
         - Prepared and submitted five final reports for donor organizations, among them the Abanumay, Al-Jomaih, Al-Mousa and Al-Eissa foundations, each to its donor's requirements
         - Prepared the full funding application for the institutional-empowerment project, then managed the project funded by the Sulaiman Abanumay Foundation with an approved operational plan and monthly and periodic reports
