@@ -41,7 +41,7 @@ jobs:
           if [ -n "$CLOUDFLARE_API_TOKEN" ] && [ -n "$CLOUDFLARE_ACCOUNT_ID" ]; then echo "ready=true" >> "$GITHUB_OUTPUT";
           else echo "Cloudflare secrets not added yet — nothing to deploy." | tee -a "$GITHUB_STEP_SUMMARY"; fi
       - if: steps.setup.outputs.ready == 'true'
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
       - if: steps.setup.outputs.ready == 'true'
         uses: actions/setup-node@v5
         with:
