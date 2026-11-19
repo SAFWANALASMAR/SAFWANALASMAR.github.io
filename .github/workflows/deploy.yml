@@ -1,20 +1,24 @@
-# النشر التلقائي على Cloudflare عند كل دمج في main، بعد نجاح الفحوص.
-# Deploys the API, then the site, to Cloudflare on every push to main — only after checks pass.
+# نشر خادم الرسائل على Cloudflare، ثم إعادة نشر الموقع على GitHub Pages مربوطاً به.
+# Deploys the message API to Cloudflare, then republishes the GitHub Pages site wired to it.
 #
-# One-time setup (by the repo owner, in GitHub → Settings → Secrets and variables → Actions):
-#   Secrets:   CLOUDFLARE_API_TOKEN  (template "Edit Cloudflare Workers"), CLOUDFLARE_ACCOUNT_ID,
-#              TURNSTILE_SECRET, RESEND_API_KEY  (copied to the API Worker as Worker secrets on each deploy)
-#   Variables: SITE_URL              (e.g. https://safwan-web.<subdomain>.workers.dev)
-# Until SITE_URL is set this workflow skips itself.
+# One-time setup (repo owner, GitHub → Settings → Secrets and variables → Actions → Secrets):
+#   CLOUDFLARE_API_TOKEN   (template "Edit Cloudflare Workers")
+#   CLOUDFLARE_ACCOUNT_ID
+#   TURNSTILE_SECRET       (Turnstile widget secret key; copied to the Worker)
+#   TURNSTILE_SITE_KEY     (Turnstile widget site key; public, used by the forms)
+#   RESEND_API_KEY         (Resend, sending access; copied to the Worker)
+# Until CLOUDFLARE_API_TOKEN exists this workflow does nothing. Run it by hand once after adding the secrets.
 name: Deploy
 
 on:
   push:
     branches: [main]
+    paths: ['apps/api/**', 'packages/shared/**', '.github/workflows/deploy.yml']
   workflow_dispatch:
 
 permissions:
   contents: read
+  actions: write
 
 concurrency:
   group: deploy
@@ -25,27 +29,32 @@ env:
 
 jobs:
   deploy:
-    if: ${{ vars.SITE_URL != '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    environment:
-      name: production
-      url: ${{ vars.SITE_URL }}
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
       CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-      SITE_URL: ${{ vars.SITE_URL }}
     steps:
-      - uses: actions/checkout@v5
-      - uses: actions/setup-node@v5
+      - name: Check setup
+        id: setup
+        run: |
+          if [ -n "$CLOUDFLARE_API_TOKEN" ] && [ -n "$CLOUDFLARE_ACCOUNT_ID" ]; then echo "ready=true" >> "$GITHUB_OUTPUT";
+          else echo "Cloudflare secrets not added yet — nothing to deploy." | tee -a "$GITHUB_STEP_SUMMARY"; fi
+      - if: steps.setup.outputs.ready == 'true'
+        uses: actions/checkout@v5
+      - if: steps.setup.outputs.ready == 'true'
+        uses: actions/setup-node@v5
         with:
           node-version-file: .nvmrc
           cache: npm
-      - run: npm ci
-      - run: npm run check
-      - run: npm test
-      - run: npm run deploy:api
+      - if: steps.setup.outputs.ready == 'true'
+        run: npm ci
+      - if: steps.setup.outputs.ready == 'true'
+        run: npm test
+      - if: steps.setup.outputs.ready == 'true'
+        run: npm run deploy:api
       - name: Sync API secrets
+        if: steps.setup.outputs.ready == 'true'
         working-directory: apps/api
         env:
           TURNSTILE_SECRET: ${{ secrets.TURNSTILE_SECRET }}
@@ -55,4 +64,9 @@ jobs:
             value="${!name}"
             if [ -n "$value" ]; then printf '%s' "$value" | npx wrangler secret put "$name"; fi
           done
-      - run: npm run deploy:web
+      - name: Republish the site wired to the API
+        if: steps.setup.outputs.ready == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: gh workflow run pages.yml --ref main

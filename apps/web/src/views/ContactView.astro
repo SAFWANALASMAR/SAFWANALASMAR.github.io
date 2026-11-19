@@ -27,6 +27,8 @@ const services = await getServices();
 
 // PUBLIC_TURNSTILE_SITE_KEY overrides settings.yaml for local runs and tests (e.g. Cloudflare's test key).
 const siteKey: string = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || s.turnstileSiteKey;
+// Where the forms post: empty means this host's /api (Cloudflare); set at build time for the GitHub Pages copy.
+const apiBase: string = (import.meta.env.PUBLIC_API_BASE ?? '').replace(/\/$/, '');
 const formReady = !isPlaceholder(siteKey);
 const emailReady = !isPlaceholder(s.email);
 // Until the Turnstile key is set, the form opens the visitor's email app with the message filled in.
@@ -67,7 +69,7 @@ const linkClass =
         <form
           class="mt-6 space-y-5"
           method="POST"
-          action={formReady ? CONTACT_PATH : undefined}
+          action={formReady ? apiBase + CONTACT_PATH : undefined}
           data-api={formReady ? '' : undefined}
           data-lang={lang}
           data-status-text={formReady ? JSON.stringify(c.status) : undefined}

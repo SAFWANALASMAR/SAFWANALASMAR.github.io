@@ -22,6 +22,7 @@ const env = (): Env => ({
   RESEND_API_KEY: 're_key',
   MAIL_TO: 'owner@example.com',
   MAIL_FROM: 'Site <onboarding@resend.dev>',
+  ALLOWED_ORIGINS: 'https://safwanalasmar.github.io',
   CONTACT_LIMITER: { limit: async () => ({ success: allowRate }) } as RateLimit,
 });
 
@@ -77,6 +78,21 @@ describe('POST /api/contact', () => {
     const res = await post(valid, { origin: 'https://evil.example' });
     expect(res.status).toBe(403);
     expect(await res.json()).toEqual({ ok: false, error: 'forbidden' });
+  });
+
+  it('accepts the GitHub Pages site and answers it with CORS headers', async () => {
+    const res = await post(valid, { origin: 'https://safwanalasmar.github.io' });
+    expect(res.status).toBe(200);
+    expect(res.headers.get('access-control-allow-origin')).toBe('https://safwanalasmar.github.io');
+  });
+
+  it('answers the CORS preflight only for listed origins', async () => {
+    const pre = (origin: string) =>
+      app.request(`${ORIGIN}/api/contact`, { method: 'OPTIONS', headers: { origin, 'access-control-request-method': 'POST' } }, env());
+    const ok = await pre('https://safwanalasmar.github.io');
+    expect(ok.status).toBe(204);
+    expect(ok.headers.get('access-control-allow-origin')).toBe('https://safwanalasmar.github.io');
+    expect((await pre('https://evil.example')).status).toBe(403);
   });
 
   it('rejects requests with no origin', async () => {

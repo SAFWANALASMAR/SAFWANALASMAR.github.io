@@ -28,10 +28,31 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
+      - name: Find the message API
+        id: api
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          SITE_KEY: ${{ secrets.TURNSTILE_SITE_KEY }}
+        run: |
+          # Wire the forms to the API only when it is set up and answering; otherwise they keep opening the mail app.
+          [ -n "$CLOUDFLARE_API_TOKEN" ] && [ -n "$CLOUDFLARE_ACCOUNT_ID" ] && [ -n "$SITE_KEY" ] || { echo "Message API not set up — forms use the mail app."; exit 0; }
+          sub=$(curl -fsS -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+            "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/workers/subdomain" | jq -r '.result.subdomain // empty') || true
+          [ -n "$sub" ] || { echo "No workers.dev subdomain yet."; exit 0; }
+          base="https://safwan-api.$sub.workers.dev"
+          if curl -fsS "$base/api/health" | grep -q '"ok":true'; then
+            echo "base=$base" >> "$GITHUB_OUTPUT"
+            echo "Forms post to $base" | tee -a "$GITHUB_STEP_SUMMARY"
+          else
+            echo "API not answering at $base yet — forms use the mail app." | tee -a "$GITHUB_STEP_SUMMARY"
+          fi
       - name: Build
         run: npm run build
         env:
           SITE_URL: https://safwanalasmar.github.io
+          PUBLIC_API_BASE: ${{ steps.api.outputs.base }}
+          PUBLIC_TURNSTILE_SITE_KEY: ${{ steps.api.outputs.base && secrets.TURNSTILE_SITE_KEY || '' }}
       - name: Push to gh-pages
         working-directory: apps/web/dist
         env:

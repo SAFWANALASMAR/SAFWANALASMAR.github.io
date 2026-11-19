@@ -26,6 +26,8 @@ const desc = (o: { descAr: string; descEn: string }) => (ar ? o.descAr : o.descE
 
 // Same switch as the contact form: the Turnstile key turns on direct sending; until then, the email app opens.
 const siteKey: string = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || s.turnstileSiteKey;
+// Where the forms post: empty means this host's /api (Cloudflare); set at build time for the GitHub Pages copy.
+const apiBase: string = (import.meta.env.PUBLIC_API_BASE ?? '').replace(/\/$/, '');
 const apiReady = !isPlaceholder(siteKey);
 const mail = emailParts(s.email);
 const stageIcons: IconName[] = ['sparkles', 'document', 'check'];
@@ -38,7 +40,7 @@ const stageIcons: IconName[] = ['sparkles', 'document', 'check'];
     <form
       class="req-form card mt-10 scroll-mt-28 overflow-hidden"
       method="POST"
-      action={apiReady ? REQUEST_PATH : undefined}
+      action={apiReady ? apiBase + REQUEST_PATH : undefined}
       data-request
       data-api={apiReady ? '' : undefined}
       data-lang={lang}

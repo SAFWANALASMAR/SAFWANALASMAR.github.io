@@ -24,7 +24,7 @@ export default defineConfig({
         "default-src 'self'",
         "img-src 'self' data:",
         "font-src 'self' data:",
-        "connect-src 'self'",
+        `connect-src 'self'${process.env.PUBLIC_API_BASE ? ' ' + new URL(process.env.PUBLIC_API_BASE).origin : ''}`,
         "form-action 'self'",
         // Cloudflare Turnstile (contact form bot check) runs in its own frame.
         'frame-src https://challenges.cloudflare.com',

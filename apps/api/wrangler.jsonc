@@ -1,5 +1,5 @@
-// خادم الموقع: لا يُفتح للعموم مباشرة، ويصله عامل الواجهة فقط عبر ربط الخدمة (services).
-// The site API. Not public on its own: only the web Worker reaches it, through a service binding.
+// خادم الموقع: يصله عامل الواجهة عبر ربط الخدمة، ونماذج نسخة GitHub Pages مباشرة (ALLOWED_ORIGINS فقط).
+// The site API. Reached by the web Worker through a service binding, and directly by the GitHub Pages forms (ALLOWED_ORIGINS only).
 // Secrets (set once with `npx wrangler secret put <NAME>`, never committed):
 //   TURNSTILE_SECRET  — Cloudflare Turnstile secret key
 //   RESEND_API_KEY    — Resend API key used to send the contact email
@@ -8,7 +8,7 @@
   "name": "safwan-api",
   "main": "src/index.ts",
   "compatibility_date": "2026-11-01",
-  "workers_dev": false,
+  "workers_dev": true,
   "preview_urls": false,
   "observability": { "enabled": true },
   "ratelimits": [
@@ -19,7 +19,8 @@
     }
   ],
   "vars": {
-    "MAIL_TO": "safwan.asmar10@gmail.com",
+    "MAIL_TO": "safwanasmar10@gmail.com",
+    "ALLOWED_ORIGINS": "https://safwanalasmar.github.io",
     "MAIL_FROM": "Safwan Site <onboarding@resend.dev>"
   }
 }
