@@ -29,6 +29,12 @@ const sections = [
 const image = p.image && publicFileExists(p.image) ? p.image : undefined;
 const imageSmall = image?.replace(/\.webp$/, '-778.webp');
 const hasSmall = !!imageSmall && imageSmall !== image && publicFileExists(imageSmall);
+const casePdf = `/cases/${project.id}-${lang}.pdf`;
+const caseVideo = `/cases/${project.id}-${lang}.mp4`;
+const hasPdf = publicFileExists(casePdf);
+const hasVideo = publicFileExists(caseVideo);
+const casePoster = `/cases/${project.id}-${lang}.jpg`;
+const hasPoster = publicFileExists(casePoster);
 const domain = p.link?.replace(/^https?:\/\/|\/$/g, '');
 const abs = (path: string) => new URL(path, Astro.site).href;
 const pageUrl = abs(localePath(lang, `/projects/${project.id}/`));
@@ -147,6 +153,34 @@ const jsonLd = {
       <ul class="mt-6 flex flex-wrap gap-1.5">
         {p.tags.map((tag) => <Tag text={tag} />)}
       </ul>
+
+      {
+        (hasPdf || hasVideo) && (
+          <div class="card mt-8 grid items-center gap-6 p-5 sm:p-6 md:grid-cols-2" data-case-media>
+            <div>
+              <h2 class="text-lg font-bold">{t.projects.caseMedia.title}</h2>
+              <p class="mt-2 text-sm leading-relaxed text-muted">{t.projects.caseMedia.text}</p>
+              {hasPdf && (
+                <a href={url(casePdf)} download class="btn btn-primary mt-4">
+                  <Icon name="download" size={18} />
+                  {t.projects.caseMedia.pdf}
+                </a>
+              )}
+            </div>
+            {hasVideo && (
+              <video
+                class="aspect-video w-full rounded-xl bg-black"
+                controls
+                preload="none"
+                playsinline
+                aria-label={t.projects.caseMedia.video}
+                src={url(caseVideo)}
+                poster={hasPoster ? url(casePoster) : undefined}
+              />
+            )}
+          </div>
+        )
+      }
     </header>
 
     <div class="divide-y divide-line">

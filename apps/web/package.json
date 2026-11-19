@@ -14,6 +14,7 @@
     "e2e": "playwright test",
     "deploy:cf": "node scripts/deploy-cf.mjs",
     "cv": "node scripts/generate-cv.mjs",
+    "cases": "node scripts/generate-case-media.mjs",
     "og": "node scripts/generate-og.mjs"
   },
   "dependencies": {

@@ -155,6 +155,7 @@ const site = defineCollection({
       live: z.string(),
       visit: z.string(),
       back: z.string(),
+      caseMedia: z.object({ title: z.string(), text: z.string(), pdf: z.string(), video: z.string() }),
       portfolio: z.object({ title: z.string(), text: z.string(), download: z.string(), video: z.string() }),
       types: z.record(z.enum(projectTypes), z.string()),
       labels: z.object({

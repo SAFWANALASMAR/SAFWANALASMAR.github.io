@@ -9,3 +9,4 @@ dist/
 .dev.vars*
 test-results/
 playwright-report/
+.case-tmp/

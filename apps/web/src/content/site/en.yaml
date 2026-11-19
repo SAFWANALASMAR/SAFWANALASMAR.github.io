@@ -135,6 +135,11 @@ projects:
   live: Live
   visit: Visit the site
   back: All projects
+  caseMedia:
+    title: Project file and short video
+    text: The case study as a downloadable PDF, and a short video that walks through the project in under a minute.
+    pdf: Download the case study (PDF)
+    video: Project video
   portfolio:
     title: Portfolio
     text: A comprehensive file of my career, achievements, case studies and certificates, with a 90-second video overview.
