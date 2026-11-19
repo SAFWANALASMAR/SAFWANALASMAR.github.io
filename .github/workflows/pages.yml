@@ -32,11 +32,10 @@ jobs:
         id: api
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          SITE_KEY: ${{ secrets.TURNSTILE_SITE_KEY }}
+          CLOUDFLARE_ACCOUNT_ID: 9cc1f581b4d5f3986c417c11831cb55b
         run: |
           # Wire the forms to the API only when it is set up and answering; otherwise they keep opening the mail app.
-          [ -n "$CLOUDFLARE_API_TOKEN" ] && [ -n "$CLOUDFLARE_ACCOUNT_ID" ] && [ -n "$SITE_KEY" ] || { echo "Message API not set up — forms use the mail app."; exit 0; }
+          [ -n "$CLOUDFLARE_API_TOKEN" ] || { echo "Message API not set up — forms use the mail app."; exit 0; }
           sub=$(curl -fsS -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
             "https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/workers/subdomain" | jq -r '.result.subdomain // empty') || true
           [ -n "$sub" ] || { echo "No workers.dev subdomain yet."; exit 0; }
@@ -52,7 +51,8 @@ jobs:
         env:
           SITE_URL: https://safwanalasmar.github.io
           PUBLIC_API_BASE: ${{ steps.api.outputs.base }}
-          PUBLIC_TURNSTILE_SITE_KEY: ${{ steps.api.outputs.base && secrets.TURNSTILE_SITE_KEY || '' }}
+          # Turnstile site key: public by design (it is printed in the page).
+          PUBLIC_TURNSTILE_SITE_KEY: ${{ steps.api.outputs.base && '0x4AAAAAAGIbEOn9s2Bucovb' || '' }}
       - name: Push to gh-pages
         working-directory: apps/web/dist
         env:

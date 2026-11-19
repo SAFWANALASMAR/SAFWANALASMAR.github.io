@@ -19,7 +19,7 @@
     }
   ],
   "vars": {
-    "MAIL_TO": "safwanasmar10@gmail.com",
+    "MAIL_TO": "safwan.asmar10@gmail.com",
     "ALLOWED_ORIGINS": "https://safwanalasmar.github.io",
     "MAIL_FROM": "Safwan Site <onboarding@resend.dev>"
   }

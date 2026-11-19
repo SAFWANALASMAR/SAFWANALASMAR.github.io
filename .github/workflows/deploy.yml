@@ -3,10 +3,9 @@
 #
 # One-time setup (repo owner, GitHub → Settings → Secrets and variables → Actions → Secrets):
 #   CLOUDFLARE_API_TOKEN   (template "Edit Cloudflare Workers")
-#   CLOUDFLARE_ACCOUNT_ID
 #   TURNSTILE_SECRET       (Turnstile widget secret key; copied to the Worker)
-#   TURNSTILE_SITE_KEY     (Turnstile widget site key; public, used by the forms)
 #   RESEND_API_KEY         (Resend, sending access; copied to the Worker)
+# The account ID and the Turnstile site key are public identifiers and live below / in pages.yml.
 # Until CLOUDFLARE_API_TOKEN exists this workflow does nothing. Run it by hand once after adding the secrets.
 name: Deploy
 
@@ -33,7 +32,7 @@ jobs:
     timeout-minutes: 20
     env:
       CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_ACCOUNT_ID: 9cc1f581b4d5f3986c417c11831cb55b
     steps:
       - name: Check setup
         id: setup
@@ -51,6 +50,19 @@ jobs:
         run: npm ci
       - if: steps.setup.outputs.ready == 'true'
         run: npm test
+      - name: Make sure the account has a workers.dev subdomain
+        if: steps.setup.outputs.ready == 'true'
+        run: |
+          api="https://api.cloudflare.com/client/v4/accounts/$CLOUDFLARE_ACCOUNT_ID/workers/subdomain"
+          sub=$(curl -fsS -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" "$api" | jq -r '.result.subdomain // empty' || true)
+          if [ -z "$sub" ]; then
+            for name in safwanalasmar safwan-alasmar safwan-site; do
+              if curl -fsS -X PUT -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" -H 'Content-Type: application/json' \
+                   --data "{\"subdomain\":\"$name\"}" "$api" > /dev/null; then sub=$name; break; fi
+            done
+          fi
+          echo "workers.dev subdomain: ${sub:-none}" | tee -a "$GITHUB_STEP_SUMMARY"
+          [ -n "$sub" ]
       - if: steps.setup.outputs.ready == 'true'
         run: npm run deploy:api
       - name: Sync API secrets
