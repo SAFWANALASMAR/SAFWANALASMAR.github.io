@@ -330,3 +330,13 @@ test('the booking button opens the Google Calendar booking page in a new tab', a
     await expect(button).toHaveAttribute('rel', /noopener/);
   }
 });
+
+test('an ad landing page carries the short form with its service preselected and no tag before IDs are set', async ({ page }) => {
+  await page.goto('/lp/nonprofits/');
+  await expect(page.locator('h1')).toBeVisible();
+  await expect(page.locator('#service')).toHaveValue('nonprofit-transformation');
+  await expect(page.locator('a[href^="https://wa.me/"]:visible').first()).toBeVisible();
+  await expect(page.locator('[data-consent]')).toHaveCount(0);
+  await page.goto('/en/lp/websites-stores/');
+  await expect(page.locator('#service')).toHaveValue('web-mobile-apps');
+});

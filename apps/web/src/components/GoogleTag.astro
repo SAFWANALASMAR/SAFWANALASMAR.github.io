@@ -1,0 +1,126 @@
+---
+// Google tag (Analytics / Ads) behind a consent banner. Nothing loads from Google until the visitor accepts;
+// with no IDs in settings.yaml (googleTag) the component renders nothing.
+import { getSettings, getSite, localePath, type Lang } from '../lib/i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const s = await getSettings();
+const t = await getSite(lang);
+const g = s.googleTag;
+const on = Boolean(g.ga4 || g.ads);
+---
+
+{
+  on && (
+    <div
+      data-consent
+      data-ga4={g.ga4}
+      data-ads={g.ads}
+      data-lead={g.leadLabel}
+      hidden
+      role="dialog"
+      aria-label={t.consent.title}
+      class="card fixed inset-x-3 bottom-3 z-50 mx-auto max-w-2xl p-4 shadow-lg sm:p-5"
+    >
+      <p class="text-sm text-text">
+        {t.consent.text}{' '}
+        <a href={localePath(lang, '/privacy/')} class="font-semibold text-accent hover:underline">
+          {t.consent.more}
+        </a>
+      </p>
+      <div class="mt-3 flex flex-wrap justify-end gap-2">
+        <button type="button" class="btn btn-ghost" data-consent-choice="denied">
+          {t.consent.decline}
+        </button>
+        <button type="button" class="btn btn-primary" data-consent-choice="granted">
+          {t.consent.accept}
+        </button>
+      </div>
+    </div>
+  )
+}
+
+<script>
+  const box = document.querySelector<HTMLElement>('[data-consent]');
+  if (box) {
+    const KEY = 'consent';
+    const { ga4 = '', ads = '', lead = '' } = box.dataset;
+    const w = window as unknown as { dataLayer: unknown[] };
+    w.dataLayer = w.dataLayer || [];
+    // gtag.js reads `arguments` objects from the data layer, so this has to be a classic function.
+    // eslint-disable-next-line prefer-rest-params
+    const gtag = function (..._args: unknown[]) {
+      // eslint-disable-next-line prefer-rest-params
+      w.dataLayer.push(arguments);
+    };
+    let loaded = false;
+
+    const read = () => {
+      try {
+        return localStorage.getItem(KEY);
+      } catch {
+        return null;
+      }
+    };
+    const load = () => {
+      if (loaded) return;
+      loaded = true;
+      gtag('js', new Date());
+      if (ga4) gtag('config', ga4);
+      if (ads) gtag('config', ads);
+      const tag = document.createElement('script');
+      tag.async = true;
+      tag.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(ga4 || ads)}`;
+      document.head.appendChild(tag);
+    };
+
+    box.querySelectorAll<HTMLButtonElement>('[data-consent-choice]').forEach((button) =>
+      button.addEventListener('click', () => {
+        const choice = button.dataset.consentChoice!;
+        try {
+          localStorage.setItem(KEY, choice);
+        } catch {}
+        box.hidden = true;
+        if (choice === 'granted') load();
+        else if (loaded) location.reload(); // drop a tag that was already running
+      }),
+    );
+    document.querySelectorAll('[data-consent-reset]').forEach((el) =>
+      el.addEventListener('click', () => {
+        box.hidden = false;
+      }),
+    );
+
+    if (read() === 'granted') load();
+    else if (read() !== 'denied') box.hidden = false;
+
+    // A message or project request was sent successfully.
+    window.addEventListener('lead', (event) => {
+      if (!loaded) return;
+      const detail = (event as CustomEvent<{ form: string; service: string }>).detail ?? {};
+      gtag('event', 'generate_lead', { form: detail.form, service: detail.service });
+      if (ads && lead) gtag('event', 'conversion', { send_to: `${ads}/${lead}` });
+    });
+    // Direct contact clicks: WhatsApp, email, phone, booking.
+    document.addEventListener('click', (event) => {
+      if (!loaded) return;
+      const link = (event.target as Element).closest<HTMLAnchorElement>('a[href]');
+      if (!link) return;
+      const href = link.getAttribute('href') ?? '';
+      const method = href.startsWith('https://wa.me/')
+        ? 'whatsapp'
+        : href.startsWith('mailto:')
+          ? 'email'
+          : href.startsWith('tel:')
+            ? 'phone'
+            : link.hasAttribute('data-booking')
+              ? 'booking'
+              : '';
+      if (method) gtag('event', 'contact_click', { method });
+    });
+  }
+</script>

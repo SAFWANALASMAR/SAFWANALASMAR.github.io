@@ -15,6 +15,7 @@ const p = t.privacy;
 // Same switch as the forms: with a Turnstile key they send directly, otherwise they open the visitor's email app.
 const siteKey: string = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || s.turnstileSiteKey;
 const direct = !isPlaceholder(siteKey);
+const tracking = Boolean(s.googleTag.ga4 || s.googleTag.ads);
 ---
 
 <Base lang={lang} path="/privacy/" title={t.meta.pages.privacy.title} description={t.meta.pages.privacy.description}>
@@ -34,13 +35,18 @@ const direct = !isPlaceholder(siteKey);
               {section.title}
             </h2>
             <ul class="mt-4 space-y-2.5">
-              {((direct && section.pointsDirect) || section.points).map((point) => (
+              {((tracking && section.pointsTracking) || (direct && section.pointsDirect) || section.points).map((point) => (
                 <li class="flex gap-2.5 text-text">
                   <Icon name="check" size={18} class="mt-1 shrink-0 text-accent" />
                   <span>{point}</span>
                 </li>
               ))}
             </ul>
+            {tracking && section.pointsTracking && (
+              <button type="button" class="btn btn-ghost mt-4" data-consent-reset>
+                {t.consent.reset}
+              </button>
+            )}
           </article>
         ))
       }

@@ -1,0 +1,131 @@
+---
+// Ad landing page for one service: offer, what it covers, related work, quick FAQ and the short contact form.
+import type { CollectionEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import SectionTitle from '../components/SectionTitle.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import ContactForm from '../components/ContactForm.astro';
+import { getProjects, getSettings, getSite, localePath, type Lang } from '../lib/i18n';
+
+interface Props {
+  lang: Lang;
+  page: CollectionEntry<'landing'>;
+}
+
+const { lang, page } = Astro.props;
+const t = await getSite(lang);
+const s = await getSettings();
+const l = t.landing;
+const p = page.data[lang];
+const all = await getProjects();
+const projects = page.data.projects.map((id) => all.find((x) => x.id === id)).filter((x) => x !== undefined);
+const whatsapp = s.whatsapp ? `https://wa.me/${s.whatsapp}?text=${encodeURIComponent(`${l.whatsappText}: ${p.eyebrow}`)}` : '';
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: p.faq.map((i) => ({ '@type': 'Question', name: i.q, acceptedAnswer: { '@type': 'Answer', text: i.a } })),
+};
+---
+
+<Base lang={lang} path={`/lp/${page.id}/`} title={p.metaTitle} description={p.metaDescription} jsonLd={faqLd}>
+  <section class="container-x pt-14 sm:pt-20">
+    <div class="grid items-start gap-10 lg:grid-cols-[1.15fr_1fr]">
+      <div>
+        <p class="inline-flex items-center gap-2 rounded-full border border-line px-3 py-1 text-sm font-semibold text-accent">
+          <Icon name={page.data.icon} size={16} />
+          {p.eyebrow}
+        </p>
+        <h1 class="mt-5 text-3xl leading-tight font-bold text-text sm:text-4xl">{p.title}</h1>
+        <p class="mt-4 text-lg text-muted">{p.intro}</p>
+        <div class="mt-6 flex flex-wrap gap-3 lg:hidden">
+          <a href="#contact-form" class="btn btn-primary">
+            {l.formTitle}
+            <Icon name="arrow" size={18} class="rtl:-scale-x-100" />
+          </a>
+          {
+            whatsapp && (
+              <a href={whatsapp} target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+                <Icon name="whatsapp" size={18} />
+                {l.whatsapp}
+              </a>
+            )
+          }
+        </div>
+        <ul class="mt-8 grid gap-4 sm:grid-cols-2">
+          {
+            p.benefits.map((b) => (
+              <li class="card p-5">
+                <h2 class="flex items-center gap-2 font-bold text-text">
+                  <Icon name="check" size={18} class="shrink-0 text-accent" />
+                  {b.title}
+                </h2>
+                <p class="mt-2 text-sm text-muted">{b.text}</p>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="mt-6 text-sm text-muted">{l.pricing}</p>
+      </div>
+
+      <div class="lg:sticky lg:top-24">
+        <ContactForm lang={lang} preset={page.data.preset} title={l.formTitle} />
+        <div class="mt-4 flex flex-wrap items-center justify-center gap-3 text-sm">
+          {
+            whatsapp && (
+              <>
+                <a href={whatsapp} target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+                  <Icon name="whatsapp" size={18} />
+                  {l.whatsapp}
+                </a>
+                <span class="text-muted">{l.or}</span>
+              </>
+            )
+          }
+          <a href={localePath(lang, '/request/') + `?service=${page.data.preset}`} class="more-pill">
+            {l.requestCta}
+            <Icon name="arrow" size={16} class="rtl:-scale-x-100" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container-x pt-16" aria-labelledby="includes">
+    <SectionTitle id="includes" icon="check" size="md" title={l.includesTitle} />
+    <ul class="mt-6 grid gap-3 sm:grid-cols-2">
+      {
+        p.includes.map((item) => (
+          <li class="flex gap-2.5 text-text">
+            <Icon name="check" size={18} class="mt-1 shrink-0 text-accent" />
+            <span>{item}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="container-x pt-16" aria-labelledby="work">
+    <SectionTitle id="work" icon="briefcase" size="md" title={l.projectsTitle} />
+    <div class="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {projects.map((project) => <ProjectCard project={project} lang={lang} />)}
+    </div>
+  </section>
+
+  <section class="container-x pt-16" aria-labelledby="lp-faq">
+    <SectionTitle id="lp-faq" icon="help" size="md" title={l.faqTitle} />
+    <div class="faq-list mt-8">
+      {
+        p.faq.map((item, i) => (
+          <details class="faq-item" open={i === 0}>
+            <summary>
+              <span>{item.q}</span>
+              <Icon name="plus" size={20} class="faq-icon ico-still" />
+            </summary>
+            <p>{item.a}</p>
+          </details>
+        ))
+      }
+    </div>
+  </section>
+</Base>

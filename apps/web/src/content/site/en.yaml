@@ -534,6 +534,12 @@ privacy:
         - The site uses no advertising and no tracking tools.
         - Your browser keeps, on your device, your light or dark mode choice and a copy of the pages you visited so they open quickly.
         - The hosting provider may record routine technical data such as the network address, as with any website.
+      pointsTracking:
+        - The site uses the Google tag (Google Analytics and Google Ads) to measure visits and see which ads led to a message or request. It runs only after you accept in the banner at the bottom of the page.
+        - If you decline, nothing is loaded from Google. You can change your choice at any time with the button below.
+        - Your name, email and message are never sent to Google; only the fact that a message or request was sent is recorded.
+        - Your browser keeps, on your device, this choice, your light or dark mode choice, and a copy of the pages you visited so they open quickly.
+        - The hosting provider may record routine technical data such as the network address, as with any website.
     - icon: clock
       title: Retention and your rights
       points:
@@ -543,6 +549,24 @@ privacy:
   contactCta: Contact page
   formNote: Your details are used only to reply to you.
   formLink: Privacy
+consent:
+  title: Cookies
+  text: I use the Google tag to measure visits and ad performance. It runs only with your consent.
+  more: Details
+  accept: Accept
+  decline: Decline
+  reset: Change cookie choice
+landing:
+  includesTitle: What the work covers
+  projectsTitle: Related work
+  faqTitle: Quick questions
+  formTitle: Tell me about your project
+  whatsapp: Chat on WhatsApp
+  whatsappText: Hello, I came from your website and would like to ask about a service
+  or: or
+  requestCta: Detailed step-by-step request
+  pricing: Pricing depends on scope; I send a tailored quote once I understand your needs.
+
 footer:
   tagline: Digital Solutions Developer for Organizations · Madinah
   rights: All rights reserved.

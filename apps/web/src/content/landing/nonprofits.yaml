@@ -1,0 +1,62 @@
+order: 1
+icon: nonprofit
+preset: nonprofit-transformation
+projects: [ejaz-portal, sudan-ngo-website, nonprofit-digital-transformation]
+ar:
+  metaTitle: مواقع وأنظمة للجمعيات الخيرية — صفوان الأسمر
+  metaDescription: مواقع وبوابات وأنظمة إدارة للجمعيات والقطاع غير الربحي، عربية من اليمين لليسار، مع قوالب تقارير المانحين وتأمين الحسابات الرقمية.
+  eyebrow: الجمعيات والقطاع غير الربحي
+  title: موقع وبوابة خدمات لجمعيتك، تديرونها من لوحة تحكم واحدة
+  intro: أبني للجمعيات مواقع وأنظمة عربية تناسب طبيعة عملها ومتطلبات الجهات المانحة، من فهم الإجراء الحالي إلى الإطلاق والتوثيق.
+  benefits:
+    - title: خبرة من داخل القطاع
+      text: أعمل في القطاع غير الربحي، وأعرف ما تطلبه الجهات المانحة من تقارير وشواهد.
+    - title: عربي من الأساس
+      text: واجهات من اليمين إلى اليسار، مع الإنجليزية عند الحاجة.
+    - title: لوحة تحكم بأيديكم
+      text: تحديث المحتوى ومتابعة الطلبات دون الرجوع إلى مبرمج في كل تعديل.
+    - title: تسليم موثّق
+      text: نظام موثّق يعمل دون الاعتماد على شخص بعينه.
+  includes:
+    - نقل الموقع وإضافة صفحات الخدمات (الاستبيانات، الشكاوى، المتجر)
+    - بوابات طلبات وتسجيل ومسابقات بلوحة إدارة
+    - صفحات التبرع والربط بمتجر الجمعية
+    - قوالب التقارير الدورية والختامية للمانحين
+    - حصر الأصول والحسابات الرقمية وتأمينها
+    - تشغيل منصات الموارد البشرية والمتاجر الإلكترونية
+  faq:
+    - q: كم يستغرق بناء بوابة للجمعية؟
+      a: حسب نطاق العمل. على سبيل المثال، أُنجزت بوابة جمعية إعجاز من المتطلبات إلى الإطلاق الرسمي في خمسة أسابيع.
+    - q: هل نستطيع تعديل المحتوى بأنفسنا؟
+      a: نعم، من لوحة التحكم، ومع التسليم دليل استخدام وتوثيق للنظام.
+    - q: هل تعمل مع جمعيات خارج المدينة المنورة؟
+      a: نعم، العمل عن بُعد، ومن أعمالي موقع لمنظمة إنسانية يخاطب العالم بالعربية والإنجليزية.
+en:
+  metaTitle: Websites and Systems for Non-Profits — Safwan Alasmar
+  metaDescription: Websites, service portals and admin systems for associations and non-profits, Arabic-first, with donor report templates and digital account security.
+  eyebrow: Associations and non-profits
+  title: A website and service portal for your association, run from one dashboard
+  intro: I build Arabic-first websites and systems around how associations and their donors work, from understanding the current process to launch and documentation.
+  benefits:
+    - title: Experience from inside the sector
+      text: I work in the non-profit sector and know the reports and evidence donors ask for.
+    - title: Arabic-first
+      text: Right-to-left interfaces, with English where needed.
+    - title: A dashboard in your hands
+      text: Update content and follow requests without calling a developer for every change.
+    - title: Documented handover
+      text: A documented system that does not depend on any single person.
+  includes:
+    - Website migration and service pages (surveys, complaints, store)
+    - Request, registration and competition portals with an admin dashboard
+    - Donation pages linked to the association's store
+    - Periodic and final donor report templates
+    - Digital assets and accounts audit and security
+    - HR platform and e-store setup
+  faq:
+    - q: How long does an association portal take?
+      a: It depends on scope. For example, the Ejaz Association portal went from requirements to official launch in five weeks.
+    - q: Can we edit the content ourselves?
+      a: Yes, from the dashboard, with a user guide and system documentation at handover.
+    - q: Do you work with organizations outside Madinah?
+      a: Yes, remotely. My work includes a website for a humanitarian organization that addresses the world in Arabic and English.

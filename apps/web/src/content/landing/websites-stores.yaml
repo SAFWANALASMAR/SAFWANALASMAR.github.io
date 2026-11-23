@@ -1,0 +1,62 @@
+order: 2
+icon: web
+preset: web-mobile-apps
+projects: [ejaz-store, ejaz-portal, academic-author-site]
+ar:
+  metaTitle: تصميم مواقع ومتاجر إلكترونية عربية — صفوان الأسمر
+  metaDescription: تطوير مواقع الشركات والجهات والمتاجر الإلكترونية بواجهة عربية سريعة على الجوال، وإعداد المتاجر على سلة وربطها بحساباتك.
+  eyebrow: المواقع والمتاجر الإلكترونية
+  title: موقع أو متجر إلكتروني عربي احترافي، سريع على الجوال
+  intro: أطوّر مواقع الشركات والجهات والمتاجر الإلكترونية بواجهة عربية من اليمين إلى اليسار، وأضبط المتاجر على منصات مثل سلة وأربطها بحساباتك وواتساب الأعمال.
+  benefits:
+    - title: سريع على الجوال
+      text: صفحات خفيفة تفتح بسرعة على الجوال، حيث يتصفح أغلب زوارك.
+    - title: متاجر جاهزة للبيع
+      text: إعداد المتجر وتصميمه بهويتك، وإضافة المنتجات واختبار روابط الشراء.
+    - title: بأكثر من لغة
+      text: مواقع بالعربية والإنجليزية، ومن أعمالي موقع بأربع لغات.
+    - title: يصلك كل طلب
+      text: نماذج تواصل وطلبات تصل إلى بريدك مباشرة، مع حماية من الرسائل الآلية.
+  includes:
+    - تصميم الموقع وتطويره من الصفر
+    - إعداد متجر على سلة بهويتك وإضافة المنتجات
+    - موقع بالعربية والإنجليزية أو بلغات أكثر
+    - نماذج تواصل وطلبات تصل إلى بريدك
+    - ربط الموقع بحسابات التواصل وكتالوج واتساب الأعمال
+    - تهيئة أساسية لمحركات البحث وصور المعاينة عند مشاركة الرابط
+  faq:
+    - q: متجر على سلة أم برمجة خاصة؟
+      a: حسب حاجتك. المنصة الجاهزة مثل سلة أسرع للبدء، والبرمجة الخاصة للمزايا التي لا توفرها المنصات.
+    - q: هل يعمل الموقع بالعربي والإنجليزي؟
+      a: نعم، من اليمين إلى اليسار بالعربية ومن اليسار إلى اليمين بالإنجليزية، ويمكن إضافة لغات أخرى.
+    - q: هل أستطيع تحديث المحتوى بنفسي؟
+      a: نعم، المتاجر تُدار من لوحة المنصة، والمواقع المبرمجة خاصة تُسلَّم بلوحة تحكم عند الحاجة.
+en:
+  metaTitle: Arabic Website and E-Store Development — Safwan Alasmar
+  metaDescription: Websites for companies and organizations and e-stores with a fast, mobile-friendly Arabic interface, plus Salla store setup linked to your accounts.
+  eyebrow: Websites and e-stores
+  title: A professional Arabic website or e-store, fast on mobile
+  intro: I build websites and e-stores for companies and organizations with a right-to-left Arabic interface, and set up stores on platforms such as Salla linked to your accounts and WhatsApp Business.
+  benefits:
+    - title: Fast on mobile
+      text: Light pages that open quickly on the phones most of your visitors use.
+    - title: Stores ready to sell
+      text: Store setup and design in your brand, products added and purchase links tested.
+    - title: More than one language
+      text: Arabic and English sites; my work includes a site in four languages.
+    - title: Every request reaches you
+      text: Contact and request forms delivered straight to your inbox, protected from bots.
+  includes:
+    - Website design and development from scratch
+    - Salla store setup in your brand, with products added
+    - Arabic and English sites, or more languages
+    - Contact and request forms delivered to your inbox
+    - Links to your social accounts and WhatsApp Business catalog
+    - Basic search engine setup and link preview images
+  faq:
+    - q: A Salla store or custom development?
+      a: It depends on your needs. A ready platform such as Salla is faster to start; custom development covers features platforms don't offer.
+    - q: Does the site work in Arabic and English?
+      a: Yes, right-to-left in Arabic and left-to-right in English, and more languages can be added.
+    - q: Can I update the content myself?
+      a: Yes. Stores are managed from the platform dashboard, and custom sites come with a dashboard where needed.

@@ -59,6 +59,31 @@ const projects = defineCollection({
   }),
 });
 
+const landingText = z.object({
+  metaTitle: z.string(),
+  metaDescription: z.string(),
+  eyebrow: z.string(),
+  title: z.string(),
+  intro: z.string(),
+  benefits: z.array(z.object({ title: z.string(), text: z.string() })).min(3),
+  includes: z.array(z.string()).min(3),
+  faq: z.array(z.object({ q: z.string(), a: z.string() })).min(2),
+});
+
+// Ad landing pages: one per advertised service, at /lp/<id>/ (Arabic) and /en/lp/<id>/.
+const landing = defineCollection({
+  loader: glob({ pattern: '*.yaml', base: './src/content/landing' }),
+  schema: z.object({
+    order: z.number(),
+    icon: z.enum(['nonprofit', 'web', 'trend']),
+    // Contact form service to preselect, and the related projects shown as proof.
+    preset: z.string(),
+    projects: z.array(z.string()).min(1),
+    ar: landingText,
+    en: landingText,
+  }),
+});
+
 const pageMeta = z.object({ title: z.string(), description: z.string() });
 
 const site = defineCollection({
@@ -318,6 +343,25 @@ const site = defineCollection({
     }),
     faq: z.object({ title: z.string(), items: z.array(z.object({ q: z.string(), a: z.string() })) }),
     pwa: z.object({ install: z.string() }),
+    consent: z.object({
+      title: z.string(),
+      text: z.string(),
+      more: z.string(),
+      accept: z.string(),
+      decline: z.string(),
+      reset: z.string(),
+    }),
+    landing: z.object({
+      includesTitle: z.string(),
+      projectsTitle: z.string(),
+      faqTitle: z.string(),
+      formTitle: z.string(),
+      whatsapp: z.string(),
+      whatsappText: z.string(),
+      or: z.string(),
+      requestCta: z.string(),
+      pricing: z.string(),
+    }),
     privacy: z.object({
       title: z.string(),
       intro: z.string(),
@@ -329,6 +373,8 @@ const site = defineCollection({
           points: z.array(z.string()),
           // Shown instead of `points` once the forms send directly (Turnstile key set).
           pointsDirect: z.array(z.string()).optional(),
+          // Shown instead of `points` once the Google tag is configured (settings.yaml googleTag).
+          pointsTracking: z.array(z.string()).optional(),
         }),
       ),
       contactText: z.string(),
@@ -352,7 +398,15 @@ const settings = defineCollection({
     // Optional link to a booking page (e.g. a Google Calendar appointment schedule); empty hides the button.
     booking: z.union([z.literal(''), z.url()]),
     photo: z.string(),
+    // WhatsApp number in international form, digits only (e.g. 9665…); empty hides the WhatsApp buttons.
+    whatsapp: z.string().regex(/^\d*$/),
+    // Google tag IDs; all empty = no tag, no consent banner. Public IDs, not secrets.
+    googleTag: z.object({
+      ga4: z.string().regex(/^(G-[A-Z0-9]+)?$/),
+      ads: z.string().regex(/^(AW-\d+)?$/),
+      leadLabel: z.string().regex(/^[\w-]*$/),
+    }),
   }),
 });
 
-export const collections = { services, projects, site, settings };
+export const collections = { services, projects, site, settings, landing };

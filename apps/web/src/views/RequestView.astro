@@ -426,7 +426,10 @@ const stageIcons: IconName[] = ['sparkles', 'document', 'check'];
           body: JSON.stringify({ ...request, turnstileToken: token }),
         });
         const result = await res.json().catch(() => ({ ok: false, error: 'unavailable' }));
-        if (result.ok) done();
+        if (result.ok) {
+          done();
+          window.dispatchEvent(new CustomEvent('lead', { detail: { form: 'request', service: request.categories?.join(',') ?? '' } }));
+        }
         else status.textContent = text[result.error] ?? text.unavailable ?? '';
       } catch {
         status.textContent = text.unavailable ?? '';

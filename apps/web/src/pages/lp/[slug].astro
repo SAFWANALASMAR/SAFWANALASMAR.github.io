@@ -1,0 +1,12 @@
+---
+import type { GetStaticPaths } from 'astro';
+import LandingView from '../../views/LandingView.astro';
+import { getLandings } from '../../lib/i18n';
+
+export const getStaticPaths = (async () =>
+  (await getLandings()).map((page) => ({ params: { slug: page.id }, props: { page } }))) satisfies GetStaticPaths;
+
+const { page } = Astro.props;
+---
+
+<LandingView lang="ar" page={page} />

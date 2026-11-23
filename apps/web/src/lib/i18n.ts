@@ -56,3 +56,7 @@ export async function getServices() {
 export async function getProjects() {
   return (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 }
+
+export async function getLandings() {
+  return (await getCollection('landing')).sort((a, b) => a.data.order - b.data.order);
+}

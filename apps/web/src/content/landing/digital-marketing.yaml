@@ -1,0 +1,62 @@
+order: 3
+icon: trend
+preset: digital-marketing
+projects: [ejaz-digital-presence, nashr-platform, ejaz-store]
+ar:
+  metaTitle: إدارة حسابات التواصل والتسويق الرقمي — صفوان الأسمر
+  metaDescription: تأسيس حسابات التواصل وتوحيد هويتها، وخطة المحتوى، وأتمتة النشر، وإعداد واتساب الأعمال للجهات والجمعيات والمشاريع التجارية.
+  eyebrow: التسويق الرقمي وإدارة الحسابات
+  title: حضور رقمي منظم لجهتك على منصات التواصل
+  intro: أؤسس الحسابات وأوحّد هويتها، وأضع خطة المحتوى، وأتمت النشر، للجهات والجمعيات والمشاريع التجارية.
+  benefits:
+    - title: هوية ومعرّف موحدان
+      text: كل الحسابات بالاسم والهوية نفسيهما، فيسهل على جمهورك الوصول إليك.
+    - title: خطة محتوى واضحة
+      text: محاور ونسب وأيام نشر، بدل النشر العشوائي.
+    - title: نشر مؤتمت
+      text: من أعمالي منصة تجدول المحتوى وتوزعه على ثماني منصات من لوحة واحدة.
+    - title: واتساب الأعمال
+      text: إعداد الحساب والكتالوج وربطه بالمتجر والموقع.
+  includes:
+    - تأسيس الحسابات أو ترتيبها بهوية ومعرّف موحدين
+    - خطة محتوى وتقويم نشر شهري
+    - إدارة النشر على منصات التواصل
+    - إعداد واتساب الأعمال والكتالوج
+    - ربط الحسابات بالموقع والمتجر
+    - أرشفة المحتوى والهوية في مكان واحد
+  faq:
+    - q: هل تتولى إدارة الحسابات أم يتولاها فريقنا؟
+      a: حسب الاتفاق. أتولى الإدارة، أو أبني الخطة والأدوات ويتولاها فريقكم.
+    - q: هل تعمل مع المتاجر والمشاريع التجارية؟
+      a: نعم، ومن أعمالي ربط متجر جمعية بحساباتها وكتالوج واتساب الأعمال.
+    - q: نبدأ بحسابات قديمة متفرقة، هل هذا مناسب؟
+      a: نعم، من أعمالي نقل جمعية من حسابين قديمين إلى ثماني قنوات بهوية ومعرّف موحدين.
+en:
+  metaTitle: Social Media Management and Digital Marketing — Safwan Alasmar
+  metaDescription: Setting up social accounts under one identity, content plans, publishing automation and WhatsApp Business setup for organizations, associations and businesses.
+  eyebrow: Digital marketing and account management
+  title: An organized digital presence for your organization on social media
+  intro: I set up accounts under one identity, build the content plan and automate publishing, for organizations, associations and businesses.
+  benefits:
+    - title: One name, one identity
+      text: Every account under the same name and branding, so your audience finds you easily.
+    - title: A clear content plan
+      text: Themes, ratios and publishing days instead of random posting.
+    - title: Automated publishing
+      text: My work includes a platform that schedules content and distributes it to eight platforms from one dashboard.
+    - title: WhatsApp Business
+      text: Account and catalog setup, linked to your store and website.
+  includes:
+    - Setting up or reorganizing accounts under one name and identity
+    - Content plan and monthly publishing calendar
+    - Managing publishing across social platforms
+    - WhatsApp Business and catalog setup
+    - Linking accounts to your website and store
+    - Archiving content and brand assets in one place
+  faq:
+    - q: Do you manage the accounts or does our team?
+      a: As agreed. I run them, or I build the plan and tools and your team runs them.
+    - q: Do you work with stores and businesses?
+      a: Yes. My work includes linking an association's store to its accounts and WhatsApp Business catalog.
+    - q: We start with scattered old accounts. Is that fine?
+      a: Yes. My work includes taking an association from two old accounts to eight channels under one name and identity.

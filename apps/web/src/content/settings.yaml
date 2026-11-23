@@ -12,3 +12,11 @@ cv:
 photo: "images/profile.jpg"
 # رابط صفحة حجز المواعيد (مثل جدول المواعيد في تقويم قوقل). اتركه فارغاً لإخفاء زر «احجز موعداً»
 booking: "https://calendar.google.com/calendar/appointments/schedules/AcZssZ0P2NK3KBOSGSsdtU3CdfiNpN2ulQf039R661eT1Mzgm2bcvtk98V81pOHI-AIHU47nklO-ONGo"
+# رقم واتساب بالصيغة الدولية أرقاماً فقط. فارغ = يختفي زر واتساب
+whatsapp: "966506670759"
+# معرّفات وسم قوقل (عامة وليست سرية). كلها فارغة = لا وسم ولا شريط موافقة.
+# ga4: من Google Analytics مثل G-XXXXXXX — ads: من Google Ads مثل AW-123456789 — leadLabel: تسمية تحويل «عميل محتمل» من Google Ads
+googleTag:
+  ga4: ""
+  ads: ""
+  leadLabel: ""
