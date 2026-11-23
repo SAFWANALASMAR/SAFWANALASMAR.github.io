@@ -2,7 +2,7 @@
 // Run after changing the name, title or value line:  npm run images
 // Needs Chrome or Edge installed. Set CHROME_PATH if it isn't found automatically.
 import { execFileSync } from 'node:child_process';
-import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -55,8 +55,7 @@ h1 { font-size: 84px; font-weight: 700; line-height: 1.15; }
 </div></body></html>`;
 }
 
-const tmp = join(tmpdir(), 'og-gen');
-mkdirSync(tmp, { recursive: true });
+const tmp = mkdtempSync(join(tmpdir(), 'og-gen-'));
 mkdirSync(join(root, 'public/og'), { recursive: true });
 
 for (const lang of ['ar', 'en']) {

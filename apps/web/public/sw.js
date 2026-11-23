@@ -27,7 +27,8 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  if (/\/(_astro|images|certificates|og)\/|\.(?:woff2?|png|webp|jpg|svg)$/.test(url.pathname)) {
+  const path = url.pathname.slice(new URL(self.registration.scope).pathname.length - 1);
+  if (/^\/(?:_astro|images|certificates|og)\//.test(path) || /\.(?:woff2?|png|webp|jpg|svg)$/.test(path)) {
     event.respondWith(
       caches.match(req).then(
         (hit) =>

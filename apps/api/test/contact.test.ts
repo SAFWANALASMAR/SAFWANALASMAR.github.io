@@ -43,14 +43,14 @@ const post = (body: unknown, headers: Record<string, string> = {}) =>
   );
 
 const resendCalls = () =>
-  fetchMock.mock.calls.filter(([url]) => String(url).startsWith('https://api.resend.com'));
+  fetchMock.mock.calls.filter(([url]) => new URL(String(url)).hostname === 'api.resend.com');
 
 beforeEach(() => {
   allowRate = true;
   turnstile = { success: true, action: 'contact' };
   resendStatus = 200;
   fetchMock = vi.fn(async (url: string) =>
-    String(url).includes('turnstile')
+    new URL(String(url)).hostname === 'challenges.cloudflare.com'
       ? Response.json(turnstile)
       : new Response('{}', { status: resendStatus }),
   );
