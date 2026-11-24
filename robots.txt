@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://safwanalasmar.github.io/sitemap-index.xml
