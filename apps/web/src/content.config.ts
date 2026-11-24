@@ -290,6 +290,7 @@ const site = defineCollection({
       emailLabel: z.string(),
       linkedinLabel: z.string(),
       githubLabel: z.string(),
+      whatsappLabel: z.string(),
       cv: z.string(),
       booking: z.string(),
       bookingHint: z.string(),

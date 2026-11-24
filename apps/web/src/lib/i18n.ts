@@ -60,3 +60,10 @@ export async function getProjects() {
 export async function getLandings() {
   return (await getCollection('landing')).sort((a, b) => a.data.order - b.data.order);
 }
+
+/** WhatsApp number from settings (digits, e.g. 966506670759) as a display string and a wa.me link; empty when unset. */
+export function whatsapp(digits: string) {
+  if (!digits) return { display: '', href: '' };
+  const m = digits.match(/^966(\d{2})(\d{3})(\d{4})$/);
+  return { display: m ? `+966 ${m[1]} ${m[2]} ${m[3]}` : `+${digits}`, href: `https://wa.me/${digits}` };
+}

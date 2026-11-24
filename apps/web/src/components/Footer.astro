@@ -1,6 +1,6 @@
 ---
 import Icon from './Icon.astro';
-import { emailParts, getSettings, getSite, isPlaceholder, localePath, type Lang } from '../lib/i18n';
+import { emailParts, getSettings, getSite, isPlaceholder, localePath, whatsapp, type Lang } from '../lib/i18n';
 
 interface Props {
   lang: Lang;
@@ -11,6 +11,7 @@ const t = await getSite(lang);
 const s = await getSettings();
 const year = new Date().getFullYear();
 const mail = emailParts(s.email);
+const wa = whatsapp(s.whatsapp);
 ---
 
 <footer class="site-footer mt-24">
@@ -39,6 +40,21 @@ const mail = emailParts(s.email);
               aria-label={t.contact.emailLabel}
             >
               <Icon name="mail" />
+            </a>
+          </li>
+        )
+      }
+      {
+        wa.href && (
+          <li>
+            <a
+              href={wa.href}
+              rel="noopener noreferrer"
+              target="_blank"
+              class="ctrl-btn size-11 text-muted"
+              aria-label={t.contact.whatsappLabel}
+            >
+              <Icon name="whatsapp" />
             </a>
           </li>
         )

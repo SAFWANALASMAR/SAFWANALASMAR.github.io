@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import ContactForm from '../components/ContactForm.astro';
-import { emailParts, getSettings, getSite, isPlaceholder, publicFileExists, url, type Lang } from '../lib/i18n';
+import { emailParts, getSettings, getSite, isPlaceholder, publicFileExists, url, whatsapp, type Lang } from '../lib/i18n';
 
 interface Props {
   lang: Lang;
@@ -18,6 +18,7 @@ const githubReady = !isPlaceholder(s.github);
 const cvPath = s.cv[lang];
 const hasCv = publicFileExists(cvPath);
 const mail = emailParts(s.email);
+const wa = whatsapp(s.whatsapp);
 
 const linkClass =
   'flex items-center gap-3 glass-soft rounded-xl border border-line p-4 text-text transition-colors hover:border-accent hover:text-accent';
@@ -59,6 +60,17 @@ const linkClass =
               )
             }
           </li>
+          {
+            wa.href && (
+              <li>
+                <a href={wa.href} target="_blank" rel="noopener noreferrer" class={linkClass}>
+                  <Icon name="whatsapp" />
+                  <span class="shrink-0 text-sm whitespace-nowrap text-muted">{c.whatsappLabel}</span>
+                  <span class="ms-auto truncate font-medium" dir="ltr">{wa.display}</span>
+                </a>
+              </li>
+            )
+          }
           <li>
             <a href={s.linkedin} target="_blank" rel="me noopener noreferrer" class={linkClass}>
               <Icon name="linkedin" />

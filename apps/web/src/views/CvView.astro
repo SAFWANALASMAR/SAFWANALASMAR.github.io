@@ -1,10 +1,10 @@
 ---
-// Printable one-language CV built from the same content as the site (no phone number by design).
+// Printable one-language CV built from the same content as the site (business WhatsApp number only, never the personal one).
 // Turned into PDFs by scripts/generate-cv.mjs; the pages themselves are noindex.
 import '@fontsource/ibm-plex-sans-arabic/400.css';
 import '@fontsource/ibm-plex-sans-arabic/700.css';
 import QRCode from 'qrcode';
-import { getSettings, getSite, type Lang } from '../lib/i18n';
+import { getSettings, getSite, whatsapp, type Lang } from '../lib/i18n';
 
 interface Props {
   lang: Lang;
@@ -12,6 +12,7 @@ interface Props {
 const { lang } = Astro.props;
 const t = await getSite(lang);
 const s = await getSettings();
+const wa = whatsapp(s.whatsapp);
 const a = t.about;
 const ar = lang === 'ar';
 const L = ar
@@ -39,7 +40,7 @@ const qrLabel = ar ? 'امسح لفتح الموقع' : 'Scan to open the site';
         <h1>{t.hero.name}</h1>
         <p class="role">{t.hero.title}</p>
         <p class="contact" dir="ltr">
-          {s.email} · {s.linkedin.replace(/^https?:\/\/(www\.)?/, '')} · {s.github.replace(/^https?:\/\//, '')} · {site.replace(/^https?:\/\//, '')}
+          {wa.display && <>{wa.display} · </>}{s.email} · {s.linkedin.replace(/^https?:\/\/(www\.)?/, '')} · {s.github.replace(/^https?:\/\//, '')} · {site.replace(/^https?:\/\//, '')}
         </p>
       </div>
       <div class="qr">
